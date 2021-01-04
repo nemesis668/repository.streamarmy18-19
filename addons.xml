@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addons>
+<addon id="plugin.video.fanime" name="[COLOR magenta][B]FANime[/COLOR][/B]" version="1.00.000" provider-name="@Nemzzy668">
+  <requires>
+    <!-- <import addon="xbmc.python" version="2.1.0"/> -->
+    <import addon="script.module.simplejson"/>
+    <import addon="script.module.requests" />
+    <import addon="script.module.beautifulsoup4" />
+	<import addon="script.module.resolveurl" />
+	<import addon="script.module.six" />
+	<import addon="script.module.kodi-six" />
+
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="nemzzy.py">
+        <provides>video</provides>
+        <provides>audio</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">FANime Was Created By @Nemzzy668 ( Follow On Twitter )</summary>
+    <description lang="en">Anime (pronounced AH-nee-may ) is a term for a style of Japanese comic book and video cartoon animation in which the main characters have large doe-like eyes. Many Web sites are devoted to anime. Anime is the prevalent style in Japanese comic books or manga</description>
+        <disclaimer lang="en">If You Are Using This Addon To Watch Content You Legally Do Not Have The Rights To Then The Author Takes No Affiliation With This, You Do So At Your Own Judgement And Risk!</disclaimer>
+	<platform>all</platform>
+	<assets>
+        <icon>icon.png</icon>
+        <fanart>fanart.jpg</fanart>
+    </assets>
+  </extension>
+</addon>
+
+<addon id="plugin.video.nemesisaio" name="[COLOR yellow][B]NemesisAio[/B][/COLOR]" version="4.00.000" provider-name="[COLOR yellow]@Nemzzy668 , @_Manc_ , @LordJD , @__K__M__M__ , @NoleNation4 [/COLOR]">
+  <requires>
+    <!-- <import addon="xbmc.python" version="2.1.0"/> -->
+    <import addon="script.module.simplejson"/>
+	<import addon="script.module.six" />
+	<import addon="script.module.kodi-six" />
+    <import addon="script.common.plugin.cache"/>
+    <import addon="script.module.resolveurl" />
+    <import addon="script.module.requests" />
+    <import addon="script.module.beautifulsoup4" />
+    <import addon="script.module.html5lib" />
+	<import addon="script.module.nemzzyscrapers" />
+	<import addon="script.module.pyxbmct" />
+
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="nemesis.py">
+        <provides>video</provides>
+        <provides>audio</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">[COLOR yellow]NemesisAio Addon[/COLOR]</summary>
+    <description lang="en">[COLOR yellow]NemesisAio Addon, We Do not host any streams or content, all information available in this addon is obtained using scrappers[/COLOR]</description>
+    <platform>all</platform>
+	<assets>
+        <icon>icon.gif</icon>
+        <fanart>fanart.jpg</fanart>
+    </assets>
+  </extension>
+</addon>
+
+<addon id="repository.StreamArmy" name="[COLOR crimson]S[COLOR silver]tream Army Repo 18 / 19 Compatible Addons[/COLOR]" version="13.0.000" provider-name="@Nemzzy668 / @_Manc_">
+	<extension point="xbmc.addon.repository" name="Stream Army">
+		<dir maxversion="18.8.9">
+			<info compressed="false">https://raw.githubusercontent.com/nemesis668/repository.streamarmy/master/addons.xml</info>
+			<checksum>http://raw.githubusercontent.com/nemesis668/repository.streamarmy/master/addons.xml.md5</checksum>
+			<datadir zip="true">http://raw.githubusercontent.com/nemesis668/repository.streamarmy/master/zips/</datadir>
+		</dir>
+		<dir>
+			<info compressed="false">https://raw.githubusercontent.com/nemesis668/repository.streamarmy18-19/master/addons.xml</info>
+			<checksum>http://raw.githubusercontent.com/nemesis668/repository.streamarmy18-19/master/addons.xml.md5</checksum>
+			<datadir zip="true">http://raw.githubusercontent.com/nemesis668/repository.streamarmy18-19/master/zips/</datadir>
+		</dir>
+		<dir>
+			<info compressed="false">https://raw.githubusercontent.com/Gujal00/smrzips/master/addons.xml</info>
+			<checksum>https://raw.githubusercontent.com/Gujal00/smrzips/master/addons.xml.md5</checksum>
+			<datadir zip="true">https://raw.githubusercontent.com/Gujal00/smrzips/master/zips/</datadir>
+		</dir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>Stream Army Repo</summary>
+		<description>Repo For Stream Army, Bought to you by @Nemzzy668 /  @_MANC_</description>
+		<platform>all</platform>
+	</extension>
+</addon>
+
+<addon id="script.module.nemzzyscrapers" name="Nemzzy Scrapers" version="2.00.000" provider-name="@Nemzzy668">
+	<requires>
+		<!-- <import addon="xbmc.python" version="2.1.0" /> -->
+		<import addon="script.module.requests" />
+		<import addon="script.module.beautifulsoup4" />
+		<import addon="script.module.html5lib" />
+		<import addon="script.module.kodi-six" />
+	</requires>
+	<extension point="xbmc.python.module" library="lib" />
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<summary lang="en">Scraper Moduel Used By Addons By Nemzzy</summary>
+	</extension>
+</addon>
+</addons>
