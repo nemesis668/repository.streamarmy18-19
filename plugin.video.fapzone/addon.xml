@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.video.fapzone" name="[COLOR darkgoldenrod].FapZone[/COLOR]" version="3.00.000" provider-name="@Nemzzy">
+  <requires>
+    <!-- <import addon="xbmc.python" version="2.1.0"/> -->
+    <import addon="script.module.addon.common" version="2.0.0" />
+	<import addon="script.module.beautifulsoup4" />
+	<import addon="script.module.html5lib" />
+	<import addon="script.module.requests" />
+	<import addon="script.module.six" />
+	<import addon="script.module.kodi-six" />
+	<import addon="script.module.pyxbmct" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="Main.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Grab The Lube and The Wipes lets Fap baby</summary>
+    <description lang="en">Kodi 18 / 19 Compatible Please Try Not To Explode On The Screen, It Makes It Hard To Clean</description>
+    <platform>all</platform>
+	<assets>
+        <icon>icon.png</icon>
+        <fanart>fanart.jpg</fanart>
+    </assets>
+  </extension>
+</addon>
