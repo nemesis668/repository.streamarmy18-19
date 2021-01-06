@@ -127,13 +127,13 @@ if ( __name__ == "__main__" ):
     # start
     Generator()
     #rezip files an move
-    print 'Removing all pyo files from addons...'
+    print 'Removing all pyo and pyc files from addons...'
     rootdir = sys.path[0]
     zipsdir = rootdir + '\zips'
     #remove all pyo file from addons.
     for root, dirs, files in os.walk(rootdir):            
         rem_folder = ['_MACOSX']
-        rem_files  = ['.pyo','DS_Store']    
+        rem_files  = ['.pyo','DS_Store', '.pyc']    
         for f in files:
             try:
                 if any(x in f for x in rem_files):
