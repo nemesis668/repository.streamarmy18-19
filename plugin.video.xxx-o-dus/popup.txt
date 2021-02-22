@@ -1,0 +1,15 @@
+[COLOR pink]Welcome To XXX-O-DUS[/COLOR]
+[COLOR aqua]XXXODUS : Current Version 4.00.044[/COLOR]
+[COLOR aqua]SCRAPERS : Current Version 3.00.021[/COLOR]
+[COLOR aqua]ARTWORK: Current Version 2.00.013[/COLOR]
+
+[COLOR yellow]FIXED[/COLOR]
+[COLOR white]Removed debug pop up dialog box accidently left in search function[/COLOR]
+
+
+[COLOR yellow]Added[/COLOR]
+[COLOR white]XXXDan[/COLOR]
+
+
+[COLOR yellow]Issues Known[/COLOR]
+[COLOR red]No Known Issues At The Moment, If Any Report to [COLOR pink]@Nemzzy668 on Twitter[/COLOR]
