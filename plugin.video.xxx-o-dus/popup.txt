@@ -1,15 +1,11 @@
 [COLOR pink]Welcome To XXX-O-DUS[/COLOR]
-[COLOR aqua]XXXODUS : Current Version 4.00.044[/COLOR]
-[COLOR aqua]SCRAPERS : Current Version 3.00.021[/COLOR]
-[COLOR aqua]ARTWORK: Current Version 2.00.013[/COLOR]
+[COLOR aqua]XXXODUS : Current Version 5.00.000[/COLOR]
+[COLOR aqua]SCRAPERS : Current Version 5.00.000[/COLOR]
+[COLOR aqua]ARTWORK: Current Version 5.00.000[/COLOR]
 
-[COLOR yellow]FIXED[/COLOR]
-[COLOR white]Removed debug pop up dialog box accidently left in search function[/COLOR]
-
-
-[COLOR yellow]Added[/COLOR]
-[COLOR white]XXXDan[/COLOR]
-
+[COLOR yellow]BIG NEWS!!![/COLOR]
+[COLOR white]XXX-O-DUS Is now  compatible with Kodi 19!![/COLOR]
+[COLOR red]IF YOUR XXXODUS IS ERRORING ON PLAYING EVERY LINK, DO A FORCE UPDATE ON THE STREAM ARMY REPO, CHECK XXXODUS HEALTH WITHIN THE ADDON! EVERYTHING SHOULD BE 5.00.000[/COLOR]
 
 [COLOR yellow]Issues Known[/COLOR]
 [COLOR red]No Known Issues At The Moment, If Any Report to [COLOR pink]@Nemzzy668 on Twitter[/COLOR]

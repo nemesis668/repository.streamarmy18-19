@@ -2,7 +2,7 @@
 from kodi_six import xbmc, xbmcaddon, xbmcplugin, xbmcgui, xbmcvfs
 from six.moves.urllib.parse import parse_qs, quote_plus, urlparse, parse_qsl, urljoin
 from six import PY2
-import re,json,base64,unicodedata,os
+import re,json,base64,os
 
 import client
 import cache
@@ -10,9 +10,7 @@ import workers
 import jsunpack
 import utils
 import kodi
-import xbmc
 import log_utils
-import xbmcgui
 import resolveurl
 import requests
 from bs4 import BeautifulSoup
@@ -940,26 +938,27 @@ class streamer:
             return
             
     def streamingporn(self,url):
-        dialog.notification('XXX-O-DUS', '[COLOR yellow]Getting Links Now[/COLOR]', xbmcgui.NOTIFICATION_INFO, 5000)
-        r = scraper.get(url).text
+        
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36'}
+        r = requests.get(url,headers=headers).text
         r = re.findall('<div class="entry-content">(.*?)</div>',r, flags=re.DOTALL)[0]
         pattern = r'''<a\s+href=['"]([^'"]+)['"].+?.>(.*?)<'''
         r = re.findall(pattern,r)
         names = []
         srcs  = []
         found = 0
-        xbmc.executebuiltin("Dialog.Close(busydialog)")
+        #xbmc.executebuiltin("Dialog.Close(busydialog)")
         for url,name in r:
             if not 'image' in url:
                 if not 'severeporn' in name:
                     if resolveurl.HostedMediaFile(url).valid_url():
-                        dialog.notification('XXX-O-DUS', '[COLOR yellow]Checking For Links Now, Be Patient[/COLOR]', xbmcgui.NOTIFICATION_INFO, 13000)
+                        #dialog.notification('XXX-O-DUS', '[COLOR yellow]Checking For Links Now, Be Patient[/COLOR]', xbmcgui.NOTIFICATION_INFO, 13000)
                         try:
                             found +=1
-                            u = resolveurl.HostedMediaFile(url, include_popups=False).resolve()
+                            #u = resolveurl.HostedMediaFile(url, include_popups=False).resolve()
                             name = name.replace('Download','').strip()
                             names.append(kodi.giveColor(name,'white',True))
-                            srcs.append(u)
+                            srcs.append(url)
                         except: pass
         if found >= 1:
             selected = kodi.dialog.select('Select a link.',names)
@@ -969,7 +968,9 @@ class streamer:
                 quit()
             else:
                 url2 = srcs[selected]
-                return url2
+                dialog.notification('XXX-O-DUS', '[COLOR yellow]Getting Links Now[/COLOR]', xbmcgui.NOTIFICATION_INFO, 5000)
+                u = resolveurl.HostedMediaFile(url2, include_popups=False).resolve()
+                xbmc.Player().play(u)
         else: dialog.notification('XXX-O-DUS', '[COLOR yellow]No Working Links Found Sorry[/COLOR]', xbmcgui.NOTIFICATION_INFO, 5000)
                 
     def threemovs(self,url):

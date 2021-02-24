@@ -52,7 +52,7 @@ specific_fanart     = translatePath(os.path.join('special://home/addons/script.x
 def mainMenu():
 
     art = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork/resources/art/', 'main/%s.png'))
-    #popup()
+    popup()
     dirlst = []
     c = []
     c += [
@@ -374,8 +374,8 @@ def popup():
             path = xbmcaddon.Addon().getAddonInfo('path')
             comparefile = os.path.join(os.path.join(path,''), 'popup.txt')
             r = open(comparefile)
-            compfile = r.read()       
-            if compfile == message: pass
+            compfile = r.read()
+            if str(len(compfile)) == str(len(message)): pass
             else:
                 showText('[B][COLOR pink]XXX-O-DUS LATEST NEWS[/B][/COLOR]', message)
                 text_file = open(comparefile, "w")

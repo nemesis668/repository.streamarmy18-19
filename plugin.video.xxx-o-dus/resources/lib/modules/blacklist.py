@@ -43,7 +43,7 @@ def Blacklistcheck(url):
     elif 'pandamovie.info' in url:
         adultresolver.resolve(url)
         quit()
-    elif 'http://streamingporn.xyz' in url:
+    elif 'streamingporn.xyz' in url:
         adultresolver.resolve(url)
         quit()
     elif '3movs.com' in url:
