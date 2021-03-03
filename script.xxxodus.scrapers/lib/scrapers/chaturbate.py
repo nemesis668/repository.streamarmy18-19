@@ -9,6 +9,7 @@ import log_utils
 import kodi
 import client
 import dom_parser2, os,re
+from bs4 import BeautifulSoup
 dialog = xbmcgui.Dialog()
 translatePath = xbmc.translatePath if PY2 else xbmcvfs.translatePath
 buildDirectory = utils.buildDir #CODE BY NEMZZY AND ECHO
@@ -119,29 +120,27 @@ def content(url,searched=False):
 @utils.url_dispatcher.register('302', ['url'])
 def byTags(url):
 
-    c = requests.get(urljoin(base_domain, url), headers=headers)
-    r = dom_parser2.parse_dom(c, 'div', {'class': 'tag_row'})
-    r = [(dom_parser2.parse_dom(i, 'a', req='href'), \
-          dom_parser2.parse_dom(i, 'span', {'class': 'viewers'}), \
-          dom_parser2.parse_dom(i, 'span', {'class': 'rooms'})) \
-        for i in r]
-    r = [(urljoin(base_domain, i[0][0].attrs['href']), i[0][0].content, i[1][0].content, i[2][0].content) for i in r]
+    c = requests.get(urljoin(base_domain, url), headers=headers).text
+    soup = BeautifulSoup(c, 'html.parser')
+    r = soup.find_all('span', class_={'tag'})
     dirlst = []
     
     for i in r:
         try:
-            if PY2: name = '%s - [ Viewers: %s | Rooms: %s ]' % (kodi.sortX(i[1].encode('utf-8')).title(),kodi.sortX(i[2].encode('utf-8')),kodi.sortX(i[3].encode('utf-8')))
-            else: name = '%s - [ Viewers: %s | Rooms: %s ]' % (kodi.sortX(i[1]).title(),kodi.sortX(i[2]),kodi.sortX(i[3]))
+            name = i.a['title'].title()
+            url2 = i.a['href']
+            if base_domain not in url2: url2 = base_domain+url2
             icon = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork', 'resources/art/%s/icon.png' % filename))
             fanarts = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork', 'resources/art/%s/fanart.jpg' % filename))
-            dirlst.append({'name': name, 'url': i[0], 'mode': content_mode, 'icon': icon, 'fanart': fanarts, 'description': name, 'folder': True})
-        except Exception as e:
-            log_utils.log('Error adding menu item %s in %s:: Error: %s' % (i[1].title(),base_name.title(),str(e)), log_utils.LOGERROR)
+            dirlst.append({'name': name, 'url': url2, 'mode': content_mode, 'icon': icon, 'fanart': fanarts, 'description': name, 'folder': True})
+        except Exception: pass
+            #log_utils.log('Error adding menu item %s in %s:: Error: %s' % (i[1].title(),base_name.title(),str(e)), log_utils.LOGERROR)
     
     if dirlst: 
         try:
-            np = re.findall('''<li><a\s*href=['"]([^'"]+)['"]\s*class=['"]next endless_page_link['"]>next<\/a><\/li>''',c)[0]
-            dirlst.append({'name': 'Next Page -->', 'url': np, 'mode': 302, 'icon': icon, 'fanart': fanarts, 'description': 'View more tags.', 'folder': True})
+            np = re.findall('''<a\s*href=['"]([^'"]+)['"]\s*class="next.*?page''',c)[0]
+            nextpage = base_domain+np
+            dirlst.append({'name': 'Next Page -->', 'url': nextpage, 'mode': 302, 'icon': icon, 'fanart': fanarts, 'description': 'View more tags.', 'folder': True})
         except: 
             log_utils.log('No next page link found for Chaturbate :: %s ' % (url), log_utils.LOGNOTICE)
         buildDirectory(dirlst)
