@@ -1,10 +1,10 @@
 [COLOR pink]Welcome To XXX-O-DUS[/COLOR]
-[COLOR aqua]XXXODUS : Current Version 5.00.002[/COLOR]
-[COLOR aqua]SCRAPERS : Current Version 5.00.001[/COLOR]
+[COLOR aqua]XXXODUS : Current Version 5.00.003[/COLOR]
+[COLOR aqua]SCRAPERS : Current Version 5.00.002[/COLOR]
 [COLOR aqua]ARTWORK: Current Version 5.00.000[/COLOR]
 
 [COLOR yellow]BIG NEWS!!![/COLOR]
-[COLOR green]Fixed Next Page Button In Kodi 19[/COLOR]
+[COLOR green]Fixed rooms By Tag In Chaturbate[/COLOR]
 [COLOR white]XXX-O-DUS Is now  compatible with Kodi 19!![/COLOR]
 
 

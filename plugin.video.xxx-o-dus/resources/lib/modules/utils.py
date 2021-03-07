@@ -116,13 +116,13 @@ def buildDir(items, content='dirs', cm=None, search=False, stopend=False, isVide
                 history = '%s?url=%s&mode=%s' \
                 % (sysaddon,quote_plus(url),str('24'))
                 htext = "Remove from History"
-                cm.append(('%s' % htext, 'xbmc.RunPlugin('+history+')'))
+                cm.append(('%s' % htext, 'RunPlugin('+history+')'))
 
             if 'search_term=' in url:
                 search_term = '%s?url=%s&mode=%s' \
                 % (sysaddon,quote_plus(url),str('25'))
                 stext = "Remove Search Term"
-                cm.append(('%s' % stext, 'xbmc.RunPlugin('+search_term+')'))
+                cm.append(('%s' % stext, 'RunPlugin('+search_term+')'))
                 url = url.replace('search_term=','') 
 
             u= '%s?url=%s&mode=%s&name=%s&iconimage=%s&fanart=%s' \
@@ -140,7 +140,7 @@ def buildDir(items, content='dirs', cm=None, search=False, stopend=False, isVide
                 
                 if chat == 'add': ctext = "Add to"
                 elif chat == 'del': ctext = "Remove from"
-                cm.append(('%s Chaturbate Monitoring' % ctext, 'xbmc.RunPlugin('+chat_compiled+')'))
+                cm.append(('%s Chaturbate Monitoring' % ctext, 'RunPlugin('+chat_compiled+')'))
 
             try: 
                 if i['fav']: fav = i['fav']
@@ -151,7 +151,7 @@ def buildDir(items, content='dirs', cm=None, search=False, stopend=False, isVide
                 if i['cm']:
                     for cmitems in i['cm']:
                         log_utils.log('%s' % (cmitems[1]), log_utils.LOGNOTICE)
-                        cm.append(('%s' % cmitems[0], 'xbmc.RunPlugin('+cmitems[1]+')'))
+                        cm.append(('%s' % cmitems[0], 'RunPlugin('+cmitems[1]+')'))
             except: pass
             
             favorite = '%s?url=%s&mode=%s&name=%s&iconimage=%s&fav=%s&favmode=%s&folder=%s' \
@@ -159,21 +159,21 @@ def buildDir(items, content='dirs', cm=None, search=False, stopend=False, isVide
             
             if fav == 'add': ftext = "Add to"
             elif fav == 'del': ftext = "Remove from"
-            cm.append(('%s %s Favorites' % (ftext, kodi.get_name()), 'xbmc.RunPlugin('+favorite+')'))
+            cm.append(('%s %s Favorites' % (ftext, kodi.get_name()), 'RunPlugin('+favorite+')'))
 
             if isDownloadable:
                 dwnld = '%s?url=%s&mode=%s&name=%s&iconimage=%s' \
                 % (sysaddon,quote_plus(url),str('26'),name,quote_plus(thumb))
-                cm.append(('Download Video', 'xbmc.RunPlugin('+dwnld+')'))
+                cm.append(('Download Video ( [COLOR red]Not Working Kodi19[/COLOR] )', 'RunPlugin('+dwnld+')'))
             if isDownloaded:
                 rmdwnld = '%s?url=%s&mode=%s&name=%s' \
                 % (sysaddon,quote_plus(url),str('28'),name)
-                cm.append(('Delete Video', 'xbmc.RunPlugin('+rmdwnld+')'))
+                cm.append(('Delete Video', 'RunPlugin('+rmdwnld+')'))
 
             open_set = '%s?mode=%s' \
             % (sysaddon,str('19'))
             stext = "Open XXX-O-DUS Settings"
-            cm.append(('%s' % stext, 'xbmc.RunPlugin('+open_set+')'))
+            cm.append(('%s' % stext, 'RunPlugin('+open_set+')'))
 
             if isDownloadable: view_type = 'thumb'
             elif pictures: view_type = 'picture'
@@ -181,7 +181,7 @@ def buildDir(items, content='dirs', cm=None, search=False, stopend=False, isVide
             else: view_type = 'list'
             view_compile = '%s?mode=%s&name=%s' \
             % (sysaddon,str('44'),view_type)
-            cm.append(('Set %s to this view mode by default.' % view_type.title(), 'xbmc.RunPlugin('+view_compile+')'))
+            cm.append(('Set %s to this view mode by default.' % view_type.title(), 'RunPlugin('+view_compile+')'))
 
             if cm: 
                 item.addContextMenuItems(cm, replaceItems=False)

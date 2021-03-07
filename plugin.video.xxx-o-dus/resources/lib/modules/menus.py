@@ -65,7 +65,7 @@ def mainMenu():
          ('[COLOR pink]Tubes',None,4,'tubes','Videos',True), \
          #('[COLOR pink]Scenes',None,36,'scenes','XXX Scenes',True), \
          ('[COLOR pink]Movies',None,43,'movies','XXX Movies',True), \
-         ('[COLOR pink]Films With Sex In',None,48,'sexfilms','Videos',True), \
+         #('[COLOR pink]Films With Sex In',None,48,'sexfilms','Videos',True), \
          ('[COLOR pink]Virtual Reality',None,42,'vr','XXX Virtual Reality',True), \
          ('[COLOR pink]Hentai',None,39,'hentai','Hentai',True), \
          #('Vintage',None,270,'vintage','Vintage',True), \
