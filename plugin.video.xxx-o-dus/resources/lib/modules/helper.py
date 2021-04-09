@@ -66,8 +66,7 @@ class scraper:
                 r = client.request(url)
                 url2 = re.findall(r'%s' % pattern,r)[0]
                 if parse:
-                    if PY2: url2 = urlparse.urljoin(parse,url2)
-                    else: url2 = urljoin(parse,url2)
+                    url2 = urljoin(parse,url2)
                 elif '&amp;' in url2: url2 = url2.replace('&amp;','&')
                 elif 'mydirtyhobby' in url:
                     url2 = 'https://www.mydirtyhobby.com'+url2
