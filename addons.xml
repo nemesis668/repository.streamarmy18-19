@@ -117,7 +117,7 @@ Addon Runs A Little Slower Now Due To Site Using CloudFlare
 	</extension>
 </addon>
 
-<addon id="plugin.video.nemesisaio" name="[COLOR yellow][B]NemesisAio[/B][/COLOR]" version="4.00.013" provider-name="[COLOR yellow]@Nemzzy668 , @_Manc_ , @LordJD[/COLOR]">
+<addon id="plugin.video.nemesisaio" name="[COLOR yellow][B]NemesisAio[/B][/COLOR]" version="4.00.014" provider-name="[COLOR yellow]@Nemzzy668 , @_Manc_ , @LordJD[/COLOR]">
   <requires>
     <!-- <import addon="xbmc.python" version="2.1.0"/> -->
     <import addon="script.module.simplejson"/>
