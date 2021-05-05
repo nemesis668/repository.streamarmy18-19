@@ -2,8 +2,8 @@
 #################### START ADDON IMPORTS ####################
 from kodi_six import xbmc, xbmcaddon, xbmcplugin, xbmcgui, xbmcvfs
 from six.moves.urllib.parse import parse_qs, quote_plus, urlparse, parse_qsl
-
-
+from six import PY2
+translatePath = xbmc.translatePath if PY2 else xbmcvfs.translatePath
 import os
 import re
 import sys
@@ -21,7 +21,7 @@ _self_          = xbmcaddon.Addon(id=kodi.get_id())
 
 #############################################################
 #################### SET ADDON THEME IMAGES #################
-ART = xbmc.translatePath(os.path.join('special://home/addons/script.xxxodus.artwork', 'resources/pyxbmct/issues'))
+ART = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork', 'resources/pyxbmct/issues'))
 
 Background_Image    = os.path.join(ART, 'bg.png')
 Button  = os.path.join(ART, 'close.png')
@@ -34,7 +34,7 @@ Closed_Seleted  = os.path.join(ART, 'numbers/selected/closed/%s.png')
 def githubSelect(name):
     import githubissues
     githubissues.run('Colossal1/plugin.video.xxx-o-dus', '%s' % name)
-    file = xbmc.translatePath(os.path.join(kodi.datafolder, '%s-issues-%s.csv' % (kodi.get_id(),name)))
+    file = translatePath(os.path.join(kodi.datafolder, '%s-issues-%s.csv' % (kodi.get_id(),name)))
     
     global msg_text
     

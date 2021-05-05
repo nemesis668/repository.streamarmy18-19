@@ -1,9 +1,6 @@
 #############################################################
 #################### START ADDON IMPORTS ####################
-import xbmc
-import xbmcaddon
-import xbmcgui
-import xbmcplugin
+from kodi_six import xbmc, xbmcaddon, xbmcplugin, xbmcgui, xbmcvfs
 
 import os
 import re
@@ -15,14 +12,15 @@ import sys
 
 import kodi
 import pyxbmct.addonwindow as pyxbmct
-
+from six import PY2
+translatePath = xbmc.translatePath if PY2 else xbmcvfs.translatePath
 #############################################################
 #################### SET ADDON ID ###########################
 _self_			= xbmcaddon.Addon(id=kodi.get_id())
 
 #############################################################
 #################### SET ADDON THEME IMAGES #################
-ART = xbmc.translatePath(os.path.join('special://home/addons/script.xxxodus.artwork', 'resources/pyxbmct/issues'))
+ART = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork', 'resources/pyxbmct/issues'))
 
 Background_Image	= os.path.join(ART, 'tbg.png')
 Button	= os.path.join(ART, 'close.png')

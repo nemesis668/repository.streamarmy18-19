@@ -1,7 +1,7 @@
 from kodi_six import xbmc, xbmcaddon, xbmcplugin, xbmcgui, xbmcvfs
 from six.moves.urllib.parse import parse_qs, quote_plus, urlparse, parse_qsl
 from six import PY2
-
+translatePath = xbmc.translatePath if PY2 else xbmcvfs.translatePath
 import urllib,os,re,base64
 import kodi
 import log_utils
@@ -13,11 +13,11 @@ buildDirectory = utils.buildDir
 dialog = xbmcgui.Dialog()
 import sqlite3
 dp = xbmcgui.DialogProgress()
-databases = xbmc.translatePath(os.path.join(kodi.datafolder, 'databases'))
-searchdb = xbmc.translatePath(os.path.join(databases, 'search.db'))
-specific_icon       = xbmc.translatePath(os.path.join('special://home/addons/script.xxxodus.artwork/resources/art/', '%s/icon.png'))
-specific_fanart     = xbmc.translatePath(os.path.join('special://home/addons/script.xxxodus.artwork/resources/art/', '%s/fanart.jpg'))
-search_icon = xbmc.translatePath(os.path.join('special://home/addons/script.xxxodus.artwork/resources/art/', 'main/search.png'))
+databases = translatePath(os.path.join(kodi.datafolder, 'databases'))
+searchdb = translatePath(os.path.join(databases, 'search.db'))
+specific_icon       = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork/resources/art/', '%s/icon.png'))
+specific_fanart     = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork/resources/art/', '%s/fanart.jpg'))
+search_icon = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork/resources/art/', 'main/search.png'))
 
 if ( not os.path.exists(databases)): os.makedirs(databases)
 

@@ -1,13 +1,16 @@
+from kodi_six import xbmc, xbmcaddon, xbmcplugin, xbmcgui, xbmcvfs
 import xbmc,os,hashlib,sys,time,re
 import kodi
 import log_utils
 import sqlite3
+from six import PY2
+translatePath = xbmc.translatePath if PY2 else xbmcvfs.translatePath
 from resources.lib.modules import utils
 buildDirectory = utils.buildDir
 
-databases = xbmc.translatePath(os.path.join(kodi.datafolder, 'databases'))
-parentaldb = xbmc.translatePath(os.path.join(databases, 'parental.db'))
-parental_icon = xbmc.translatePath(os.path.join('special://home/addons/script.xxxodus.artwork/resources/art/main', 'parental_controls.png'))
+databases = translatePath(os.path.join(kodi.datafolder, 'databases'))
+parentaldb = translatePath(os.path.join(databases, 'parental.db'))
+parental_icon = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork/resources/art/main', 'parental_controls.png'))
 
 if ( not os.path.exists(databases)): os.makedirs(databases)
 conn = sqlite3.connect(parentaldb)

@@ -1,10 +1,10 @@
 [COLOR pink]Welcome To XXX-O-DUS[/COLOR]
-[COLOR aqua]XXXODUS : Current Version 5.00.004[/COLOR]
+[COLOR aqua]XXXODUS : Current Version 5.00.005[/COLOR]
 [COLOR aqua]SCRAPERS : Current Version 5.00.002[/COLOR]
 [COLOR aqua]ARTWORK: Current Version 5.00.000[/COLOR]
 
 [COLOR yellow]BIG NEWS!!![/COLOR]
-[COLOR green]Fixed Add To Favs and Others In Context Menu, Download Function Still Needs Fixing in Kodi 19[/COLOR]
+[COLOR green]Fixed Next Page Bug In Kodi 18[/COLOR]
 
 
 [COLOR yellow]Issues Known[/COLOR]

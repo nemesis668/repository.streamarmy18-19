@@ -1,6 +1,7 @@
 from kodi_six import xbmc, xbmcaddon, xbmcplugin, xbmcgui, xbmcvfs
 from six.moves.urllib.parse import parse_qs, quote_plus, urlparse, parse_qsl, urljoin
 from six import PY2
+translatePath = xbmc.translatePath if PY2 else xbmcvfs.translatePath
 import os,re,time
 import kodi
 import xbmcaddon, os
@@ -21,7 +22,7 @@ import log_utils
 adultresolver = adultresolver.streamer()
 import resolveurl
 xxx_plugins_path = 'special://home/addons/script.module.resolveurl.xxx/resources/plugins/'
-if xbmcvfs.exists(xxx_plugins_path): resolveurl.add_plugin_dirs(xbmc.translatePath(xxx_plugins_path))
+if xbmcvfs.exists(xxx_plugins_path): resolveurl.add_plugin_dirs(translatePath(xxx_plugins_path))
 dialog = xbmcgui.Dialog()
 @utils.url_dispatcher.register('801', ['url'], ['name', 'iconimage', 'pattern']) 
 def resolve_url(url, name=None, iconimage=None, pattern=None):

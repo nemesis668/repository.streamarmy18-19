@@ -6,11 +6,12 @@ import kodi
 import log_utils
 from resources.lib.modules import utils
 import sqlite3
-
+from six import PY2
+translatePath = xbmc.translatePath if PY2 else xbmcvfs.translatePath
 buildDirectory = utils.buildDir
-databases = xbmc.translatePath(os.path.join(kodi.datafolder, 'databases'))
-historydb = xbmc.translatePath(os.path.join(databases, 'history.db'))
-history_icon = xbmc.translatePath(os.path.join('special://home/addons/script.xxxodus.artwork/resources/art/main', 'history.png'))
+databases = translatePath(os.path.join(kodi.datafolder, 'databases'))
+historydb = translatePath(os.path.join(databases, 'history.db'))
+history_icon = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork/resources/art/main', 'history.png'))
 
 if ( not os.path.exists(databases)): os.makedirs(databases)
 conn = sqlite3.connect(historydb)

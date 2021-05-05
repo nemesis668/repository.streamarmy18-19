@@ -3,12 +3,12 @@ from six.moves.urllib.parse import parse_qs, quote_plus, urlparse, parse_qsl
 from six import PY2
 import  re, os, time, urllib
 import sqlite3
-
+translatePath = xbmc.translatePath if PY2 else xbmcvfs.translatePath
 try:
     addon = xbmcaddon.Addon()
     get_setting = addon.getSetting
-    databases = xbmc.translatePath(os.path.join('special://profile/addon_data/plugin.video.xxx-o-dus', 'databases'))
-    chaturbatedb = xbmc.translatePath(os.path.join(databases, 'chaturbate.db'))
+    databases = translatePath(os.path.join('special://profile/addon_data/plugin.video.xxx-o-dus', 'databases'))
+    chaturbatedb = translatePath(os.path.join(databases, 'chaturbate.db'))
 
     xbmc.log('Starting XXX-O-DUS Service', xbmc.LOGNOTICE)
 

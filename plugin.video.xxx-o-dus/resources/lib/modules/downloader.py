@@ -1,6 +1,7 @@
 from kodi_six import xbmc, xbmcaddon, xbmcplugin, xbmcgui, xbmcvfs
 from six.moves.urllib.parse import parse_qs, quote_plus, urlparse, parse_qsl, urljoin
 from six import PY2
+translatePath = xbmc.translatePath if PY2 else xbmcvfs.translatePath
 import os
 import time
 
@@ -24,9 +25,9 @@ buildDirectory = utils.buildDir
 import resolveurl
 adultresolver = adultresolver.streamer()
 xxx_plugins_path = 'special://home/addons/script.module.resolveurl.xxx/resources/plugins/'
-if xbmcvfs.exists(xxx_plugins_path): resolveurl.add_plugin_dirs(xbmc.translatePath(xxx_plugins_path))
+if xbmcvfs.exists(xxx_plugins_path): resolveurl.add_plugin_dirs(translatePath(xxx_plugins_path))
 
-download_icon = xbmc.translatePath(os.path.join('special://home/addons/script.xxxodus.artwork/resources/art/main', 'downloads.png'))
+download_icon = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork/resources/art/main', 'downloads.png'))
 
 if PY2:
     from urllib import FancyURLopener
@@ -37,10 +38,10 @@ if PY2:
     urlretrieve = MyOpener().retrieve
     urlopen = MyOpener().open
     download_location   = kodi.get_setting("download_location")
-    download_folder = xbmc.translatePath(download_location)
+    download_folder = translatePath(download_location)
 
-    databases = xbmc.translatePath(os.path.join(kodi.datafolder, 'databases'))
-    downloaddb = xbmc.translatePath(os.path.join(databases, 'downloads.db'))
+    databases = translatePath(os.path.join(kodi.datafolder, 'databases'))
+    downloaddb = translatePath(os.path.join(databases, 'downloads.db'))
 
     if ( not os.path.exists(databases)): os.makedirs(databases)
     conn = sqlite3.connect(downloaddb)
@@ -58,10 +59,10 @@ else:
     urlretrieve = MyOpener().retrieve
     urlopen = MyOpener().open
     download_location   = kodi.get_setting("download_location")
-    download_folder = xbmc.translatePath(download_location)
+    download_folder = translatePath(download_location)
 
-    databases = xbmc.translatePath(os.path.join(kodi.datafolder, 'databases'))
-    downloaddb = xbmc.translatePath(os.path.join(databases, 'downloads.db'))
+    databases = translatePath(os.path.join(kodi.datafolder, 'databases'))
+    downloaddb = translatePath(os.path.join(databases, 'downloads.db'))
 
     if ( not os.path.exists(databases)): os.makedirs(databases)
     conn = sqlite3.connect(downloaddb)

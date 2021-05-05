@@ -1,11 +1,10 @@
 import datetime
 import os
 from sqlite3 import dbapi2 as db_lib
-from kodi_six import xbmc, xbmcaddon
-import xbmc
-import xbmcaddon
+from kodi_six import xbmc, xbmcaddon, xbmcplugin, xbmcgui, xbmcvfs
 from six import PY2
-db_dir = xbmc.translatePath("special://profile/Database")
+translatePath = xbmc.translatePath if PY2 else xbmcvfs.translatePath
+db_dir = translatePath("special://profile/Database")
 if PY2: db_path = os.path.join(db_dir, 'Addons27.db')
 else: db_path = os.path.join(db_dir, 'Addons33.db')
 
@@ -32,7 +31,7 @@ def set_enabled(newaddon, data=None):
 
 def setall_enable():
     #if xbmcaddon.Addon().getAddonInfo('version') > 16.5:
-        addonfolder = xbmc.translatePath(os.path.join('special://home', 'addons'))
+        addonfolder = translatePath(os.path.join('special://home', 'addons'))
         contents = os.listdir(addonfolder)
         conn.executemany('update installed set enabled=1 WHERE addonID = (?)', ((val,) for val in contents))
         conn.commit()

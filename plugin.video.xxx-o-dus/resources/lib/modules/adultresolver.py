@@ -695,7 +695,7 @@ class streamer:
     def youporn(self, url):
         try:        
             r = client.request(url)
-            pattern = r"""quality[\'\"]\:[\'\"](\d+)[\'\"]\,[\'\"]videoUrl[\'\"]\:[\'\"]([^\'\"]+)"""
+            pattern = r"""quality[\'\"]\:[\'\"](\d+)[\'\"]\,[\'\"].*?videoUrl[\'\"]\:[\'\"]([^\'\"]+)"""
             i = re.findall(pattern,r)
             names = []
             srcs  = []
