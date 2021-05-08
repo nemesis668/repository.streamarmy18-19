@@ -5,6 +5,7 @@
 [COLOR yellow]Update Information[/COLOR]
 [COLOR green]Added PopUp Notification About Updates[/COLOR]
 [COLOR green]Updated Nemzzy Scrapers Lots More Results In Movies & Tv Shows[/COLOR]
+[COLOR green]Fixed DaddySports In Sports Section[/COLOR]
 
 
 [COLOR yellow]Issues Known[/COLOR]
