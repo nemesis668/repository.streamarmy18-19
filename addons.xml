@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
-<addon id="plugin.video.EntertainMe" name="[COLOR red][B]E[COLOR yellow]nterTain Me[/B][/COLOR]" version="3.00.000" provider-name="@Nemzzy668">
+<addon id="plugin.video.EntertainMe" name="[COLOR red][B]E[COLOR yellow]nterTain Me[/B][/COLOR]" version="3.00.001" provider-name="@Nemzzy668">
   <requires>
 	<import addon="script.module.six" />
 	<import addon="script.module.kodi-six" />
@@ -90,7 +90,7 @@ Addon Runs A Little Slower Now Due To Site Using CloudFlare
   </extension>
 </addon>
 
-<addon id="plugin.video.FightClub" name="[COLOR gold][B]F[COLOR silver]ight Club[/B][/COLOR]" version="1.00.018" provider-name="Nemzzy">
+<addon id="plugin.video.FightClub" name="[COLOR gold][B]F[COLOR silver]ight Club[/B][/COLOR]" version="1.00.019" provider-name="Nemzzy">
 	<requires>
 		<!-- <import addon="xbmc.python" version="2.1.0"/> -->
 		<import addon="script.module.requests"/>
