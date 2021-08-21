@@ -19,6 +19,12 @@ def Blacklistcheck(url):
     elif 'chaturbate.com' in url:
         adultresolver.resolve(url)
         quit()
+    elif 'zzcartoon.com' in url:
+        adultresolver.resolve(url)
+        quit()
+    elif 'daftporn.com' in url:
+        adultresolver.resolve(url)
+        quit()
     elif 'watchxxxfreeinhd.com' in url:
         linkfinder.find(url)
         quit()

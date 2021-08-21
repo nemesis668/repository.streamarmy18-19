@@ -55,6 +55,8 @@ class streamer:
             
             elif 'ghettotube.com' in url: u = self.ghettotube(url)
             
+            elif 'daftporn.com' in url: u = self.daftporn(url)
+            
             elif 'collectionofbestporn.com' in url: u = self.collectionofbestporn(url)
             
             elif 'pornrox.com' in url: u = self.pornrox(url)
@@ -72,6 +74,8 @@ class streamer:
             elif 'perfectgirls.net' in url: u = self.perfectgirls(url)
 
             elif 'pornhub.com' in url: u = self.pornhub(url)
+            
+            elif 'zzcartoon.com' in url: u = self.zzcartoon(url)
             
             elif 'pornheel.com' in url: u = self.pornheel(url)
             
@@ -109,8 +113,6 @@ class streamer:
             elif 'freeones' in url: u = self.freeones(url)
             
             elif 'fuqer.com' in url: u = self.fuqer(url)
-            
-            elif 'siska' in url: u = self.siska(url)
             
             elif 'satan18av' in url: u = self.satan18av(url)
 
@@ -613,16 +615,7 @@ class streamer:
         except:
             return
 
-            
-    def siska(self, url):
-        try:        
-            u = client.request(url)
-            e = re.findall('document\.write\(base64_decode\(\'([^\']*)', u)[0]
-            b64 = base64.b64decode(e)            
-            play = re.findall('rc="([^"]*)', b64)[0]
-            return play
-        except:
-            return
+           
 
     def overthumbs(self, url):
         try:
@@ -694,16 +687,19 @@ class streamer:
 
     def youporn(self, url):
         try:        
-            r = client.request(url)
-            pattern = r"""quality[\'\"]\:[\'\"](\d+)[\'\"]\,[\'\"].*?videoUrl[\'\"]\:[\'\"]([^\'\"]+)"""
-            i = re.findall(pattern,r)
+            headers = {'User-Agent' : 'User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko'}
+            link = requests.get(url,headers=headers).text
+            soup = BeautifulSoup(link, 'html.parser')
+            r = soup.find('div', class_={'feature videoLike'})['data-videoid']
+            apiurl = ('https://www.youporn.com/api/video/media_definitions/%s' % r)
+            link = requests.get(apiurl,headers=headers).json()
             names = []
             srcs  = []
-            for qual,link in i:
-                link = link.replace('\\','')
-                link = CLEANUP(link)
-                names.append(kodi.giveColor(qual,'white',True))
-                srcs.append(link)
+            for i in link:
+                quality = i['quality']
+                mediia = i['videoUrl']
+                names.append(kodi.giveColor(quality,'white',True))
+                srcs.append(mediia)
             selected = kodi.dialog.select('Select a link.',names)
             if selected < 0:
                 kodi.notify(msg='No option selected.')
@@ -885,19 +881,20 @@ class streamer:
             xbmc.Player().play(url2)
 
     def pandamovie(self,url):
-        
-        r = client.request(url)
-        r = re.findall('<div id="pettabs">(.*?)</div>',r, flags=re.DOTALL)[0]
-        pattern = r'''href=['"]([^'"]+)['"].+?>(.*?)<'''
-        r = re.findall(pattern,r)
+        headers = {'User-Agent' : 'User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko'}
+        link = requests.get(url,headers=headers).text
+        soup = BeautifulSoup(link, 'html.parser')
+        data = soup.find_all('li', class_={'hosts-buttons-wpx'})
         names = []
         srcs  = []
         found = 0
         xbmc.executebuiltin("Dialog.Close(busydialog)")
         dialog.notification('XXX-O-DUS', '[COLOR yellow]Checking For Links Now, Be Patient[/COLOR]', xbmcgui.NOTIFICATION_INFO, 5000)
-        for url,quality in sorted(r, reverse=True):
+        for i in data:
+            url = i.a['href']
+            title = i.a['title']
             if resolveurl.HostedMediaFile(url).valid_url():
-                names.append(kodi.giveColor(quality,'white',True))
+                names.append(kodi.giveColor(title,'white',True))
                 srcs.append(url)
         selected = kodi.dialog.select('Select a link.',names)
         if selected < 0:
@@ -1060,30 +1057,45 @@ class streamer:
             url2 = srcs[selected]
             xbmc.Player().play(url2)
     def siska(self, url):
-        c = client.request(url)
-        pattern = r'''<iframe src=['"](.*?)['"]'''
-        r = re.findall(pattern,c,flags=re.DOTALL)
-        names = []
-        srcs  = []
-        found = 0
-        for url in r:
-            if not 'hqq.tv' in url:
-                if resolveurl.HostedMediaFile(url).valid_url():
-                    u = resolveurl.HostedMediaFile(url, include_popups=False).resolve()
-                    if u:
+            c = client.request(url)
+            
+            pattern = r'''<iframe src=['"](.*?)['"]'''
+            r = re.findall(pattern,c,flags=re.DOTALL)
+            names = []
+            srcs  = []
+            found = 0
+            for url in r:
+                if not 'hqq.tv' in url:
+                    if resolveurl.HostedMediaFile(url).valid_url():
                         found += 1
                         stream = ('Link %s' % found)
                         names.append(kodi.giveColor(stream,'white',True))
-                        srcs.append(u)
-        selected = kodi.dialog.select('Select a Quality.',names)
-        if selected < 0:
-            kodi.notify(msg='No option selected.')
-            kodi.idle()
-            quit()
-        else:
-            url2 = srcs[selected]
-            xbmc.Player().play(url2)
+                        srcs.append(url)
+            selected = kodi.dialog.select('Select a Quality.',names)
+            if selected < 0:
+                kodi.notify(msg='No option selected.')
+                kodi.idle()
+                quit()
+            else:
+                url2 = srcs[selected]
+                u = resolveurl.HostedMediaFile(url2).resolve()
+                xbmc.Player().play(u)
             
+    def zzcartoon(self, url):
+        headers = {'User-Agent' : 'User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko'}
+        link = requests.get(url,headers=headers).text
+        soup = BeautifulSoup(link, 'html.parser')
+        data = soup.find('div', class_={'player'})
+        media_url = re.findall('''video_url:\s+['"](.*?)['"]''',str(data),flags=re.DOTALL)[0]
+        xbmc.Player().play(media_url)
+    def daftporn(self, url):
+        headers = {'User-Agent' : 'User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko'}
+        link = requests.get(url,headers=headers).text
+        soup = BeautifulSoup(link, 'html.parser')
+        dialog.ok("SOUP",str(soup))
+        data = soup.find('div', class_={'newplayercontainer'})
+        dialog.ok("DATA",str(data))
+        
     def fapality(self, url):
         c = client.request(url)
         soup = BeautifulSoup(c,'html.parser')

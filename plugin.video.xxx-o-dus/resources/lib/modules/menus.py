@@ -69,7 +69,7 @@ def mainMenu():
          ('[COLOR pink]Virtual Reality',None,42,'vr','XXX Virtual Reality',True), \
          ('[COLOR pink]Hentai',None,39,'hentai','Hentai',True), \
          #('Vintage',None,270,'vintage','Vintage',True), \
-         ('[COLOR pink]Fetish',None,40,'fetish','Fetish',True), \
+         #('[COLOR pink]Fetish',None,40,'fetish','Fetish',True), \
          ('[COLOR pink]Pictures',None,35,'pics','Pictures',True), \
          ('[COLOR pink]For Gay Men',None,47,'gaymen','Videos',True), \
          #('Comics',None,41,'comics','Comics',True), \

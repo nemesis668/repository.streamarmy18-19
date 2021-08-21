@@ -89,8 +89,7 @@ def content(url,searched=False):
 			except: icon = items.img['src']
 			fanarts = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork', 'resources/art/%s/fanart.jpg' % filename))
 			dirlst.append({'name': title, 'url': url2, 'mode': player_mode, 'icon': icon, 'fanart': fanarts, 'description': title, 'folder': False})
-		except Exception as e:
-			log_utils.log('Error adding menu item %s in %s:: Error: %s' % (i[0].title(),base_name.title(),str(e)), log_utils.LOGERROR)
+		except Exception: pass
 
 	if dirlst: buildDirectory(dirlst, stopend=True, isVideo = True, isDownloadable = True)
 	else:

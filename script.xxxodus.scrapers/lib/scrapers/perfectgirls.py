@@ -64,11 +64,13 @@ def menu():
         
 @utils.url_dispatcher.register('%s' % content_mode,['url'],['searched'])
 def content(url,searched=False):
+
     try:
-        #url = client.request(url, output='geturl')
-        c = client.request(url)
+        headers = {'User-Agent' : 'User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko'}
+        c = requests.get(url,headers=headers).text
         soup = BeautifulSoup(c,'html.parser')
         r = soup.find_all('div', class_={'list__item'})
+        #dialog.ok("R",str(r))
         if ( not r ) and ( not searched ):
             log_utils.log('Scraping Error in %s:: Content of request: %s' % (base_name.title(),str(c)), log_utils.LOGERROR)
             kodi.notify(msg='Scraping Error: Info Added To Log File', duration=6000, sound=True)
@@ -82,18 +84,18 @@ def content(url,searched=False):
     dirlst = []
     for i in r:
         try:
-            name = i.img['alt']
+            name = i.a['title']
+            media_url = i.a['href']
+            icon = i.img['src']
             if searched: description = 'Result provided by %s' % base_name.title()
             else: description = name
-            icon = i.img['data-original']
             if not 'http' in icon: icon='http:'+icon
-            url2 = i.a['href']
-            if not base_domain in url2: url2 =  base_domain + url2
+            if not base_domain in media_url: media_url =  base_domain + media_url
             fanarts = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork', 'resources/art/%s/fanart.jpg' % filename))
-            dirlst.append({'name': name, 'url': url2, 'mode': player_mode, 'icon': icon, 'fanart': fanarts, 'description': description, 'folder': False})
+            dirlst.append({'name': name, 'url': media_url, 'mode': player_mode, 'icon': icon, 'fanart': fanarts, 'description': description, 'folder': False})
         except Exception as e:
             log_utils.log('Error adding menu item %s in %s:: Error: %s' % (i[1].title(),base_name.title(),str(e)), log_utils.LOGERROR)
-    if dirlst: buildDirectory(dirlst, stopend=True, isVideo = True, isDownloadable = True)
+    if dirlst: buildDirectory(dirlst, stopend=False, isVideo = True, isDownloadable = True)
     else:
         if (not searched):
             kodi.notify(msg='No Content Found')
