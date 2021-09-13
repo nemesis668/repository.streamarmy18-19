@@ -1,11 +1,13 @@
 [COLOR pink]Welcome To XXX-O-DUS[/COLOR]
-[COLOR aqua]XXXODUS : Current Version 5.00.006[/COLOR]
-[COLOR aqua]SCRAPERS : Current Version 5.00.002[/COLOR]
+[COLOR aqua]XXXODUS : Current Version 5.00.007[/COLOR]
+[COLOR aqua]SCRAPERS : Current Version 5.00.003[/COLOR]
 [COLOR aqua]ARTWORK: Current Version 5.00.000[/COLOR]
 
 [COLOR yellow]Update Information[/COLOR]
-[COLOR green]Fixed Links Not Finding In Youporn[/COLOR]
-[COLOR green]Made Addon Compatible With Kodi 19.1[/COLOR]
+
+[COLOR yellow]FIXED[/COLOR]
+[COLOR white]PandaMovie , VrSmash, zzcartoon ,Siska, Eporner, Girlfriend videos, Perfectgirls, Youjizz, Youporn[/COLOR]
+
 
 
 [COLOR yellow]Issues Known[/COLOR]

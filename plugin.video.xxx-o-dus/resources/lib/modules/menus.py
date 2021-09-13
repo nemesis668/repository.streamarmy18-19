@@ -367,21 +367,21 @@ def versioncheck():
 	showText(AddonTitle,string)
 
 def popup():
-
-    try:
-        message = requests.get(messagetext).text
-        if len(message)>1:
-            path = xbmcaddon.Addon().getAddonInfo('path')
-            comparefile = os.path.join(os.path.join(path,''), 'popup.txt')
-            r = open(comparefile)
-            compfile = r.read()
-            if str(len(compfile)) == str(len(message)): pass
-            else:
-                showText('[B][COLOR pink]XXX-O-DUS LATEST NEWS[/B][/COLOR]', message)
-                text_file = open(comparefile, "w")
-                text_file.write(message)
-                text_file.close()
-    except: pass
+    pass
+    # try:
+        # message = requests.get(messagetext).text
+        # if len(message)>1:
+            # path = xbmcaddon.Addon().getAddonInfo('path')
+            # comparefile = os.path.join(os.path.join(path,''), 'popup.txt')
+            # r = open(comparefile)
+            # compfile = r.read()
+            # if str(len(compfile)) == str(len(message)): pass
+            # else:
+                # showText('[B][COLOR pink]XXX-O-DUS LATEST NEWS[/B][/COLOR]', message)
+                # text_file = open(comparefile, "w")
+                # text_file.write(message)
+                # text_file.close()
+    # except: pass
 
 def showText(heading, text):
 
