@@ -30,7 +30,7 @@ search_base  = urljoin(base_domain,'search.fcgi?query=%s')
 def menu():
     
 	lover.checkupdates()
-	url = urljoin(base_domain,'movies/')
+	url = urljoin(base_domain,'genres/porn-movies/')
 	content(url)
 	# try:
 		# url = urljoin(base_domain,'xxx/movies/')
@@ -65,10 +65,9 @@ def menu():
         
 @utils.url_dispatcher.register('%s' % content_mode,['url'],['searched'])
 def content(url,searched=False):
-
     try:
         if url == '':
-            url = urljoin(base_domain,'xxx/movies/')
+            url = urljoin(base_domain,'genres/porn-movies/')
         link = requests.get(url,headers=headers).text
         soup = BeautifulSoup(link, 'html.parser')
         r = soup.find_all('article', class_={'item movies'})
@@ -88,7 +87,7 @@ def content(url,searched=False):
         try:
             title = i.img['alt']
             mediaurl = i.h3.a['href']
-            icon = i.img['data-src']
+            icon = i.img['src']
             fanarts = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork', 'resources/art/%s/fanart.jpg' % filename))
             dirlst.append({'name': title, 'url': mediaurl, 'mode': player_mode, 'icon': icon, 'fanart': fanarts, 'description': 'No Desc', 'folder': False})
         except Exception as e:
