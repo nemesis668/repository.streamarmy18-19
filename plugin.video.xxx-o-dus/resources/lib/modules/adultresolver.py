@@ -354,6 +354,7 @@ class streamer:
         found = 0
         for links in r.find_all('a'):
             sources = links['href']
+            if 'drivevideo' in sources: sources = sources.split('?link=')[1]
             titles = links.text
             if resolveurl.HostedMediaFile(sources).valid_url():
                 names.append(kodi.giveColor(titles,'white',True))
@@ -892,6 +893,7 @@ class streamer:
         dialog.notification('XXX-O-DUS', '[COLOR yellow]Checking For Links Now, Be Patient[/COLOR]', xbmcgui.NOTIFICATION_INFO, 5000)
         for i in data:
             url = i.a['href']
+            if 'drivevideo' in url: url = url.split('?link=')[1]
             title = i.a['title']
             if resolveurl.HostedMediaFile(url).valid_url():
                 names.append(kodi.giveColor(title,'white',True))
@@ -1092,9 +1094,9 @@ class streamer:
         headers = {'User-Agent' : 'User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko'}
         link = requests.get(url,headers=headers).text
         soup = BeautifulSoup(link, 'html.parser')
-        dialog.ok("SOUP",str(soup))
+        #dialog.ok("SOUP",str(soup))
         data = soup.find('div', class_={'newplayercontainer'})
-        dialog.ok("DATA",str(data))
+        #dialog.ok("DATA",str(data))
         
     def fapality(self, url):
         c = client.request(url)
@@ -1123,14 +1125,17 @@ class streamer:
             'Referer' : url}
         #dialog.notification('XXX-O-DUS', '[COLOR yellow]Getting Links Now[/COLOR]', xbmcgui.NOTIFICATION_INFO, 5000)
         r = requests.get(url, headers=headers).text
-        r = re.findall('<div id="pettabs">(.*?)</div>',r, flags=re.DOTALL)[0]
+        soup = BeautifulSoup(r,'html.parser')
+        r = soup.find('div', id={'pettabs'})
+        #r = re.findall('<div id="pettabs">(.*?)</div>',r, flags=re.DOTALL)[0]
         pattern = r'''href=['"]([^'"]+)['"].+?>(.*?)<'''
-        r = re.findall(pattern,r)
+        r = re.findall(pattern,str(r))
         names = []
         srcs  = []
         found = 0
         xbmc.executebuiltin("Dialog.Close(busydialog)")
         for url,name in r:
+            if 'drivevideo' in url: url = url.split('?link=')[1]
             if resolveurl.HostedMediaFile(url).valid_url():
                 found += 1
                 name = ("Link %s" % found)
