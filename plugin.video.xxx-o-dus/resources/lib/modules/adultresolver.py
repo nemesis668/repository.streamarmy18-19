@@ -974,7 +974,7 @@ class streamer:
                 
     def threemovs(self,url):
         link = client.request(url)
-        play = re.findall('<div class="dropdown_submenu">.+?href="(.*?)"',link,flags=re.DOTALL)[0]
+        play = re.findall('<div class="dropabble">.+?href="(.*?)"',link,flags=re.DOTALL)[0]
         xbmc.Player().play(play)
         xbmc.executebuiltin("Dialog.Close(busydialog)")
         xbmc.executebuiltin('Dialog.Close(busydialognocancel)')

@@ -31,7 +31,7 @@ def menu():
 		url = urljoin(base_domain, 'categories')
 		c = client.request(url)
 		soup = BeautifulSoup(c,'html.parser')
-		r = soup.find_all('div', class_={'item'})
+		r = soup.find_all('div', class_={'thumb_cat item'})
 		if ( not r ):
 			log_utils.log('Scraping Error in %s:: Content of request: %s' % (base_name.title(),str(c)), log_utils.LOGERROR)
 			kodi.notify(msg='Scraping Error: Info Added To Log File', duration=6000, sound=True)
@@ -46,7 +46,7 @@ def menu():
 	for i in r:
 		try:
 			name = i.a['title']
-			icon = i.img['data-original']
+			icon = i.img['data-src']
 			url2 = i.a['href']
 			fanarts = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork', 'resources/art/%s/fanart.jpg' % filename))
 			dirlst.append({'name': name, 'url': url2, 'mode': content_mode, 'icon': icon, 'fanart': fanarts, 'folder': True})
@@ -64,7 +64,7 @@ def content(url,searched=False):
 	try:
 		c = client.request(url)
 		soup = BeautifulSoup(c,'html.parser')
-		r = soup.find_all('div', class_={'item'})
+		r = soup.find_all('div', class_={'item thumb'})
 		if ( not r ) and ( not searched ):
 			log_utils.log('Scraping Error in %s:: Content of request: %s' % (base_name.title(),str(c)), log_utils.LOGERROR)
 			kodi.notify(msg='Scraping Error: Info Added To Log File', duration=6000, sound=True)
@@ -79,7 +79,7 @@ def content(url,searched=False):
 	for i in r:
 		try:
 			name = i.a['title']
-			icon = i.img['data-original']
+			icon = i.img['data-src']
 			url2 = i.a['href']
 			if searched: description = 'Result provided by %s' % base_name.title()
 			else: description = name
