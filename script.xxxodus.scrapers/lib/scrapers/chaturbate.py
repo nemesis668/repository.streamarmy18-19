@@ -74,39 +74,29 @@ def menu():
 def content(url,searched=False):
 
     r = requests.get(url, headers=headers).text
-    r = dom_parser2.parse_dom(r, 'li')
-    r = [(dom_parser2.parse_dom(i, 'div', {'class': 'title'}), \
-        dom_parser2.parse_dom(i, 'img', req='src'), \
-        dom_parser2.parse_dom(i, 'div', {'class': re.compile('thumbnail_label.+?')}), \
-        dom_parser2.parse_dom(i, 'li', {'title': re.compile('.+?')}), \
-        dom_parser2.parse_dom(i, 'li', {'class': 'location'}), \
-        dom_parser2.parse_dom(i, 'li', {'class': 'cams'}) \
-        ) for i in r if '<div class="title">' in i.content]
-
-    r = [(dom_parser2.parse_dom(i[0], 'a'), \
-        dom_parser2.parse_dom(i[0], 'span'), \
-        i[2][0].content, \
-        i[1][0].attrs['src'], \
-        i[3][0].content if i[3] else 'Unknown', \
-        i[4][0].content, \
-        i[5][0].content, \
-        ) for i in r]
-    r = [(urljoin(base_domain,i[0][0].attrs['href']), i[0][0].content, i[1][0].content,i[2],i[3],i[6],i[5],i[4]) for i in r]
+    soup = BeautifulSoup(r, 'html.parser')
+    data = soup.find_all('li', class_={'room_list_room'})
     dirlst = []
     
-    for i in r:
+    for i in data:
         try:
-            if PY2: name = '%s - [ %s ]' % (kodi.sortX(i[1].encode('utf-8')).title(),kodi.sortX(i[3].encode('utf-8')))
-            else: name = '%s - [ %s ]' % (kodi.sortX(i[1]).title(),kodi.sortX(i[3]))
-            if PY2: description = 'Name: %s \nAge: %s \nLocation: %s \nStats: %s \n\nDescription: %s' % \
-            (kodi.sortX(i[1].encode('utf-8')),i[2],kodi.sortX(i[6].encode('utf-8')),kodi.sortX(i[5].encode('utf-8')),kodi.sortX(i[7].encode('utf-8')))
-            else: description = 'Name: %s \nAge: %s \nLocation: %s \nStats: %s \n\nDescription: %s' % \
-            (kodi.sortX(i[1]),i[2],kodi.sortX(i[6]),kodi.sortX(i[5]),kodi.sortX(i[7]))
-            content_url = i[0] + '|SPLIT|%s' % base_name
+            name = i.a['data-room'].title()
+            content_url = i.a['href']
+            if not base_domain in content_url: content_url = base_domain+content_url
+            img = i.img['src']
+            description = i.find('li')['title']
+            #if PY2: name = '%s - [ %s ]' % (kodi.sortX(i[1].encode('utf-8')).title(),kodi.sortX(i[3].encode('utf-8')))
+            #else: name = '%s - [ %s ]' % (kodi.sortX(i[1]).title(),kodi.sortX(i[3]))
+            #if PY2: description = 'Name: %s \nAge: %s \nLocation: %s \nStats: %s \n\nDescription: %s' % \
+            #(kodi.sortX(i[1].encode('utf-8')),i[2],kodi.sortX(i[6].encode('utf-8')),kodi.sortX(i[5].encode('utf-8')),kodi.sortX(i[7].encode('utf-8')))
+            #else: description = 'Name: %s \nAge: %s \nLocation: %s \nStats: %s \n\nDescription: %s' % \
+            #(kodi.sortX(i[1]),i[2],kodi.sortX(i[6]),kodi.sortX(i[5]),kodi.sortX(i[7]))
+            #content_url = i[0] + '|SPLIT|%s' % base_name
             fanarts = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork', 'resources/art/%s/fanart.jpg' % filename))
-            dirlst.append({'name': name, 'url': content_url, 'mode': player_mode, 'icon': i[4], 'fanart': fanarts, 'description': description, 'folder': False})
+            dirlst.append({'name': name, 'url': content_url, 'mode': player_mode, 'icon': img, 'fanart': fanarts, 'description': description, 'folder': False})
         except Exception as e:
-            log_utils.log('Error adding menu item %s in %s:: Error: %s' % (i[1].title(),base_name.title(),str(e)), log_utils.LOGERROR)
+            pass
+            #log_utils.log('Error adding menu item %s in %s:: Error: %s' % (name.title(),base_name.title(),str(e)), log_utils.LOGERROR)
     
     if dirlst: buildDirectory(dirlst, stopend=True, isVideo = False, isDownloadable = False, chaturbate = True)
     else:
