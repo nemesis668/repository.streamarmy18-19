@@ -87,7 +87,7 @@ def content(url,searched=False):
         try:
             title = i.img['alt']
             mediaurl = i.h3.a['href']
-            icon = i.img['src']
+            icon = i.img['data-src']
             fanarts = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork', 'resources/art/%s/fanart.jpg' % filename))
             dirlst.append({'name': title, 'url': mediaurl, 'mode': player_mode, 'icon': icon, 'fanart': fanarts, 'description': 'No Desc', 'folder': False})
         except Exception as e:
