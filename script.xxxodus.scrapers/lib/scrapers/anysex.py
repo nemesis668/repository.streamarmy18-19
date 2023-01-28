@@ -10,6 +10,7 @@ import client
 import kodi
 import dom_parser2
 import log_utils
+from bs4 import BeautifulSoup
 translatePath = xbmc.translatePath if PY2 else xbmcvfs.translatePath
 buildDirectory = utils.buildDir #CODE BY NEMZZY AND ECHO
 dialog = xbmcgui.Dialog()
@@ -59,43 +60,47 @@ def menu():
 @utils.url_dispatcher.register('%s' % content_mode,['url'],['searched'])
 def content(url,searched=False):
 
-	try:
-		c = client.request(url)
-		r = re.findall('<li class="item\s+">(.*?)</li>',c,flags=re.DOTALL)
-	except Exception as e:
-		if ( not searched ):
-			log_utils.log('Fatal Error in %s:: Error: %s' % (base_name.title(),str(e)), log_utils.LOGERROR)
-			kodi.notify(msg='Fatal Error', duration=4000, sound=True)
-			quit()    
-		else: pass
-	dirlst = []
-	for i in r:
-		try:
-			name = re.findall('title="(.*?)"',i, flags=re.DOTALL)[0]
-			url2 = re.findall('<a href="(.*?)"',i, flags=re.DOTALL)[0]
-			if not base_domain in url2: url2 = base_domain + url2
-			icon = re.findall('<img\s+class="thumb"\s+src="(.*?)"',i, flags=re.DOTALL)[0]
-			time = re.findall('<span\s+class="time">(.*?)</span>',i, flags=re.DOTALL)[0]
-			fanarts = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork', 'resources/art/%s/fanart.jpg' % filename))
-			dirlst.append({'name': name + '[COLOR yellow] | ' + time + '[/COLOR]', 'url': url2, 'mode': player_mode, 'icon': icon, 'fanart': fanarts, 'folder': False})
-		except Exception as e:
-			log_utils.log('Error adding menu item. %s:: Error: %s' % (base_name.title(),str(e)), log_utils.LOGERROR)
-	if dirlst: buildDirectory(dirlst, stopend=True, isVideo = True, isDownloadable = True)
-	else:
-		if (not searched):
-			kodi.notify(msg='No Content Found')
-			quit()
-		
-	if searched: return str(len(r))
+    try:
+        c = client.request(url)
+        soup = BeautifulSoup(c,'html.parser')
+        r = soup.find_all('li', class_={'item'})
+    except Exception as e:
+        if ( not searched ):
+            log_utils.log('Fatal Error in %s:: Error: %s' % (base_name.title(),str(e)), log_utils.LOGERROR)
+            kodi.notify(msg='Fatal Error', duration=4000, sound=True)
+            quit()    
+        else: pass
+    dirlst = []
+    for i in r:
+        try:
+            name = i.a['title']
+            url2 = i.a['href']
+            if not base_domain in url2: url2 = base_domain + url2
+            icon = i.img['src']
+            try:
+                time = i.find('span', class_={'time'}).text
+            except:
+                time = '?'
+            fanarts = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork', 'resources/art/%s/fanart.jpg' % filename))
+            dirlst.append({'name': name + '[COLOR yellow] | ' + time + '[/COLOR]', 'url': url2, 'mode': player_mode, 'icon': icon, 'fanart': fanarts, 'folder': False})
+        except Exception as e:
+            log_utils.log('Error adding menu item. %s:: Error: %s' % (base_name.title(),str(e)), log_utils.LOGERROR)
+    if dirlst: buildDirectory(dirlst, stopend=True, isVideo = True, isDownloadable = True)
+    else:
+        if (not searched):
+            kodi.notify(msg='No Content Found')
+            quit()
+        
+    if searched: return str(len(r))
 
-	if not searched:
-		#dirlst = []
-		try:
-			currentp = re.findall(r'''/([0-9]+)/''',url)[0]
-			np = int(currentp) + 1
-			nextp = url.replace(currentp,str(np))
-		except: nextp = url+'2/'
-		npicon = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork', 'resources/art/main/next.png'))
-		dirlst.append({'name': kodi.giveColor('Next Page -->','white'), 'url': nextp, 'mode': content_mode, 'icon': npicon, 'fanart': fanarts, 'description': 'Load More......', 'folder': True})
-		if dirlst: buildDirectory(dirlst, stopend=True, isVideo = True, isDownloadable = True)
-	xbmcplugin.endOfDirectory(kodi.syshandle, cacheToDisc=True)
+    if not searched:
+        #dirlst = []
+        try:
+            currentp = re.findall(r'''/([0-9]+)/''',url)[0]
+            np = int(currentp) + 1
+            nextp = url.replace(currentp,str(np))
+        except: nextp = url+'2/'
+        npicon = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork', 'resources/art/main/next.png'))
+        dirlst.append({'name': kodi.giveColor('Next Page -->','white'), 'url': nextp, 'mode': content_mode, 'icon': npicon, 'fanart': fanarts, 'description': 'Load More......', 'folder': True})
+        if dirlst: buildDirectory(dirlst, stopend=True, isVideo = True, isDownloadable = True)
+    xbmcplugin.endOfDirectory(kodi.syshandle, cacheToDisc=True)

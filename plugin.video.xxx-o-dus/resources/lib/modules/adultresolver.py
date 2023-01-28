@@ -166,6 +166,8 @@ class streamer:
             
             elif 'pornhd.com' in url: u = self.pornhd(url)
             
+            elif 'motherless.com' in url: u = self.motherless(url)
+            
 
 
             else: u = self.generic(url, pattern=None)
@@ -711,30 +713,10 @@ class streamer:
                 xbmc.Player().play(url2)
         except: pass
     def pornrox(self,url):
-        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36'}
-        link = requests.get(url,headers=headers)
-        cookie = link.cookies.get_dict()
-        soup = BeautifulSoup(link.text,'html.parser')
-        r = soup.find_all('source' , {"type" : "video/mp4"})
-        names = []
-        srcs  = []
-        for i in r:
-            qual = i['label']
-            source = i['src']
-            names.append(kodi.giveColor(qual,'white',True))
-            srcs.append(source)
-        selected = kodi.dialog.select('Select a link.',names)
-        if selected < 0:
-            kodi.notify(msg='No option selected.')
-            kodi.idle()
-            quit()
-        else:
-            url2 = srcs[selected]
-            headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36',
-                        'Referer': url}
-            link2 = requests.get(url2,headers=headers,cookies=cookie,stream=True)
-            play = link2.url
-            xbmc.Player().play(play)
+        c = client.request(url)
+        pattern = r'''video_url:\s+['"](.*?)['"]'''
+        r = re.findall(pattern,c,flags=re.DOTALL)[0]
+        xbmc.Player().play(r)
     def chaturbate(self, url):
         dialog.notification('XXX-O-DUS', '[COLOR yellow]Getting Cam Now[/COLOR]', xbmcgui.NOTIFICATION_INFO, 5000)
         try:
@@ -1027,6 +1009,7 @@ class streamer:
         for i in r:
             quality = i['res']
             url = i['src']
+            url = url+'|verifypeer=false'
             names.append(kodi.giveColor(quality,'white',True))
             srcs.append(url)
         selected = kodi.dialog.select('Select a Quality.',names)
@@ -1039,25 +1022,9 @@ class streamer:
             xbmc.Player().play(url2)
     def ghettotube(self, url):
         c = client.request(url)
-        pattern = r'''file:\s+['"](.*?)['"]'''
-        r = re.findall(pattern,c,flags=re.DOTALL)
-        names = []
-        srcs  = []
-        found = 0
-        for url in r:
-            if 'http' in url and 'm3u8' in url:
-                found += 1
-                title = ('Link %s' %found)
-                names.append(kodi.giveColor(title,'white',True))
-                srcs.append(url)
-        selected = kodi.dialog.select('Select a Quality.',names)
-        if selected < 0:
-            kodi.notify(msg='No option selected.')
-            kodi.idle()
-            quit()
-        else:
-            url2 = srcs[selected]
-            xbmc.Player().play(url2)
+        pattern = r'''video_url:\s+['"](.*?)['"]'''
+        r = re.findall(pattern,c,flags=re.DOTALL)[0]
+        xbmc.Player().play(r)
     def siska(self, url):
             c = client.request(url)
             
@@ -1158,6 +1125,16 @@ class streamer:
             pattern = r'''sources.+?src:['"]([^'"]+)['"]'''
             link = requests.get(url,headers=Headers).text
             source = re.findall(pattern,link,flags=re.DOTALL)[0]
+            xbmc.Player ().play(source)
+        except: dialog.notification('XXX-O-DUS', '[COLOR yellow]Performer Is Offline[/COLOR]', xbmcgui.NOTIFICATION_INFO, 5000)
+        
+    def motherless(self, url):
+        try:
+            Headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36' }
+            pattern = r'''__fileurl = ['"]([^'"]+)['"]'''
+            link = requests.get(url,headers=Headers).text
+            source = re.findall(pattern,link,flags=re.DOTALL)[0]
+            source = source+'|verifypeer=false'
             xbmc.Player ().play(source)
         except: dialog.notification('XXX-O-DUS', '[COLOR yellow]Performer Is Offline[/COLOR]', xbmcgui.NOTIFICATION_INFO, 5000)
         

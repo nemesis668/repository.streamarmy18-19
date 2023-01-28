@@ -112,6 +112,9 @@ def Blacklistcheck(url):
     elif 'xxxdan.com' in url:
         adultresolver.resolve(url)
         quit()
+    elif 'motherless.com' in url:
+        adultresolver.resolve(url)
+        quit()
     else:
         return url
 		

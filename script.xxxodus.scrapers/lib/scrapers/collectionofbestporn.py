@@ -8,6 +8,7 @@ import log_utils
 import kodi
 import client
 import dom_parser2, os,re
+from bs4 import BeautifulSoup
 dialog = xbmcgui.Dialog()
 buildDirectory = utils.buildDir #CODE BY NEMZZY AND ECHO
 translatePath = xbmc.translatePath if PY2 else xbmcvfs.translatePath
@@ -66,12 +67,8 @@ def content(url,searched=False):
     try:
         url = url.replace('+','-')
         c = client.request(url)
-        r = dom_parser2.parse_dom(c, 'div', {'class': 'video-item'})
-        r = [(dom_parser2.parse_dom(i, 'a', req='href'), \
-             dom_parser2.parse_dom(i, 'img', req=['src','alt']), \
-             dom_parser2.parse_dom(i, 'span', {'class': 'time'})) \
-            for i in r]
-        r = [(i[0][0].attrs['href'], i[1][0].attrs['alt'], i[2][0].content, i[1][0].attrs['src']) for i in r if i]
+        soup = BeautifulSoup(c,'html.parser')
+        r = soup.find_all('div', class_={'video-thumb'})
         if ( not r ) and ( not searched ):
             log_utils.log('Scraping Error in %s:: Content of request: %s' % (base_name.title(),str(c)), log_utils.LOGERROR)
             kodi.notify(msg='Scraping Error: Info Added To Log File', duration=6000, sound=True)
@@ -86,15 +83,15 @@ def content(url,searched=False):
         
     for i in r:
         try:
-            if PY2: name = '%s - [ %s ]' % (kodi.sortX(i[1].encode('utf-8')).title(),kodi.sortX(i[2].encode('utf-8')))
-            else: name = '%s - [ %s ]' % (kodi.sortX(i[1]).title(),kodi.sortX(i[2]))
-            if searched: description = 'Result provided by %s' % base_name.title()
-            else: description = name
-            content_url = i[0] + '|SPLIT|%s' % base_name
+            name = i.img['title']
+            content_url = i.a['href']
+            icon = i.img['src']
+            icon = icon+'|verifypeer=false'
+            time = i.find('span', class_={'time'}).text
             fanarts = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork', 'resources/art/%s/fanart.jpg' % filename))
-            dirlst.append({'name': name, 'url': content_url, 'mode': player_mode, 'icon': i[3], 'fanart': fanarts, 'description': description, 'folder': False})
+            dirlst.append({'name': name + '[COLOR yellow] | ' + time + '[/COLOR]', 'url': content_url, 'mode': player_mode, 'icon': icon, 'fanart': fanarts, 'description': name, 'folder': False})
         except Exception as e:
-            log_utils.log('Error adding menu item %s in %s:: Error: %s' % (i[1].title(),base_name.title(),str(e)), log_utils.LOGERROR)
+            log_utils.log('Error adding menu item %s in %s:: Error: %s' % (name.title(),base_name.title(),str(e)), log_utils.LOGERROR)
     
     if dirlst: buildDirectory(dirlst, stopend=True, isVideo = True, isDownloadable = True)
     else:

@@ -36,8 +36,8 @@ def menu():
     try:
         url = urljoin(base_domain,'categories')
         c = cloudflare.get(url,headers=headers)
-        soup = BeautifulSoup(c.text, 'html5lib')
-        content = soup.find('div', class_={'categories'})
+        soup = BeautifulSoup(c.text, 'html.parser')
+        content = soup.find('ul', class_={'list'})
         if ( not content ):
             log_utils.log('Scraping Error in %s:: Content of request: %s' % (base_name.title(),str(c)), log_utils.LOGERROR)
             kodi.notify(msg='Scraping Error: Info Added To Log File', duration=6000, sound=True)
@@ -49,13 +49,13 @@ def menu():
         
     dirlst = []
 
-    for a in content.find_all('a'):
+    for a in content.find_all('li'):
         try:
-            title = a.span.text
-            url2 = a['href']
+            title = a.text
+            url2 = a.find('a', class_={'keyword'})['href']
             if not base_domain in url2: url2 = base_domain+url2
-            icon = a.img['src']
-            if not base_domain in icon: icon = base_domain+icon
+            icon = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork', 'resources/art/%s/icon.png' % filename))
+            #if not base_domain in icon: icon = base_domain+icon
             fanarts = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork', 'resources/art/%s/fanart.jpg' % filename))
             dirlst.append({'name': title, 'url': url2, 'mode': content_mode, 'icon': icon, 'fanart': fanarts, 'folder': True})
         except Exception as e:

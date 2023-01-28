@@ -29,7 +29,7 @@ def menu():
 	lover.checkupdates()
 
 	try:
-		url = urljoin(base_domain,'categories?o=al')
+		url = urljoin(base_domain,'categories')
 		c = client.request(url)
 		soup = BeautifulSoup(c,'html.parser')
 		r = soup.find_all('div', class_={'category-wrapper'})
@@ -48,7 +48,7 @@ def menu():
 	for i in r:
 		try:
 			name = i.a['data-mxptext']
-			icon = i.img['data-thumb_url']
+			icon = i.img['src']
 			url2 = i.a['href']
 			if not base_domain in url2: url2=base_domain+url2
 			fanarts = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork', 'resources/art/%s/fanart.jpg' % filename))
@@ -86,7 +86,7 @@ def content(url,searched=False):
 	for i in c:
 		try:
 			name = i.a['title']
-			icon = i.img['data-thumb_url']
+			icon = i.img['src']
 			content_url = i.a['href']
 			if searched: description = 'Result provided by %s' % base_name.title()
 			else: description = name

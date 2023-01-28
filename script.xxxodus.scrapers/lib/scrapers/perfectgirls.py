@@ -86,7 +86,8 @@ def content(url,searched=False):
         try:
             name = i.a['title']
             media_url = i.a['href']
-            icon = i.img['src']
+            icon = i.img['data-original']
+            icon = icon+'|verifypeer=false'
             if searched: description = 'Result provided by %s' % base_name.title()
             else: description = name
             if not 'http' in icon: icon='http:'+icon
