@@ -1,0 +1,5 @@
+<settings>
+<category label="Settings">
+    <setting label="Addon Theme" type="text" id="Theme" values="Flex" default="Flex" visible="false"/>	<setting type="lsep" label="[COLOR red][B]New Show Notification ( Feature Coming Soon )[/B][/COLOR]"/>	<setting id="notifications" type="bool" label="[COLOR white]Notifications On / Off ( Default On )[/COLOR]" default="false"/>	<setting type="lsep" label="[COLOR red][B]Enter Own TMDB API Key ( If Empty Addon Uses Default API Key )[/B][/COLOR]"/>	<setting id="tmdb" type="text" label="[COLOR white]Personal TMDB API Key : [/COLOR]" default="" visible="true"/>	<setting id="pin" type="text" label="Current Pin : " default="Expired" visible="true"/>	<setting id="pinused" type="text" label="Current Pin : " default="false" visible="false"/>
+</category>
+</settings>

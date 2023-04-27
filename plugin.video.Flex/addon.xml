@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.video.Flex" name="[COLOR white][B]FLE[COLOR blue]X[/B][/COLOR]" version="1.00.000" provider-name="@Nemzzy668">
+  <requires>
+    <import addon="script.module.requests" />
+    <import addon="script.module.resolveurl" />
+	<import addon="script.module.pyxbmct" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="Login.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">FLEX, It's Like Plex but it's FLEX</summary>
+    <description lang="en">Add Your Favourite Movies and Tv Shows, Flex Will Auto Track them provide links and notify you when new episodes are available to watch.
+
+
+Credits ::
+DevKong - For Starting Me Off In Pyxbmct
+EchoCoder - For Starting Me Off On Learning Python
+NjmSoccer - For Introducing Me To Kodi In The First Place, And Getting Me Into The Scence
+Unkown - Forgot the devs name, but credit to him for recreating some of the artwork for Flex
+
+For Support Follow @Nemzzy668 On Twitter
+</description>
+    <platform>all</platform>
+  <assets>
+   <icon>icon.png</icon>
+   <fanart>fanart.jpg</fanart>
+   <screenshot>resources/screenshots/screenshot001.png</screenshot>
+   <screenshot>resources/screenshots/screenshot002.png</screenshot>
+   <screenshot>resources/screenshots/screenshot003.png</screenshot>
+  </assets>
+  </extension>
+
+</addon>
