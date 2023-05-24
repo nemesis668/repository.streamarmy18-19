@@ -109,16 +109,17 @@ def content(url,searched=False):
     
 @utils.url_dispatcher.register('302', ['url'])
 def byTags(url):
-
-    c = requests.get(urljoin(base_domain, url), headers=headers).text
+    #dialog.ok("URL",str(url))
+    c = requests.get(base_domain, headers=headers).text
     soup = BeautifulSoup(c, 'html.parser')
-    r = soup.find_all('span', class_={'tag'})
+    tags = soup.find_all("a", href=lambda href: href and "/tag/" in href)
+    dialog.ok("TAGS",str(tags))
     dirlst = []
     
-    for i in r:
+    for i in tags:
         try:
-            name = i.a['title'].title()
-            url2 = i.a['href']
+            name = i.text.title()
+            url2 = i['href']
             if base_domain not in url2: url2 = base_domain+url2
             icon = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork', 'resources/art/%s/icon.png' % filename))
             fanarts = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork', 'resources/art/%s/fanart.jpg' % filename))
