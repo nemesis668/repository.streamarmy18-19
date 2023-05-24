@@ -113,7 +113,7 @@ def byTags(url):
     c = requests.get(base_domain, headers=headers).text
     soup = BeautifulSoup(c, 'html.parser')
     tags = soup.find_all("a", href=lambda href: href and "/tag/" in href)
-    dialog.ok("TAGS",str(tags))
+    #dialog.ok("TAGS",str(tags))
     dirlst = []
     
     for i in tags:
