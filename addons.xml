@@ -117,7 +117,7 @@ Addon Runs A Little Slower Now Due To Site Using CloudFlare
 	</extension>
 </addon>
 
-<addon id="plugin.video.Flex" name="[COLOR white][B]FLE[COLOR blue]X[/B][/COLOR]" version="1.00.000" provider-name="@Nemzzy668">
+<addon id="plugin.video.Flex" name="[COLOR white][B]FLE[COLOR blue]X[/B][/COLOR]" version="1.00.001" provider-name="@Nemzzy668">
   <requires>
     <import addon="script.module.requests" />
     <import addon="script.module.resolveurl" />
