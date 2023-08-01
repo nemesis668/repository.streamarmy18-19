@@ -180,9 +180,9 @@ def CheckParent():
     if pin == '': pin = 'EXPIRED'
     if pin == 'EXPIRED':
         kodi.set_setting('pinused','False')
-        dialog.ok(AddonTitle,"[COLOR aqua]New Site, NO MORE POP UPS! Please visit [COLOR yellow]https://pinsystem.co.uk[COLOR aqua] to generate an access token for [COLOR pink]XXX-O-DUS[COLOR aqua] Addon then enter it after clicking ok[/COLOR]")
+        dialog.ok(AddonTitle,"[COLOR aqua]Please visit [COLOR pink]https://pinsystem.co.uk[COLOR aqua] to generate an pin code for [COLOR pink]XXX-O-DUS[COLOR aqua] Addon then enter it after clicking ok[/COLOR]")
         string =''
-        keyboard = xbmc.Keyboard(string, '[COLOR red]Please Enter Pin Generated From Website(Case Sensitive)[/COLOR]')
+        keyboard = xbmc.Keyboard(string, '[COLOR red]Please Enter Pin Generated From Website[/COLOR]')
         keyboard.doModal()
         if keyboard.isConfirmed():
             string = keyboard.getText()

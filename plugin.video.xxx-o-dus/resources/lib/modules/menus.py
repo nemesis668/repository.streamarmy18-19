@@ -62,6 +62,7 @@ def mainMenu():
          ('[COLOR orange]Check XXX-O-DUS Health',None,46,'icon','Versions',True), \
          ('Search...',None,29,'search','Search XXX-O-DUS',True), \
          ('[COLOR pink]Live Cams',None,37,'webcams','Live Cams',True), \
+         ('[COLOR pink]Live Channels ( Coming Soon )',None,'','','',False), \
          ('[COLOR pink]Tubes',None,4,'tubes','Videos',True), \
          #('[COLOR pink]Scenes',None,36,'scenes','XXX Scenes',True), \
          ('[COLOR pink]Movies',None,43,'movies','XXX Movies',True), \
@@ -82,7 +83,7 @@ def mainMenu():
          #('View Addon Information',xbmc.translatePath(os.path.join(kodi.addonfolder, 'resources/files/information.txt')),17,'addon_info','View XXX-O-DUS Information.',False), \
          #('Debug Versions',None,45,'addon_info','View the versions of XXXODUS and its dependencies for debugging.',True), \
          ('RESET XXX-O-DUS',None,18,'reset','Reset XXX-O-DUS to Factory Settings.',False), \
-         #(kodi.giveColor('Report Issues @ https://github.com/Colossal1/plugin.video.xxx-o-dus/issues','violet',True),xbmc.translatePath(os.path.join(kodi.addonfolder, 'resources/files/information.txt')),17,'report','All issues must be reported at https://github.com/Colossal1/plugin.video.xxx-o-dus/issues or I will not know the issues exist. I will not provide support at any other location as one central place for everyone to see and discuss issues benefits everyone.',False), \
+         (kodi.giveColor('Report Issues on Twitter @Nemzzy668','violet',True),translatePath(os.path.join(kodi.addonfolder, 'resources/files/information.txt')),17,'report','All issues must be reported to me at twitter, I can\'t fix them, if I don\'t know about them!',False), \
          ]
 
     for i in c:
