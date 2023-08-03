@@ -4,6 +4,7 @@ from six import PY2
 import  re, os, time, urllib
 import sqlite3
 translatePath = xbmc.translatePath if PY2 else xbmcvfs.translatePath
+
 try:
     addon = xbmcaddon.Addon()
     get_setting = addon.getSetting

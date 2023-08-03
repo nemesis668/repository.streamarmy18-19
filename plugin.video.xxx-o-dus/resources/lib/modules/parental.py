@@ -175,35 +175,3 @@ def delEntry(passwd):
     conn.commit()
     conn.close()
     
-def CheckParent():
-    pin = kodi.get_setting('pin')
-    if pin == '': pin = 'EXPIRED'
-    if pin == 'EXPIRED':
-        kodi.set_setting('pinused','False')
-        dialog.ok(AddonTitle,"[COLOR aqua]Please visit [COLOR pink]https://pinsystem.co.uk[COLOR aqua] to generate an pin code for [COLOR pink]XXX-O-DUS[COLOR aqua] Addon then enter it after clicking ok[/COLOR]")
-        string =''
-        keyboard = xbmc.Keyboard(string, '[COLOR red]Please Enter Pin Generated From Website[/COLOR]')
-        keyboard.doModal()
-        if keyboard.isConfirmed():
-            string = keyboard.getText()
-            if len(string)>1:
-                term = string.title().replace(' ','')
-                kodi.set_setting('pin',term)
-                CheckParent()
-            else: quit()
-        else:
-            quit()
-    if not 'EXPIRED' in pin:
-        pinurlcheck = ('https://pinsystem.co.uk/service.php?code=%s&plugin=RnVja1lvdSE' % pin)
-        link = requests.get(pinurlcheck).text
-        if len(link) <= 5 or 'Pin Expired' in link:
-            kodi.set_setting('pin','EXPIRED')
-            CheckParent()
-        else:
-            registerpin = kodi.get_setting('pinused')
-            if registerpin == 'False':
-                try:
-                    requests.get('https://pinsystem.co.uk/checker.php?code=99999&plugin=XXXODUS').content
-                    kodi.set_setting('pinused','True')
-                except: pass
-            else: pass
