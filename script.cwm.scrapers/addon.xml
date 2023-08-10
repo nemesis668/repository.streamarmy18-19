@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.cwm.scrapers" name="CumWithMe Scrapers" version="1.00.000" provider-name="@Nemzzy668">
+	<requires>
+		<import addon="script.module.requests" />
+		<import addon="script.module.beautifulsoup4" />
+		<import addon="script.module.html5lib" />
+	</requires>
+	<extension point="xbmc.python.module" library="lib" />
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<summary lang="en">Scrapers for use in CumWithMe</summary>
+	</extension>
+</addon>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.video.cwm" name="[COLOR gold][B]C[COLOR red]um [COLOR gold]W[COLOR red]ith [COLOR gold]M[COLOR red]e [/B][/COLOR]" version="1.00.000" provider-name="Nemzzy668">
+  <requires>
+    <import addon="script.module.requests" />
+	<import addon="script.module.pyxbmct" />
+	<import addon="script.module.beautifulsoup4" />
+	<import addon="script.module.resolveurl" />
+	<import addon="script.cwm.scrapers"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="Main.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Ultimate GUI XXX Addon</summary>
+    <description lang="en">A GUI XXX Addon for Kodi</description>
+    <platform>all</platform>
+	<assets>
+        <icon>icon.png</icon>
+        <fanart>fanart.jpg</fanart>
+		<screenshot>resources/screenshots/1.png</screenshot>
+		<screenshot>resources/screenshots/2.png</screenshot>
+		<screenshot>resources/screenshots/3.png</screenshot>
+    </assets>
+  </extension>
+</addon>
