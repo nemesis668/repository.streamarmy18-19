@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.cwm" name="[COLOR gold][B]C[COLOR red]um [COLOR gold]W[COLOR red]ith [COLOR gold]M[COLOR red]e [/B][/COLOR]" version="1.00.001" provider-name="Nemzzy668">
+<addon id="plugin.video.cwm" name="[COLOR gold][B]C[COLOR red]um [COLOR gold]W[COLOR red]ith [COLOR gold]M[COLOR red]e [/B][/COLOR]" version="1.00.002" provider-name="Nemzzy668">
   <requires>
     <import addon="script.module.requests" />
 	<import addon="script.module.pyxbmct" />
