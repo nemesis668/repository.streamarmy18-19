@@ -9,10 +9,24 @@ class Scraper:
     def __init__(self):
         self.Base = 'https://collectionofbestporn.com'
         self.CatUrl = 'https://collectionofbestporn.com/channels/'
-        self.Search = ('?query=')
+        self.Search = ('https://collectionofbestporn.com/search/%s')
         self.content = []
         self.links = []
         self.cats = []
+    def SearchSite(self,term):
+        term = term.replace(' ','-')
+        link = requests.get(self.Search % term,headers=headers).text
+        soup = BeautifulSoup(link, 'html.parser')
+        data = soup.find_all('div', class_={'video-thumb'})
+        for i in data:
+            try:
+                name = i.img['title']
+                media = i.a['href']
+                icon = i.img['src']
+                icon = icon+'|verifypeer=false'
+                self.content.append({'name' : name, 'url': media, 'image' : icon})
+            except: pass
+        return self.content
     def MainContent(self,url):
         if url == '': url = self.Base
         link = requests.get(url,headers=headers).text

@@ -9,10 +9,23 @@ class Scraper:
     def __init__(self):
         self.Base = 'https://anysex.com/'
         self.CatUrl = 'https://anysex.com/categories/'
-        self.Search = ('?query=')
+        self.Search = ('https://anysex.com/search/?q=%s')
         self.content = []
         self.links = []
         self.cats = []
+    def SearchSite(self,term):
+        term = term.replace(' ','+')
+        link = requests.get(self.Search % term,headers=headers).text
+        soup = BeautifulSoup(link, 'html.parser')
+        data = soup.find_all('li', class_={'item'})
+        for i in data:
+            name = i.img['alt']
+            media = i.a['href']
+            if not Base_Domain in media: media=Base_Domain+media
+            icon = i.img['src']
+            if not Base_Domain in media: media = Base_Domain+media
+            self.content.append({'name' : name, 'url': media, 'image' : icon})
+        return self.content
     def MainContent(self,url):
         if url == '': url = self.Base
         link = requests.get(url,headers=headers).text
@@ -31,6 +44,7 @@ class Scraper:
         pattern = r'''<source\s+id=['"]video_source.+?src=['"]([^'"]+)['"].+?title=['"](.*?)['"]'''
         r = re.findall(pattern,c,flags=re.DOTALL)
         for url,quality in sorted(r, reverse=True):
+            if quality == '': quality = 'SD'
             self.links.append({'name' : quality, 'url': url})
         return self.links
     def GetCats(self):

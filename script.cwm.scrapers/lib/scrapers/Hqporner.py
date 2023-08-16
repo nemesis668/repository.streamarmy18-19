@@ -9,11 +9,26 @@ class Scraper:
     def __init__(self):
         self.Base = 'https://hqporner.com/hdporn/1'
         self.CatUrl = 'https://hqporner.com/categories'
-        self.Search = ('?query=')
+        self.Search = ('https://hqporner.com/?q=%s')
         self.content = []
         self.links = []
         self.cats = []
-        
+    def SearchSite(self,term):
+        term = term.replace(' ','+')
+        link = requests.get(self.Search % term,headers=headers).text
+        soup = BeautifulSoup(link, 'html.parser')
+        data = soup.find_all('section', class_={'box feature'})
+        for i in data:
+            try:
+                name = i.img['alt'].title()
+                url2 = i.a['href']
+                icon = i.img['src']
+                icon =icon+'|verifypeer=false'
+                if not 'https:' in url2: url2 = 'https://hqporner.com' + url2
+                if not 'https:' in icon: icon = 'https:' + icon
+                self.content.append({'name' : name, 'url': url2, 'image' : icon})
+            except: pass
+        return self.content
     def MainContent(self,url):
         if url == '': url = self.Base
         link = requests.get(url,headers=headers).text

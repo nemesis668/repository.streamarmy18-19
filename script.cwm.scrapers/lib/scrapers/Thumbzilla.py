@@ -9,11 +9,24 @@ class Scraper:
     def __init__(self):
         self.Base = 'https://www.thumbzilla.com/'
         self.CatUrl = 'https://www.thumbzilla.com/'
-        self.Search = ('?query=')
+        self.Search = ('https://www.thumbzilla.com/tags/%s')
         self.content = []
         self.links = []
         self.cats = []
-        
+    def SearchSite(self,term):
+        term = term.replace(' ','-')
+        link = requests.get(self.Search % term,headers=headers).text
+        soup = BeautifulSoup(link, 'html.parser')
+        data = soup.find_all('a', class_={'js-thumb'})
+        for i in data:
+            try:
+                name = i.find('span', class_={'title'}).text.replace('/n','')
+                url = i['href']
+                if not Base_Domain in url: url=Base_Domain+url
+                icon = i.img['data-original']
+                self.content.append({'name' : name, 'url': url, 'image' : icon})
+            except: pass
+        return self.content
     def MainContent(self,url):
         if url == '': url = self.Base
         link = requests.get(url,headers=headers).text

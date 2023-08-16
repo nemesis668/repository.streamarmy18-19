@@ -8,10 +8,23 @@ class Scraper:
     def __init__(self):
         self.Base = 'https://www.eporner.com/most-viewed/'
         self.CatUrl = 'https://www.eporner.com/cats/'
-        self.Search = ('?query=')
+        self.Search = ('https://www.eporner.com/search/%s/')
         self.content = []
         self.links = []
         self.cats = []
+    def SearchSite(self,term):
+        term = term.replace(' ','-')
+        link = requests.get(self.Search % term,headers=headers).text
+        soup = BeautifulSoup(link, 'html.parser')
+        data = soup.find_all('div', class_={'mb hdy'})
+        for i in data:
+            title = i.img['alt']
+            try: icon = i.img['data-src']
+            except: icon = i.img['src']
+            media = i.a['href']
+            if not Base_Domain in media: media = Base_Domain+media
+            self.content.append({'name' : title, 'url': media, 'image' : icon})
+        return self.content
     def MainContent(self,url):
         if url == '': url = self.Base
         link = requests.get(url,headers=headers).text
