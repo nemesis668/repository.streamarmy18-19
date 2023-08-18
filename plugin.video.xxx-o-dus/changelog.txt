@@ -1,12 +1,13 @@
 [COLOR pink]Welcome To XXX-O-DUS[/COLOR]
 
-[COLOR aqua]XXXODUS : Current Version 5.00.015[/COLOR]
+[COLOR aqua]XXXODUS : Current Version 5.00.017[/COLOR]
 
-[COLOR aqua]SCRAPERS : Current Version 5.00.011[/COLOR]
+[COLOR aqua]SCRAPERS : Current Version 5.00.012[/COLOR]
 
 
 [COLOR yellow]FIXED[/COLOR]
-[COLOR white]Minor Imrpovement Updates[/COLOR]
+[COLOR white]Anysex,PerfectGirls,Pornhub,Redtube[/COLOR]
+[COLOR white]Removed some dead sites that no longer exsist[/COLOR]
 
 
 [COLOR yellow]BUGS KNOWN[/COLOR]

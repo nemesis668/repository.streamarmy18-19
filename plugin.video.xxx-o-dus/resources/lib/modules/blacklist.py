@@ -115,6 +115,9 @@ def Blacklistcheck(url):
     elif 'motherless.com' in url:
         adultresolver.resolve(url)
         quit()
+    elif 'redtube.com' in url:
+        adultresolver.resolve(url)
+        quit()
     else:
         return url
 		

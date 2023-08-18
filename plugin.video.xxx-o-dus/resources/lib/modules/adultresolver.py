@@ -51,6 +51,8 @@ class streamer:
             
             elif 'girlfriendvideos.com' in url: u = self.girlfriendvideos(url)
             
+            elif 'redtube.com' in url: u = self.redtube(url)
+            
             elif 'siska.video' in url: u = self.siska(url)
             
             elif 'ghettotube.com' in url: u = self.ghettotube(url)
@@ -71,7 +73,7 @@ class streamer:
             
             elif 'chaturbate.com' in url: u = self.chaturbate(url)
 
-            elif 'perfectgirls.net' in url: u = self.perfectgirls(url)
+            elif 'perfectgirls.xxx' in url: u = self.perfectgirls(url)
 
             elif 'pornhub.com' in url: u = self.pornhub(url)
             
@@ -410,6 +412,7 @@ class streamer:
         link = requests.get(url, headers=headers).text
         soup = BeautifulSoup(link, 'html5lib')
         content = soup.find('div', id={'video'})['data-streamkey']
+        dialog.ok("CONTENT",str(content))
         apiurl = 'https://spankbang.com/api/videos/stream'
         ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36'
         headers = {'User-Agent': ua,
@@ -457,14 +460,15 @@ class streamer:
     def perfectgirls(self, url):
         try:
             r = client.request(url)
-            pattern = r'''source\s*src=\"([^"]+)\"\s*res=\"\d+\"\s*label="([^"]+)"'''
-            r = re.findall(pattern, r)
+            soup = BeautifulSoup(r,'html.parser')
+            r = soup.find_all('a', class_={'download-link'})
             names = []
             srcs  = []
-            for link,qual in r:
-                if not 'http' in link: link='http:'+link
+            for i in r:
+                url = i['href']
+                qual = i.span.text
                 names.append(kodi.giveColor(qual,'white',True))
-                srcs.append(link)
+                srcs.append(url)
             selected = kodi.dialog.select('Select a link.',names)
             if selected < 0:
                 kodi.notify(msg='No option selected.')
@@ -1138,4 +1142,27 @@ class streamer:
             xbmc.Player ().play(source)
         except: dialog.notification('XXX-O-DUS', '[COLOR yellow]Performer Is Offline[/COLOR]', xbmcgui.NOTIFICATION_INFO, 5000)
         
-		
+    def redtube(self, url):
+        try:
+            Headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36' }
+            pattern = r'''videoUrl['"]:['"]([^"]+)['"]'''
+            link = requests.get(url,headers=Headers).text
+            source = re.findall(pattern,link,flags=re.DOTALL)[0].replace('\\','')
+            source = 'https://www.redtube.com'+source
+            link = requests.get(source,headers=Headers).json()
+            names = []
+            srcs  = []
+            for i in link:
+                qual = i['quality']
+                url = i['videoUrl']
+                names.append(kodi.giveColor(qual,'white',True))
+                srcs.append(url)
+            selected = kodi.dialog.select('Select a link.',names)
+            if selected < 0:
+                kodi.notify(msg='No option selected.')
+                kodi.idle()
+                quit()
+            else:
+                url2 = srcs[selected]
+                xbmc.Player().play(url2)
+        except: dialog.notification('XXX-O-DUS', '[COLOR yellow]Resolver Couldn\'t Resolve Link, Try Another[/COLOR]', xbmcgui.NOTIFICATION_INFO, 5000)

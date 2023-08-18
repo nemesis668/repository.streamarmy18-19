@@ -73,7 +73,7 @@ def content(url,searched=False):
     dirlst = []
     for i in r:
         try:
-            name = i.a['title']
+            name = i.img['alt']
             url2 = i.a['href']
             if not base_domain in url2: url2 = base_domain + url2
             icon = i.img['src']
