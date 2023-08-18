@@ -1,4 +1,4 @@
 <settings>
 <category label="Pin Settings">	<setting id="PinCode" type="text" label="Current Pin Code : " default="" visible="true"/>	<setting id="pinused" type="text" label="Pin Used" default="false" visible="false"/>	<setting id="userid" type="text" label="User ID" default="" visible="false"/>
-</category><category label="Chat Settings">	<setting id="ShowChat" type="bool" label="Show Chat Window : " default="true"/>	<setting id="Username" type="text" label="Chat Username : " default="" visible="true"/></category>
+</category><category label="Chat Settings">	<setting id="ShowChat" type="bool" label="Show Chat Window : " default="true"/>	<setting id="Username" type="text" label="Chat Username : " default="" visible="true"/></category><category label="Live Cam Settings">	<setting type="lsep" label="[COLOR magenta]Turn Alert Monitor On For performers added to favourites.(Default On)[/COLOR]"/>	<setting id="Monitor" type="bool" label="Alert Performers Online (Changes require kodi reboot to take effect)" default="true"/></category>
 </settings>
