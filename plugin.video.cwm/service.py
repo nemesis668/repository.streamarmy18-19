@@ -43,7 +43,6 @@ while not monitor.abortRequested():
                     pattern = r'''hls_source.+(http.*?m3u8)'''
                     link = requests.get(url,headers=headers).text
                     source = re.findall(pattern,link,flags=re.DOTALL)
-                    dialog.ok("SOURCE",str(source))
                     if source:
                         dialog.notification(AddonTitle, '[COLOR pink]Performer %s is now Online[/COLOR]' % name, image, 2500)
                         Checked.append(name)
