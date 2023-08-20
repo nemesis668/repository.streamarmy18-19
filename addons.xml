@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
-<addon id="plugin.video.cwm" name="[COLOR gold][B]C[COLOR magenta]um [COLOR gold]W[COLOR magenta]ith [COLOR gold]M[COLOR magenta]e [/B][/COLOR]" version="1.00.006" provider-name="Nemzzy668">
+<addon id="plugin.video.cwm" name="[COLOR gold][B]C[COLOR magenta]um [COLOR gold]W[COLOR magenta]ith [COLOR gold]M[COLOR magenta]e [/B][/COLOR]" version="1.00.007" provider-name="Nemzzy668">
   <requires>
     <import addon="script.module.requests" />
 	<import addon="script.module.pyxbmct" />
@@ -277,7 +277,7 @@ For Support Follow @Nemzzy668 On Twitter
 	</extension>
 </addon>
 
-<addon id="script.cwm.scrapers" name="CumWithMe Scrapers" version="1.00.004" provider-name="@Nemzzy668">
+<addon id="script.cwm.scrapers" name="CumWithMe Scrapers" version="1.00.005" provider-name="@Nemzzy668">
 	<requires>
 		<import addon="script.module.requests" />
 		<import addon="script.module.beautifulsoup4" />

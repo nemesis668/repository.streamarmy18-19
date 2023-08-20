@@ -6,7 +6,8 @@ dialog = xbmcgui.Dialog()
 headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.82'}
 Base_Domain = 'https://www.pornhub.com'
 cookies = {'Cookie': 'accessAgeDisclaimerPH=1; accessAgeDisclaimerUK=1'}
-
+SiteName = 'PornHub'
+DefaultImage = 'https://raw.githubusercontent.com/nemesis668/repository.streamarmy18-19/917d31e44e35d06957f37e1e65bf89b2c549d36d/plugin.video.cwm/icon.png'
 class Scraper:
     def __init__(self):
         self.Base = 'https://www.pornhub.com'
@@ -16,6 +17,7 @@ class Scraper:
         self.links = []
         self.cats = []
     def SearchSite(self,term):
+        self.content.append({'name' : '[COLOR magenta]Content From %s[/COLOR]' % SiteName ,'url': '', 'image' : DefaultImage})
         term = term.replace(' ','+')
         link = requests.get(self.Search % term,headers=headers, cookies=cookies).text
         soup = BeautifulSoup(link, 'html.parser')
@@ -28,7 +30,8 @@ class Scraper:
                 if not Base_Domain in url: url=Base_Domain+url
                 self.content.append({'name' : name, 'url': url, 'image' : icon})
             except: pass
-        return self.content
+        if len(self.content) > 3: return self.content
+        else: pass
     def MainContent(self,url):
         if url == '': url = self.Base
         if 'video?c=' in url:
