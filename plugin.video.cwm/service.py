@@ -23,8 +23,10 @@ conn.close()
 Checked = []
 CheckMonitor = get_setting('Monitor')
 i = 0
+
 if CheckMonitor == 'false': quit()
-while not xbmc.Monitor().abortRequested():
+monitor = xbmc.Monitor()
+while not monitor.abortRequested():
     if i <= 500:
         conn = sqlite3.connect(cwmdb)
         conn.text_factory = str
@@ -41,6 +43,7 @@ while not xbmc.Monitor().abortRequested():
                     pattern = r'''hls_source.+(http.*?m3u8)'''
                     link = requests.get(url,headers=headers).text
                     source = re.findall(pattern,link,flags=re.DOTALL)
+                    dialog.ok("SOURCE",str(source))
                     if source:
                         dialog.notification(AddonTitle, '[COLOR pink]Performer %s is now Online[/COLOR]' % name, image, 2500)
                         Checked.append(name)
@@ -50,4 +53,5 @@ while not xbmc.Monitor().abortRequested():
         i = 0
         Checked = []
     i += 1
-    time.sleep(300)
+    if monitor.waitForAbort(300):
+        break
