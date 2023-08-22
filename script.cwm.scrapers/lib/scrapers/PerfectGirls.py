@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import xbmcgui
 import re
+import xbmc
 dialog = xbmcgui.Dialog()
 headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.82'}
 Base_Domain = 'https://www.perfectgirls.xxx'
@@ -16,23 +17,25 @@ class Scraper:
         self.links = []
         self.cats = []
     def SearchSite(self,term):
-        self.content.append({'name' : '[COLOR magenta]Content From %s[/COLOR]' % SiteName ,'url': '', 'image' : DefaultImage})
-        term = term.replace(' ','-')
-        link = requests.get(self.Search % term,headers=headers).text
-        soup = BeautifulSoup(link,'html.parser')
-        data = soup.find_all('div', class_={'thumb thumb-video'})
-        for i in data:
-            try:
-                title = i.a['title']
-                media = i.a['href']
-                icon = i.img['data-original']
-                #icon = icon+'|verifypeer=false'
-                if not 'http' in icon: icon='https:'+icon
-                if not Base_Domain in media: media = Base_Domain+media
-                self.content.append({'name' : title, 'url': media, 'image' : icon})
-            except: pass
-        if len(self.content) > 3: return self.content
-        else: pass
+        try:
+            self.content.append({'name' : '[COLOR magenta]Content From %s[/COLOR]' % SiteName ,'url': '', 'image' : DefaultImage})
+            term = term.replace(' ','-')
+            link = requests.get(self.Search % term,headers=headers).text
+            soup = BeautifulSoup(link,'html.parser')
+            data = soup.find_all('div', class_={'thumb thumb-video'})
+            for i in data:
+                try:
+                    title = i.a['title']
+                    media = i.a['href']
+                    icon = i.img['data-original']
+                    #icon = icon+'|verifypeer=false'
+                    if not 'http' in icon: icon='https:'+icon
+                    if not Base_Domain in media: media = Base_Domain+media
+                    self.content.append({'name' : title, 'url': media, 'image' : icon})
+                except: pass
+            if len(self.content) > 3: return self.content
+            else: pass
+        except Exception as e: xbmc.log('SCRAPER ERROR : %s ::: %s'% (SiteName,e),xbmc.LOGINFO)
     def MainContent(self,url):
         if url == '': url = self.Base
         link = requests.get(url,headers=headers).text

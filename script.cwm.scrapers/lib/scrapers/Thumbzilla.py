@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import xbmcgui
 import re
+import xbmc
 dialog = xbmcgui.Dialog()
 headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.82'}
 Base_Domain = 'https://www.thumbzilla.com'
@@ -16,21 +17,23 @@ class Scraper:
         self.links = []
         self.cats = []
     def SearchSite(self,term):
-        self.content.append({'name' : '[COLOR magenta]Content From %s[/COLOR]' % SiteName ,'url': '', 'image' : DefaultImage})
-        term = term.replace(' ','-')
-        link = requests.get(self.Search % term,headers=headers).text
-        soup = BeautifulSoup(link, 'html.parser')
-        data = soup.find_all('a', class_={'js-thumb'})
-        for i in data:
-            try:
-                name = i.find('span', class_={'title'}).text.replace('/n','')
-                url = i['href']
-                if not Base_Domain in url: url=Base_Domain+url
-                icon = i.img['data-original']
-                self.content.append({'name' : name, 'url': url, 'image' : icon})
-            except: pass
-        if len(self.content) > 3: return self.content
-        else: pass
+        try:
+            self.content.append({'name' : '[COLOR magenta]Content From %s[/COLOR]' % SiteName ,'url': '', 'image' : DefaultImage})
+            term = term.replace(' ','-')
+            link = requests.get(self.Search % term,headers=headers).text
+            soup = BeautifulSoup(link, 'html.parser')
+            data = soup.find_all('a', class_={'js-thumb'})
+            for i in data:
+                try:
+                    name = i.find('span', class_={'title'}).text.replace('/n','')
+                    url = i['href']
+                    if not Base_Domain in url: url=Base_Domain+url
+                    icon = i.img['data-original']
+                    self.content.append({'name' : name, 'url': url, 'image' : icon})
+                except: pass
+            if len(self.content) > 3: return self.content
+            else: pass
+        except Exception as e: xbmc.log('SCRAPER ERROR : %s ::: %s'% (SiteName,e),xbmc.LOGINFO)
     def MainContent(self,url):
         if url == '': url = self.Base
         link = requests.get(url,headers=headers).text

@@ -277,7 +277,7 @@ For Support Follow @Nemzzy668 On Twitter
 	</extension>
 </addon>
 
-<addon id="script.cwm.scrapers" name="CumWithMe Scrapers" version="1.00.005" provider-name="@Nemzzy668">
+<addon id="script.cwm.scrapers" name="CumWithMe Scrapers" version="1.00.006" provider-name="@Nemzzy668">
 	<requires>
 		<import addon="script.module.requests" />
 		<import addon="script.module.beautifulsoup4" />
