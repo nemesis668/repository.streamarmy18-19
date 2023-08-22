@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.EntertainMe" name="[COLOR red][B]E[COLOR yellow]nterTain Me[/B][/COLOR]" version="3.00.003" provider-name="@Nemzzy668">
+<addon id="plugin.video.EntertainMe" name="[COLOR red][B]E[COLOR yellow]nterTain Me[/B][/COLOR]" version="3.00.004" provider-name="@Nemzzy668">
   <requires>
 	<import addon="script.module.six" />
 	<import addon="script.module.kodi-six" />
@@ -12,7 +12,7 @@
     <provides>video</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <summary lang="en">EnterTain Me, Built Off of SeeHD</summary>
+    <summary lang="en">EnterTain Me</summary>
     <description lang="en">Find All the latest releases of Movies and Tv Shows in the best Qualitys Available, all content is obtained using scrapers and it is the users discretion how they choose to use this addon.
 
 
@@ -23,8 +23,6 @@ EchoCoder - For Starting Me Off On Learning Python
 NjmSoccer - For Introducing Me To Kodi In The First Place, And Getting Me Into The Scence
 
 For Support Follow @Nemzzy668 On Twitter
-
-Addon Runs A Little Slower Now Due To Site Using CloudFlare
 </description>
     <platform>all</platform>
   <assets>
