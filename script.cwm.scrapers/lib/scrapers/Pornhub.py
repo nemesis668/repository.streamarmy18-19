@@ -6,7 +6,8 @@ import xbmc
 dialog = xbmcgui.Dialog()
 headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.82'}
 Base_Domain = 'https://www.pornhub.com'
-cookies = {'Cookie': 'accessAgeDisclaimerPH=1; accessAgeDisclaimerUK=1'}
+cookies = {'accessAgeDisclaimerPH=':'1',
+           'accessAgeDisclaimerUK=' : '1' }
 SiteName = 'PornHub'
 DefaultImage = 'https://raw.githubusercontent.com/nemesis668/repository.streamarmy18-19/917d31e44e35d06957f37e1e65bf89b2c549d36d/plugin.video.cwm/icon.png'
 class Scraper:
@@ -24,23 +25,28 @@ class Scraper:
             link = requests.get(self.Search % term,headers=headers, cookies=cookies).text
             soup = BeautifulSoup(link, 'html.parser')
             data = soup.find_all('div', class_={'phimage'})
-            for i in data:
-                try:
-                    name = i.a['title']
-                    icon = i.img['src']
-                    url = i.a['href']
-                    if not Base_Domain in url: url=Base_Domain+url
-                    self.content.append({'name' : name, 'url': url, 'image' : icon})
-                except: pass
-            if len(self.content) > 3: return self.content
+            if data:
+                for i in data:
+                    try:
+                        name = i.a['title']
+                        icon = i.img['src']
+                        url = i.a['href']
+                        if not Base_Domain in url: url=Base_Domain+url
+                        self.content.append({'name' : name, 'url': url, 'image' : icon})
+                    except: pass
+                if len(self.content) > 3: return self.content
+                else: xbmc.log('SCRAPER ERROR : %s ::: No Content Found'% SiteName,xbmc.LOGINFO)
             else: pass
-        except Exception as e: xbmc.log('SCRAPER ERROR : %s ::: %s'% (SiteName,e),xbmc.LOGINFO)
+        except Exception as e:
+            dialog.ok("ERROR",str(e))
+            xbmc.log('SCRAPER ERROR : %s ::: %s'% (SiteName,e),xbmc.LOGINFO)
     def MainContent(self,url):
         if url == '': url = self.Base
         if 'video?c=' in url:
             link = requests.get(url,headers=headers, cookies=cookies).text
             soup = BeautifulSoup(link, 'html.parser')
             content = soup.find('ul', id={'videoCategory'})
+            dialog.ok("CONTENT",str(content))
             for i in content.find_all('div', class_={'phimage'}):
                 try:
                     name = i.a['title']

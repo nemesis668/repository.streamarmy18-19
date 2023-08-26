@@ -8,6 +8,7 @@ headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit
 Base_Domain = 'https://www.thumbzilla.com'
 SiteName = 'ThumbZilla'
 DefaultImage = 'https://raw.githubusercontent.com/nemesis668/repository.streamarmy18-19/917d31e44e35d06957f37e1e65bf89b2c549d36d/plugin.video.cwm/icon.png'
+cookies = {'accessAgeDisclaimerTZ=':'1'}
 class Scraper:
     def __init__(self):
         self.Base = 'https://www.thumbzilla.com/'
@@ -20,7 +21,7 @@ class Scraper:
         try:
             self.content.append({'name' : '[COLOR magenta]Content From %s[/COLOR]' % SiteName ,'url': '', 'image' : DefaultImage})
             term = term.replace(' ','-')
-            link = requests.get(self.Search % term,headers=headers).text
+            link = requests.get(self.Search % term,headers=headers, cookies=cookies).text
             soup = BeautifulSoup(link, 'html.parser')
             data = soup.find_all('a', class_={'js-thumb'})
             for i in data:
@@ -36,7 +37,7 @@ class Scraper:
         except Exception as e: xbmc.log('SCRAPER ERROR : %s ::: %s'% (SiteName,e),xbmc.LOGINFO)
     def MainContent(self,url):
         if url == '': url = self.Base
-        link = requests.get(url,headers=headers).text
+        link = requests.get(url,headers=headers, cookies=cookies).text
         soup = BeautifulSoup(link, 'html.parser')
         data = soup.find_all('a', class_={'js-thumb'})
         for i in data:
@@ -51,7 +52,7 @@ class Scraper:
         
     def ResolveLink(self,url):
         pattern = r'''videoUrl['"]:['"]([^'"]+m3u8.+?)['"].+?:['"](.*?)['"]'''
-        link = requests.get(url,headers=headers).text
+        link = requests.get(url,headers=headers, cookies=cookies).text
         videos = re.findall(pattern,link)
         for stream,qual in videos:
             stream = stream.replace('\\','')
@@ -59,7 +60,7 @@ class Scraper:
         return self.links
         
     def GetCats(self):
-        c = requests.get(self.CatUrl,headers=headers).text
+        c = requests.get(self.CatUrl,headers=headers, cookies=cookies).text
         soup = BeautifulSoup(c,'html.parser')
         r = soup.find_all('div', class_={'checkHomepage'})
         for i in r:
