@@ -22,7 +22,8 @@ player_mode  = 801
 headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.82'}
 search_tag   = 1
 search_base  = urljoin(base_domain,'video/search?search=%s')
-cookies = {'Cookie': 'accessAgeDisclaimerPH=1; accessAgeDisclaimerUK=1'}
+cookies = {'accessAgeDisclaimerPH=':'1',
+           'accessAgeDisclaimerUK=' : '1' }
 @utils.url_dispatcher.register('%s' % menu_mode)
 def menu():
     
