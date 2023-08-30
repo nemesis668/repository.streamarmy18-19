@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.cwm.scrapers" name="CumWithMe Scrapers" version="1.00.008" provider-name="@Nemzzy668">
+<addon id="script.cwm.scrapers" name="CumWithMe Scrapers" version="1.00.009" provider-name="@Nemzzy668">
 	<requires>
 		<import addon="script.module.requests" />
 		<import addon="script.module.beautifulsoup4" />
