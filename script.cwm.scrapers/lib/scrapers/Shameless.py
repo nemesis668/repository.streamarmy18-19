@@ -35,7 +35,6 @@ class Scraper:
             else: pass
         except Exception as e: xbmc.log('SCRAPER ERROR : %s ::: %s'% (SiteName,e),xbmc.LOGINFO)
     def MainContent(self,url):
-        dialog.ok("URL",str(url))
         if url == '': url = self.Base
         link = requests.get(url,headers=headers).text
         soup = BeautifulSoup(link, 'html.parser')
