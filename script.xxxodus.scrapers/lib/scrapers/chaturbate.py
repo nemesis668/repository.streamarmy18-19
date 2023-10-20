@@ -45,23 +45,22 @@ def menu():
     
     lover.checkupdates()
     
-    url = base_domain
-    r = requests.get(url, headers=headers).text
-    r = dom_parser2.parse_dom(r, 'dd')
-    r = dom_parser2.parse_dom(r, 'a', req='href')
-    r = [i for i in r if 'private-cams' not in i.attrs['href']]
-    r = [(urljoin(base_domain,i.attrs['href']),i.content) for i in r if i]
+    url = 'https://chaturbate.com/api/ts/hashtags/tag-table-data/?sort=&page=1&g=&limit=100'
+    #r = requests.get(url, headers=headers).json()
+    link = requests.get(url,headers=headers).json()
     dirlst = []
     icon = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork', 'resources/art/main/%s.png' % filename))
     fanarts = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork', 'resources/art/%s/fanart.jpg' % filename))
     dirlst.append({'name': 'Monitored Performers', 'url': 'none', 'mode': 30, 'icon': icon, 'fanart': fanarts, 'folder': True})
     dirlst.append({'name': 'Search By Username', 'url': 'none', 'mode': 32, 'icon': icon, 'fanart': fanarts, 'folder': False})
     dirlst.append({'name': 'Rooms By Tag', 'url': 'tags', 'mode': 302, 'icon': icon, 'fanart': fanarts, 'folder': True})
-    for i in r:
+    for i in link['hashtags']:
         try:
-            if PY2: name = kodi.sortX(i[1].encode('utf-8')).title()
-            else: name = kodi.sortX(i[1]).title()
-            dirlst.append({'name': name, 'url': i[0], 'mode': content_mode, 'icon': icon, 'fanart': fanarts, 'folder': True})
+            cat = i['hashtag']#.title()
+            viewercount = i['viewer_count']
+            name = ('%s | Viewer Count : %s' %(cat.title(),viewercount))
+            url2 = ('https://chaturbate.com/api/ts/roomlist/room-list/?enable_recommendations=false&hashtags=%s&limit=100&offset=0' % cat )
+            dirlst.append({'name': cat.title(), 'url': url2, 'mode': content_mode, 'icon': icon, 'fanart': fanarts, 'folder': True})
         except Exception as e:
             log_utils.log('Error adding menu item %s in %s:: Error: %s' % (i[1].title(),base_name.title(),str(e)), log_utils.LOGERROR)
     #dialog.ok("DIRLIST",str(dirlst))
@@ -72,28 +71,21 @@ def menu():
         
 @utils.url_dispatcher.register('%s' % content_mode,['url'],['searched'])
 def content(url,searched=False):
-
-    r = requests.get(url, headers=headers).text
-    soup = BeautifulSoup(r, 'html.parser')
-    data = soup.find_all('li', class_={'room_list_room'})
+    link = requests.get(url,headers=headers).json()
     dirlst = []
-    
+    data = link['rooms']
     for i in data:
         try:
-            name = i.a['data-room'].title()
-            content_url = i.a['href']
-            if not base_domain in content_url: content_url = base_domain+content_url
-            img = i.img['src']
-            description = i.find('li')['title']
-            #if PY2: name = '%s - [ %s ]' % (kodi.sortX(i[1].encode('utf-8')).title(),kodi.sortX(i[3].encode('utf-8')))
-            #else: name = '%s - [ %s ]' % (kodi.sortX(i[1]).title(),kodi.sortX(i[3]))
-            #if PY2: description = 'Name: %s \nAge: %s \nLocation: %s \nStats: %s \n\nDescription: %s' % \
-            #(kodi.sortX(i[1].encode('utf-8')),i[2],kodi.sortX(i[6].encode('utf-8')),kodi.sortX(i[5].encode('utf-8')),kodi.sortX(i[7].encode('utf-8')))
-            #else: description = 'Name: %s \nAge: %s \nLocation: %s \nStats: %s \n\nDescription: %s' % \
-            #(kodi.sortX(i[1]),i[2],kodi.sortX(i[6]),kodi.sortX(i[5]),kodi.sortX(i[7]))
-            #content_url = i[0] + '|SPLIT|%s' % base_name
+            pname = i['username']
+            img = i['img']
+            href = ('https://chaturbate.com/%s/' % pname)
+            age = i['display_age']
+            if len(str(age)) >=3: age = '?'
+            desc = i['subject']
+            views = i['num_users']
+            description = ('Age : %s\n\nViewers : %s\n\n%s' %(age,views,desc))
             fanarts = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork', 'resources/art/%s/fanart.jpg' % filename))
-            dirlst.append({'name': name, 'url': content_url, 'mode': player_mode, 'icon': img, 'fanart': fanarts, 'description': description, 'folder': False})
+            dirlst.append({'name': pname.title(), 'url': href, 'mode': player_mode, 'icon': img, 'fanart': fanarts, 'description': description, 'folder': False})
         except Exception as e:
             pass
             #log_utils.log('Error adding menu item %s in %s:: Error: %s' % (name.title(),base_name.title(),str(e)), log_utils.LOGERROR)
