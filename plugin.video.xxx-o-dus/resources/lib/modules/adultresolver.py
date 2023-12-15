@@ -53,6 +53,8 @@ class streamer:
             
             elif 'redtube.com' in url: u = self.redtube(url)
             
+            elif 'xnxx.com' in url: u = self.xnxx(url)
+            
             elif 'siska.video' in url: u = self.siska(url)
             
             elif 'ghettotube.com' in url: u = self.ghettotube(url)
@@ -1141,6 +1143,14 @@ class streamer:
             source = source+'|verifypeer=false'
             xbmc.Player ().play(source)
         except: dialog.notification('XXX-O-DUS', '[COLOR yellow]Performer Is Offline[/COLOR]', xbmcgui.NOTIFICATION_INFO, 5000)
+    def xnxx(self, url):
+        try:
+            Headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36' }
+            pattern = r'''setVideoHLS.*?['"](.*?.m3u8)['"]'''
+            link = requests.get(url,headers=Headers).text
+            source = re.findall(pattern,link,flags=re.DOTALL)[0]
+            xbmc.Player ().play(source)
+        except: dialog.notification('XXX-O-DUS', '[COLOR yellow]Video Is Offline[/COLOR]', xbmcgui.NOTIFICATION_INFO, 5000)
         
     def redtube(self, url):
         try:
