@@ -64,7 +64,7 @@ For Support Follow @Nemzzy668 On Twitter
 
 </addon>
 
-<addon id="plugin.video.fanime" name="[COLOR magenta][B]FANime[/COLOR][/B]" version="1.00.002" provider-name="@Nemzzy668">
+<addon id="plugin.video.fanime" name="[COLOR magenta][B]FANime[/COLOR][/B]" version="1.00.003" provider-name="@Nemzzy668">
   <requires>
     <!-- <import addon="xbmc.python" version="2.1.0"/> -->
     <import addon="script.module.simplejson"/>
