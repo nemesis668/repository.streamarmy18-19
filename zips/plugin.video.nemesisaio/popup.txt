@@ -1,0 +1,12 @@
+[COLOR pink]Welcome To NemesisAio[/COLOR]
+[COLOR aqua]NemesisAio: Current Version 4.00.015[/COLOR]
+
+
+[COLOR yellow]Update Information[/COLOR]
+[COLOR green]Added PopUp Notification About Updates[/COLOR]
+[COLOR green]Updated Nemzzy Scrapers Lots More Results In Movies & Tv Shows[/COLOR]
+[COLOR green]Fixed DaddySports In Sports Section[/COLOR]
+
+
+[COLOR yellow]Issues Known[/COLOR]
+[COLOR red]None At The Moment, If Any Issues Report to [COLOR pink]@Nemzzy668 on Twitter[/COLOR]

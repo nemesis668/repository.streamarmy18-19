@@ -176,7 +176,7 @@ For Support Follow @Nemzzy668 On Twitter
 
 </addon>
 
-<addon id="plugin.video.nemesisaio" name="[COLOR yellow][B]NemesisAio[/B][/COLOR]" version="4.00.028" provider-name="[COLOR yellow]@Nemzzy668 , @_Manc_ , @LordJD[/COLOR]">
+<addon id="plugin.video.nemesisaio" name="[COLOR yellow][B]NemesisAio[/B][/COLOR]" version="4.00.030" provider-name="[COLOR yellow]@Nemzzy668 , @_Manc_ , @LordJD[/COLOR]">
   <requires>
     <!-- <import addon="xbmc.python" version="2.1.0"/> -->
     <import addon="script.module.simplejson"/>
@@ -188,6 +188,7 @@ For Support Follow @Nemzzy668 On Twitter
     <import addon="script.module.beautifulsoup4" />
     <import addon="script.module.html5lib" />
 	<import addon="script.module.nemzzyscrapers" />
+	<import addon="script.module.nemzzy" />
 	<import addon="script.module.pyxbmct" />
 
   </requires>
@@ -300,6 +301,23 @@ For Support Follow @Nemzzy668 On Twitter
 		<platform>all</platform>
 		<summary lang="en">Forked from TK Norris Shared Module. Reusable Modules used by several of Echo's addons</summary>
 	</extension>
+</addon>
+
+<addon id="script.module.nemzzy" name="Nemzzy Utils" version="1.00.000" provider-name="@Nemzzy668">
+	<requires>
+		<import addon="script.module.requests" />
+	</requires>
+	<extension point="xbmc.python.module" library="lib" />
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<summary lang="en">Module For Checking Updates and pushing minor fixes</summary>
+		<assets>
+      <icon>icon.png</icon>
+    </assets>
+	</extension>
+	<extension point="xbmc.service" library="service.py" start="startup">
+  </extension>
+
 </addon>
 
 <addon id="script.module.nemzzyscrapers" name="Nemzzy Scrapers" version="2.00.005" provider-name="@Nemzzy668">
