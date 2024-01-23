@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.fapzone" name="[COLOR darkgoldenrod].FapZone[/COLOR]" version="3.00.002" provider-name="@Nemzzy">
+<addon id="plugin.video.fapzone" name="[COLOR darkgoldenrod].FapZone[/COLOR]" version="3.00.003" provider-name="@Nemzzy">
   <requires>
     <!-- <import addon="xbmc.python" version="2.1.0"/> -->
 	<import addon="script.module.beautifulsoup4" />
@@ -8,6 +8,7 @@
 	<import addon="script.module.six" />
 	<import addon="script.module.kodi-six" />
 	<import addon="script.module.pyxbmct" />
+	<import addon="script.module.nemzzy" />
   </requires>
   <extension point="xbmc.python.pluginsource" library="Main.py">
     <provides>video</provides>

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.cwm" name="[COLOR gold][B]C[COLOR magenta]um [COLOR gold]W[COLOR magenta]ith [COLOR gold]M[COLOR magenta]e [/B][/COLOR]" version="1.03.000" provider-name="Nemzzy668">
+<addon id="plugin.video.cwm" name="[COLOR gold][B]C[COLOR magenta]um [COLOR gold]W[COLOR magenta]ith [COLOR gold]M[COLOR magenta]e [/B][/COLOR]" version="1.04.000" provider-name="Nemzzy668">
   <requires>
     <import addon="script.module.requests" />
 	<import addon="script.module.pyxbmct" />
 	<import addon="script.module.beautifulsoup4" />
 	<import addon="script.module.resolveurl" />
 	<import addon="script.cwm.scrapers"/>
+	<import addon="script.module.nemzzy" />
   </requires>
   <extension point="xbmc.python.pluginsource" library="Main.py">
     <provides>video</provides>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.FightClub" name="[COLOR gold][B]F[COLOR silver]ight Club[/B][/COLOR]" version="1.00.023" provider-name="Nemzzy">
+<addon id="plugin.video.FightClub" name="[COLOR gold][B]F[COLOR silver]ight Club[/B][/COLOR]" version="1.00.024" provider-name="Nemzzy">
 	<requires>
 		<!-- <import addon="xbmc.python" version="2.1.0"/> -->
 		<import addon="script.module.requests"/>
@@ -8,6 +8,7 @@
 		<import addon="script.module.html5lib" />
 		<import addon="script.module.six" />
 		<import addon="script.module.kodi-six" />
+		<import addon="script.module.nemzzy" />
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="fc.py">
 		<provides>video</provides>
