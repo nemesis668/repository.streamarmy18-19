@@ -86,8 +86,11 @@ def content(url,searched=False):
     for i in r:
         try:
             title = i.img['alt']
-            mediaurl = i.h3.a['href']
-            icon = i.img['data-src']
+            mediaurl = i.a['href']
+            icon = i.img['src']
+            if '.gif' in icon: icon = i.img['data-wpfc-original-src']
+            #dialog.ok("Media",str(icon))
+            #quit()
             fanarts = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork', 'resources/art/%s/fanart.jpg' % filename))
             dirlst.append({'name': title, 'url': mediaurl, 'mode': player_mode, 'icon': icon, 'fanart': fanarts, 'description': 'No Desc', 'folder': False})
         except Exception as e:

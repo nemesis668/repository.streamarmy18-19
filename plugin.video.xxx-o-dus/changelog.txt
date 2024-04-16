@@ -1,12 +1,14 @@
 [COLOR pink]Welcome To XXX-O-DUS[/COLOR]
 
-[COLOR aqua]XXXODUS : Current Version 5.00.018[/COLOR]
+[COLOR aqua]XXXODUS : Current Version 5.00.021[/COLOR]
 
-[COLOR aqua]SCRAPERS : Current Version 5.00.012[/COLOR]
+[COLOR aqua]SCRAPERS : Current Version 5.00.016[/COLOR]
 
 
 [COLOR yellow]FIXED[/COLOR]
-[COLOR white]XNXX[/COLOR]
+[COLOR white]FreeOMovie Next Page[/COLOR]
+[COLOR white]PandaMovie[/COLOR]
+[COLOR white]HQPorner[/COLOR]
 
 
 

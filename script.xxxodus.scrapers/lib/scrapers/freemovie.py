@@ -31,11 +31,10 @@ def menu():
         
 @utils.url_dispatcher.register('%s' % content_mode,['url'],['searched'])
 def content(url,searched=False):
-
     try:
         ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36'
         headers = {'User-Agent': ua}
-        c = requests.get(url, headers=headers).text
+        c = requests.get(url.strip(), headers=headers).text
         soup = BeautifulSoup(c, 'html5lib')
         r = soup.find_all('li', class_={'TPostMv'})
         if ( not r ) and ( not searched ):
@@ -43,6 +42,7 @@ def content(url,searched=False):
             kodi.notify(msg='Scraping Error: Info Added To Log File', duration=6000, sound=True)
     except Exception as e:
         if ( not searched ):
+            dialog.ok("ERROR",str(e))
             log_utils.log('Fatal Error in %s:: Error: %s' % (base_name.title(),str(e)), log_utils.LOGERROR)
             kodi.notify(msg='Fatal Error', duration=4000, sound=True)    
         else: pass
@@ -54,8 +54,6 @@ def content(url,searched=False):
             name = i.find('div', class_={'Title'}).text
             url2 = i.a['href']
             icon = i.find('img')['data-lazy-src']
-            #dialog.ok("Icon",str(icon))
-            #quit()
             fanarts = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork', 'resources/art/%s/fanart.jpg' % filename))
             dirlst.append({'name': name, 'url': url2, 'mode': player_mode, 'icon': icon, 'fanart': fanarts, 'folder': False})
         except Exception as e:
@@ -71,7 +69,7 @@ def content(url,searched=False):
     if not searched:
         
         try:
-            search_pattern = '''<link rel=['"]next['"]\s*href=['"]([^'"]+)'''
+            search_pattern = '''<a class=['"]next\s*page.*?['"]\s*href=['"]([^'"]+)'''
             helper.scraper().get_next_page(content_mode,url,search_pattern,filename)
         except Exception as e: 
             log_utils.log('Error getting next page for %s :: Error: %s' % (base_name.title(),str(e)), log_utils.LOGERROR)

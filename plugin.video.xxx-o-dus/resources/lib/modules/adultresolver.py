@@ -747,17 +747,34 @@ class streamer:
             return
 
     def hqporner(self, url):
+        # Thank you to Cummination for letting me use their resolver code for HQPorner
         #try:
             r = client.request(url)
             pattern = r"""iframe\s*width=['"]\d+['"]\s*height=['"]\d+['"]\s*src=['"]([^'"]+)"""
             url = re.findall(pattern,r)[0]
             url = url if url.startswith('http') else 'https:' + url
-            r = client.request(url)
-            pattern = r"""a\s+href=['"]([^'"]+mp4)['"].*?>(.*?)<"""
-            urls = re.findall(pattern,r)
             names = []
             srcs  = []
-            for links,qual in urls:
+            videopage = requests.get(url).text
+            vdiv = re.search(r'function do_pl\(\)\s*{(.*)};', videopage)
+            if vdiv:
+                vdiv = vdiv.group(1)
+                s = re.search(r'replaceAll\("([^"]+)",\s*([^)]+)', vdiv)
+                if s:
+                    var = s.group(1)
+                    params = s.group(2).split('+')
+                    repl = ''
+                    for param in params:
+                        if param.startswith('"'):
+                            repl += param[1:-1]
+                        else:
+                            repl += re.findall(r'{0}="([^"]+)'.format(param), vdiv)[0]
+                    vdiv = vdiv.replace(var, repl)
+                videopage = vdiv
+            videos = re.compile(r'source\s*src=\\"([^\\]+).+?\\"([^\\\s]+)', re.DOTALL | re.IGNORECASE).findall(videopage)
+            if not videos:
+                videos = re.compile(r'file:\s*"([^"]+mp4)",\s*label:\s*"\d+', re.DOTALL | re.IGNORECASE).findall(videopage)
+            for links,qual in videos:
                 if not 'http' in links: links='http:'+links
                 names.append(kodi.giveColor(qual,'white',True))
                 srcs.append(links)
