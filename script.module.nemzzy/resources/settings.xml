@@ -1,3 +1,6 @@
 <settings>
 	<setting id="xml_folder" type="folder" label="Custom Progress Dialog XML Folder" visible="true" default=""/>
+	<category label="Pin">
+	<setting id="pincheck" type="text" label="Current Pin : " default="false" visible="false"/>
+</category>
 </settings>
