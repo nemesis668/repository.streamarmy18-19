@@ -310,7 +310,7 @@ For Support Follow @Nemzzy668 On Twitter
 	</extension>
 </addon>
 
-<addon id="script.module.nemzzy" name="Nemzzy Utils" version="4.00.000" provider-name="@Nemzzy668">
+<addon id="script.module.nemzzy" name="Nemzzy Utils" version="5.00.000" provider-name="@Nemzzy668">
 	<requires>
 		<import addon="script.module.requests" />
 	</requires>
