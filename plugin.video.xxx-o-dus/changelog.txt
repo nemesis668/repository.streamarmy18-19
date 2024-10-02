@@ -1,14 +1,21 @@
 [COLOR pink]Welcome To XXX-O-DUS[/COLOR]
 
-[COLOR aqua]XXXODUS : Current Version 5.00.021[/COLOR]
+[COLOR aqua]XXXODUS : Current Version 5.00.022[/COLOR]
 
-[COLOR aqua]SCRAPERS : Current Version 5.00.016[/COLOR]
+[COLOR aqua]SCRAPERS : Current Version 5.00.017[/COLOR]
 
 
 [COLOR yellow]FIXED[/COLOR]
-[COLOR white]FreeOMovie Next Page[/COLOR]
-[COLOR white]PandaMovie[/COLOR]
-[COLOR white]HQPorner[/COLOR]
+[COLOR white]Perfect Girls[/COLOR]
+[COLOR white]Pornhub[/COLOR]
+[COLOR white]Redtube[/COLOR]
+[COLOR white]Tube8[/COLOR]
+[COLOR white]Xvideos[/COLOR]
+[COLOR white]Youjizz[/COLOR]
+[COLOR white]Youporn[/COLOR]
+
+[COLOR yellow]ADDED[/COLOR]
+[COLOR white]Live XXX Streams[/COLOR]
 
 
 

@@ -47,7 +47,7 @@ def menu():
 
     for i in r:
         try:
-            name = i.a['data-mxptext']
+            name = i.a['alt']
             icon = i.img['src']
             url2 = i.a['href']
             if not base_domain in url2: url2=base_domain+url2

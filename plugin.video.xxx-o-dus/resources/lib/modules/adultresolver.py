@@ -172,6 +172,12 @@ class streamer:
             
             elif 'motherless.com' in url: u = self.motherless(url)
             
+            elif 'xvideos.com' in url: u = self.xvideos(url)
+            
+            elif 'youjizz.com' in url: u = self.youjizz(url)
+            
+            elif 'adult-tv-channels.com' in url: u = self.adult_tv(url)
+            
 
 
             else: u = self.generic(url, pattern=None)
@@ -377,6 +383,7 @@ class streamer:
                 xbmc.Player().play(u)
             except : dialog.notification('XXX-O-DUS', '[COLOR yellow]Resolver Couldn\'t Resolve Link, Try Another[/COLOR]', xbmcgui.NOTIFICATION_INFO, 5000)
     def fourtube(self, url):
+        dialog.ok("URL",str(url))
         ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36'
         headers = {'User-Agent': ua}
         link = requests.get(url, headers=headers).text
@@ -460,17 +467,19 @@ class streamer:
             return
 
     def perfectgirls(self, url):
+        headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+                   'X-Requested-With' : 'XMLHttpRequest'}
         try:
-            r = client.request(url)
-            soup = BeautifulSoup(r,'html.parser')
-            r = soup.find_all('a', class_={'download-link'})
+            link = requests.get(url,headers=headers).content
+            soup = BeautifulSoup(str(link),'html.parser')
+            r = soup.find('video', class_={'video-js'})
             names = []
             srcs  = []
-            for i in r:
-                url = i['href']
-                qual = i.span.text
+            for vids in r.find_all('source'):
+                qual = vids['title']
+                source = vids['src']
                 names.append(kodi.giveColor(qual,'white',True))
-                srcs.append(url)
+                srcs.append(source)
             selected = kodi.dialog.select('Select a link.',names)
             if selected < 0:
                 kodi.notify(msg='No option selected.')
@@ -1150,7 +1159,15 @@ class streamer:
             source = re.findall(pattern,link,flags=re.DOTALL)[0]
             xbmc.Player ().play(source)
         except: dialog.notification('XXX-O-DUS', '[COLOR yellow]Performer Is Offline[/COLOR]', xbmcgui.NOTIFICATION_INFO, 5000)
-        
+    def xvideos(self, url):
+        try:
+            Headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36' }
+            pattern = r'''['"]([^'"]+m3u8)['"]'''
+            link = requests.get(url,headers=Headers).text
+            source = re.findall(pattern,link,flags=re.DOTALL)[0]
+            xbmc.Player ().play(source)
+        except: dialog.notification('XXX-O-DUS', '[COLOR yellow]Couldn\'t resolve Link[/COLOR]', xbmcgui.NOTIFICATION_INFO, 5000)
+    
     def motherless(self, url):
         try:
             Headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36' }
@@ -1168,7 +1185,23 @@ class streamer:
             source = re.findall(pattern,link,flags=re.DOTALL)[0]
             xbmc.Player ().play(source)
         except: dialog.notification('XXX-O-DUS', '[COLOR yellow]Video Is Offline[/COLOR]', xbmcgui.NOTIFICATION_INFO, 5000)
-        
+    
+    def adult_tv(self, url):
+        try:
+            headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36' }
+            pattern = r'''file:['"](.*?)['"]'''
+            base_domain = 'https://adult-tv-channels.com'
+            link = requests.get(url,headers=headers).text
+            soup = BeautifulSoup(link,'html.parser')
+            iframe = soup.find('iframe')['src']
+            if not base_domain in iframe: iframe = base_domain+iframe
+            headers2 = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36',
+                       'Referer' : url}
+            link2 = requests.get(iframe,headers=headers2).text
+            source = re.findall(pattern,link2,flags=re.DOTALL)[0]
+            xbmc.Player ().play(source)
+        except: dialog.notification('XXX-O-DUS', '[COLOR yellow]Video Is Offline[/COLOR]', xbmcgui.NOTIFICATION_INFO, 5000)
+    
     def redtube(self, url):
         try:
             Headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36' }
@@ -1184,6 +1217,31 @@ class streamer:
                 url = i['videoUrl']
                 names.append(kodi.giveColor(qual,'white',True))
                 srcs.append(url)
+            selected = kodi.dialog.select('Select a link.',names)
+            if selected < 0:
+                kodi.notify(msg='No option selected.')
+                kodi.idle()
+                quit()
+            else:
+                url2 = srcs[selected]
+                xbmc.Player().play(url2)
+        except: dialog.notification('XXX-O-DUS', '[COLOR yellow]Resolver Couldn\'t Resolve Link, Try Another[/COLOR]', xbmcgui.NOTIFICATION_INFO, 5000)
+        
+    def youjizz(self, url):
+        try:
+            Headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36' }
+            pattern = r'''quality['"]:['"](.*?)['"].*?name['"]:['"](.*?)['"]'''
+            link = requests.get(url,headers=Headers).text
+            soup = BeautifulSoup(link,'html.parser')
+            r = soup.find('div', id={'content'})
+            stuff = re.findall(pattern,str(r))
+            names = []
+            srcs  = []
+            for qual,vid in stuff:
+                names.append(kodi.giveColor(qual,'white',True))
+                vid = vid.replace('\\','')
+                if not 'http' in vid: vid = 'https:'+vid
+                srcs.append(vid)
             selected = kodi.dialog.select('Select a link.',names)
             if selected < 0:
                 kodi.notify(msg='No option selected.')

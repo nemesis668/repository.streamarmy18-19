@@ -16,6 +16,12 @@ def Blacklistcheck(url):
     if 'hclips.com' in url:
         adultresolver.resolve(url)
         quit()
+    elif 'xvideos.com' in url:
+        adultresolver.resolve(url)
+        quit()
+    elif 'youjizz.com' in url:
+        adultresolver.resolve(url)
+        quit()
     elif 'chaturbate.com' in url:
         adultresolver.resolve(url)
         quit()
@@ -119,6 +125,9 @@ def Blacklistcheck(url):
         adultresolver.resolve(url)
         quit()
     elif 'redtube.com' in url:
+        adultresolver.resolve(url)
+        quit()
+    elif 'adult-tv-channels.com' in url:
         adultresolver.resolve(url)
         quit()
     else:

@@ -9,6 +9,8 @@ import kodi
 import client
 import os,re
 import dom_parser2
+from bs4 import BeautifulSoup
+dialog = xbmcgui.Dialog()
 translatePath = xbmc.translatePath if PY2 else xbmcvfs.translatePath
 buildDirectory = utils.buildDir #CODE BY NEMZZY AND ECHO
 
@@ -70,13 +72,8 @@ def content(url,searched=False):
 
     try:
         c = client.request(url)
-        r = dom_parser2.parse_dom(c, 'div', {'id': re.compile('video_\d+')})
-        r = [(dom_parser2.parse_dom(i, 'a', req=['href','title']), \
-            dom_parser2.parse_dom(i, 'span', {'class': 'duration'}), \
-            dom_parser2.parse_dom(i, 'img', req='data-src'), \
-            dom_parser2.parse_dom(i, 'span', {'class': 'video-hd-mark'})) \
-            for i in r if i]
-        r = [(urljoin(base_domain,i[0][0].attrs['href']), i[0][0].attrs['title'],  i[1][0].content, i[2][0].attrs['data-src'], i[3][0].content if i[3] else 'SD') for i in r]
+        soup = BeautifulSoup(c,'html.parser')
+        r = soup.find_all('div', class_={'frame-block thumb-block'})
         if ( not r ) and ( not searched ):
             log_utils.log('Scraping Error in %s:: Content of request: %s' % (base_name.title(),str(c)), log_utils.LOGERROR)
             kodi.notify(msg='Scraping Error: Info Added To Log File', duration=6000, sound=True)
@@ -91,12 +88,13 @@ def content(url,searched=False):
         
     for i in r:
         try:
-            if PY2: name = '%s - [ %s - %s ]' % (kodi.sortX(i[1].encode('utf-8')).title(),kodi.sortX(i[2].encode('utf-8')),kodi.sortX(i[4].encode('utf-8')))
-            else: name = '%s - [ %s - %s ]' % (kodi.sortX(i[1]).title(),kodi.sortX(i[2]),kodi.sortX(i[4]))
+            name = i.find('p').text
+            content_url = i.a['href']
+            if not base_domain in content_url: content_url = base_domain+content_url
+            icon = i.img['data-src']
             if searched: description = 'Result provided by %s' % base_name.title()
             else: description = name
-            icon = re.sub('(\.THUMBNUM\.)','.1.',i[3])
-            content_url = i[0] + '|SPLIT|%s' % base_name
+            #content_url = i[0] + '|SPLIT|%s' % base_name
             fanarts = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork', 'resources/art/%s/fanart.jpg' % filename))
             dirlst.append({'name': name, 'url': content_url, 'mode': player_mode, 'icon': icon, 'fanart': fanarts, 'description': description, 'folder': False})
         except Exception as e:
