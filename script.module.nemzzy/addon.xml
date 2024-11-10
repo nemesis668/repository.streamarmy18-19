@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.nemzzy" name="Nemzzy Utils" version="6.00.000" provider-name="@Nemzzy668">
+<addon id="script.module.nemzzy" name="Nemzzy Utils" version="7.00.000" provider-name="@Nemzzy668">
 	<requires>
 		<import addon="script.module.requests" />
 	</requires>
