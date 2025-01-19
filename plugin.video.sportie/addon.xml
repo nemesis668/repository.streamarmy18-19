@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.sportie" name="[COLOR aqua][B]S[COLOR red]PORTI[COLOR aqua]E[/B][/COLOR]" version="1.00.02" provider-name="Nemzzy668">
+<addon id="plugin.video.sportie" name="[COLOR aqua][B]S[COLOR red]PORTI[COLOR aqua]E[/B][/COLOR]" version="1.00.03" provider-name="Nemzzy668">
   <requires>
     <import addon="script.module.requests" />
 	<import addon="script.module.pyxbmct" />
 	<import addon="script.module.beautifulsoup4" />
 	<import addon="script.module.nemzzy" />
+	<import addon="script.module.inputstreamhelper" />
   </requires>
   <extension point="xbmc.python.pluginsource" library="Main.py">
     <provides>video</provides>

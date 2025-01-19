@@ -1,2 +1,5 @@
 <settings>
+<category label="UserID">
+	<setting id="userid" type="text" label="Random ID" default="" visible="true"/>
+</category>
 </settings>
