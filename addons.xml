@@ -213,7 +213,7 @@ For Support Follow @Nemzzy668 On Twitter
   </extension>
 </addon>
 
-<addon id="plugin.video.sportie" name="[COLOR aqua][B]S[COLOR red]PORTI[COLOR aqua]E[/B][/COLOR]" version="1.00.05" provider-name="Nemzzy668">
+<addon id="plugin.video.sportie" name="[COLOR aqua][B]S[COLOR red]PORTI[COLOR aqua]E[/B][/COLOR]" version="1.00.06" provider-name="Nemzzy668">
   <requires>
     <import addon="script.module.requests" />
 	<import addon="script.module.pyxbmct" />
@@ -221,6 +221,8 @@ For Support Follow @Nemzzy668 On Twitter
 	<import addon="script.module.nemzzy" />
 	<import addon="script.module.inputstreamhelper" />
 	<import addon="script.module.pil" />
+	<import addon="script.module.sportiescrapers" />
+
   </requires>
   <extension point="xbmc.python.pluginsource" library="Main.py">
     <provides>video</provides>
@@ -366,6 +368,20 @@ For Support Follow @Nemzzy668 On Twitter
 	<extension point="xbmc.addon.metadata">
 		<platform>all</platform>
 		<summary lang="en">Scraper Moduel Used By Addons By Nemzzy</summary>
+	</extension>
+</addon>
+
+<addon id="script.module.sportiescrapers" name="Sportie Scrapers" version="1.00.00" provider-name="@Nemzzy668">
+	<requires>
+		<import addon="script.module.requests" />
+		<import addon="script.module.beautifulsoup4" />
+		<import addon="script.module.html5lib" />
+		<import addon="script.module.resolveurl" />
+	</requires>
+	<extension point="xbmc.python.module" library="lib" />
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<summary lang="en">Scraper Moduel Used By Sportie addon</summary>
 	</extension>
 </addon>
 
