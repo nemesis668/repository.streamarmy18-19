@@ -182,7 +182,7 @@ For Support Follow @Nemzzy668 On Twitter
 
 </addon>
 
-<addon id="plugin.video.nemesisaio" name="[COLOR yellow][B]NemesisAio[/B][/COLOR]" version="4.00.030" provider-name="[COLOR yellow]@Nemzzy668 , @_Manc_ , @LordJD[/COLOR]">
+<addon id="plugin.video.nemesisaio" name="[COLOR yellow][B]NemesisAio[/B][/COLOR]" version="5.00.00" provider-name="[COLOR yellow]@Nemzzy668 , @_Manc_ , @LordJD[/COLOR]">
   <requires>
     <!-- <import addon="xbmc.python" version="2.1.0"/> -->
     <import addon="script.module.simplejson"/>
@@ -356,7 +356,7 @@ For Support Follow @Nemzzy668 On Twitter
 
 </addon>
 
-<addon id="script.module.nemzzyscrapers" name="Nemzzy Scrapers" version="2.00.005" provider-name="@Nemzzy668">
+<addon id="script.module.nemzzyscrapers" name="Nemzzy Scrapers" version="3.00.00" provider-name="@Nemzzy668">
 	<requires>
 		<!-- <import addon="xbmc.python" version="2.1.0" /> -->
 		<import addon="script.module.requests" />
