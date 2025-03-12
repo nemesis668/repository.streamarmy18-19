@@ -733,17 +733,64 @@ class streamer:
         r = re.findall(pattern,c,flags=re.DOTALL)[0]
         xbmc.Player().play(r)
     def chaturbate(self, url):
+        import random
+        from inputstreamhelper import Helper
+        api_url = 'https://chaturbate.com/get_edge_hls_url_ajax/'
+        user_agent_list = [
+            ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)"
+             "Chrome/77.0.3865.90 Safari/537.36"),
+            ("Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)"
+             "Chrome/79.0.3945.130 Safari/537.36"),
+        ]
+
+        def get_headers():
+            headers = {
+                "Connection": "keep-alive",
+                "Cache-Control": "max-age=0",
+                "Upgrade-Insecure-Requests": "1",
+                "User-Agent": random.choice(user_agent_list),
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
+                "Accept-Encoding": "gzip, deflate",
+                "Accept-Language": "en-US,en;q=0.9,fr;q=0.8",
+                "Sec-Ch-Ua" : "Microsoft Edge;v=131, Chromium;v=131, Not_A Brand;v=24",
+                "Referer" : "https://chaturbate.com/",
+                "x-requested-with": "XMLHttpRequest"
+            }
+            return headers
+            
+            
+
         dialog.notification('XXX-O-DUS', '[COLOR yellow]Getting Cam Now[/COLOR]', xbmcgui.NOTIFICATION_INFO, 5000)
-        try:
-            Headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36' }
-            pattern = r'''hls_source.+(http.*?m3u8)'''
-            link = requests.get(url,headers=Headers).text
-            source = re.findall(pattern,link,flags=re.DOTALL)[0]
-            if PY2: source = source.replace('\u002D','-')
-            else: source = source.replace('u002D','-').replace('\-','-')
-            xbmc.log("%s" % source, xbmc.LOGINFO)
-            xbmc.Player ().play(source)
-        except: dialog.notification('XXX-O-DUS', '[COLOR yellow]Performer Is Offline[/COLOR]', xbmcgui.NOTIFICATION_INFO, 5000)
+        #try:
+        room_slug = url.split('.com/')[1].replace('/','')
+        Headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36' }
+        #pattern = r'''hls_source.+(http.*?m3u8)'''
+        link = requests.get(url,headers=get_headers())
+        csrf_token = link.cookies.get_dict()['csrftoken']
+        data = {'room_slug': room_slug,
+                'bandwidth' : 'high',
+                'current_edge': '',
+                'exclude_edge': '',
+                'csrfmiddlewaretoken': csrf_token}
+        source = requests.post(api_url, headers=get_headers(),data=data).json()
+        #dialog.ok("SOURCE",str(source))
+        cam = source['url']
+        cam = cam.replace('live-hls','live-c-fhls').replace('playlist.m3u8','playlist_sfm4s.m3u8').replace('-ams','-rtm')
+        #cam = cam+'|User-Agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36&Keep-Alive=true&Referer=https://chaturbate.com&Origin=https://chaturbate.com'
+        #source = re.findall(pattern,link,flags=re.DOTALL)[0]
+        #if PY2: source = source.replace('\u002D','-')
+        #else: source = source.replace('u002D','-').replace('\-','-')
+        #xbmc.log("%s" % source, xbmc.LOGINFO)
+        is_helper = Helper("hls")
+        if is_helper.check_inputstream():
+            play_item = xbmcgui.ListItem(path=cam)
+            play_item.setProperty('inputstreamaddon', is_helper.inputstream_addon)
+            play_item.setProperty('inputstream.adaptive.manifest_type', 'hls')
+            play_item.setProperty('inputstream', 'inputstream.adaptive')
+            play_item.setProperty('inputstream.adaptive.common_headers', 'headername=encoded_value&User-Agent=%s&Origin=https://chaturbate.com' % random.choice(user_agent_list))
+            xbmc.Player ().play(cam, play_item, False)
+        #xbmc.Player ().play(cam)
+        #except: dialog.notification('XXX-O-DUS', '[COLOR yellow]Performer Is Offline[/COLOR]', xbmcgui.NOTIFICATION_INFO, 5000)
             
     def nxgx(self, url):
         try:        

@@ -243,7 +243,7 @@ For Support Follow @Nemzzy668 On Twitter
 
 <addon id="plugin.video.xxx-o-dus"
 	     name="XXX-O-DUS"
-	     version="5.00.023"
+	     version="5.00.024"
 	     provider-name="Originally By : Echo Coder :: Revived By @Nemzzy668">
   <requires>
     <!-- <import addon="xbmc.python" version="2.24.0"/> -->
@@ -259,6 +259,7 @@ For Support Follow @Nemzzy668 On Twitter
 	<import addon="script.module.six" />
 	<import addon="script.module.kodi-six" />
 	<import addon="script.module.nemzzy" />
+	<import addon="script.module.inputstreamhelper" />
     <!--<import addon="repository.colossus"/>-->
   </requires>
   <extension point="xbmc.python.pluginsource" library="default.py">
