@@ -213,7 +213,7 @@ For Support Follow @Nemzzy668 On Twitter
   </extension>
 </addon>
 
-<addon id="plugin.video.sportie" name="[COLOR aqua][B]S[COLOR red]PORTI[COLOR aqua]E[/B][/COLOR]" version="1.00.08" provider-name="Nemzzy668">
+<addon id="plugin.video.sportie" name="[COLOR aqua][B]S[COLOR red]PORTI[COLOR aqua]E[/B][/COLOR]" version="1.00.09" provider-name="Nemzzy668">
   <requires>
     <import addon="script.module.requests" />
 	<import addon="script.module.pyxbmct" />
@@ -222,6 +222,7 @@ For Support Follow @Nemzzy668 On Twitter
 	<import addon="script.module.inputstreamhelper" />
 	<import addon="script.module.pil" />
 	<import addon="script.module.sportiescrapers" />
+	<import addon="script.module.resolveurl"/>
 
   </requires>
   <extension point="xbmc.python.pluginsource" library="Main.py">
