@@ -39,6 +39,7 @@ def menu():
             kodi.notify(msg='Scraping Error: Info Added To Log File', duration=6000, sound=True)
             quit()
     except Exception as e:
+        
         log_utils.log('Fatal Error in %s:: Error: %s' % (base_name.title(),str(e)), log_utils.LOGERROR)
         kodi.notify(msg='Fatal Error', duration=4000, sound=True)
         quit()

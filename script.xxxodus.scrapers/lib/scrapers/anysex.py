@@ -33,8 +33,8 @@ def menu():
     try:
         url = urljoin(base_domain,'/categories/')
         c = client.request(url)
-        r = re.findall('<ul class="box">(.+?)</ul>',c,flags=re.DOTALL)[0]
-        r = re.findall('<div class="img">(.+?)</div>',r,flags=re.DOTALL)
+        soup = BeautifulSoup(c, "html.parser")
+        r = soup.find_all('div', class_={'item'})
     except Exception as e:
         log_utils.log('Fatal Error in %s:: Error: %s' % (base_name.title(),str(e)), log_utils.LOGERROR)
         kodi.notify(msg='Fatal Error', duration=4000, sound=True)
@@ -44,9 +44,9 @@ def menu():
 
     for i in r:
         try:
-            name = re.findall('<span class="title">(.*?)</span>',i, flags=re.DOTALL)[0]
-            url = re.findall('<a href="(.*?)"',i, flags=re.DOTALL)[0]
-            icon = re.findall('<img class="thumb"\s+src="(.*?)"',i, flags=re.DOTALL)[0]
+            name = i.a['title']
+            icon = i.img['src']
+            url = i.a['href']
             fanarts = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork', 'resources/art/%s/fanart.jpg' % base_name))
             dirlst.append({'name': name, 'url': url,'mode': content_mode, 'icon': icon, 'fanart': fanarts, 'folder': True})
         except Exception as e:
@@ -63,7 +63,7 @@ def content(url,searched=False):
     try:
         c = client.request(url)
         soup = BeautifulSoup(c,'html.parser')
-        r = soup.find_all('li', class_={'item'})
+        r = soup.find_all('div', class_={'item'})
     except Exception as e:
         if ( not searched ):
             log_utils.log('Fatal Error in %s:: Error: %s' % (base_name.title(),str(e)), log_utils.LOGERROR)
@@ -76,7 +76,7 @@ def content(url,searched=False):
             name = i.img['alt']
             url2 = i.a['href']
             if not base_domain in url2: url2 = base_domain + url2
-            icon = i.img['src']
+            icon = i.img['data-jpg']
             try:
                 time = i.find('span', class_={'time'}).text
             except:

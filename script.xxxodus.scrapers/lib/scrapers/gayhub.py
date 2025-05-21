@@ -6,7 +6,7 @@ from resources.lib.modules import utils
 from resources.lib.modules import helper
 import log_utils
 import kodi
-import client
+import client,requests
 import dom_parser2, os,re
 from bs4 import BeautifulSoup
 buildDirectory = utils.buildDir #CODE BY NEMZZY AND ECHO
@@ -19,56 +19,61 @@ type         = 'gay'
 menu_mode    = 322
 content_mode = 323
 player_mode  = 801
-
+headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.82'}
 search_tag   = 0
 search_base  = urljoin(base_domain,'video/search?search=%s')
-
+cookies = {'accessAgeDisclaimerPH=':'1',
+           'accessAgeDisclaimerUK=' : '1' }
 @utils.url_dispatcher.register('%s' % menu_mode)
 def menu():
     
-	lover.checkupdates()
+    lover.checkupdates()
 
-	try:
-		url = urljoin(base_domain,'/gay/categories')
-		c = client.request(url)
-		soup = BeautifulSoup(c,'html.parser')
-		r = soup.find_all('div', class_={'category-wrapper'})
-		
-		if ( not r ):
-			log_utils.log('Scraping Error in %s:: Content of request: %s' % (base_name.title(),str(c)), log_utils.LOGERROR)
-			kodi.notify(msg='Scraping Error: Info Added To Log File', duration=6000, sound=True)
-			quit()
-	except Exception as e:
-		log_utils.log('Fatal Error in %s:: Error: %s' % (base_name.title(),str(e)), log_utils.LOGERROR)
-		kodi.notify(msg='Fatal Error', duration=4000, sound=True)
-		quit()
+    try:
+        url = urljoin(base_domain,'/gay/categories')
+        c = requests.get(url, headers=headers,cookies=cookies).text
+        soup = BeautifulSoup(c,'html.parser')
+        #dialog.ok("SOUP",str(soup))
+        r = soup.find_all('div', class_={'category-wrapper'})
+        #dialog.ok("R",str(r))
+        if ( not r ):
+            log_utils.log('Scraping Error in %s:: Content of request: %s' % (base_name.title(),str(c)), log_utils.LOGERROR)
+            kodi.notify(msg='Scraping Error: Info Added To Log File', duration=6000, sound=True)
+            quit()
+    except Exception as e:
+        #dialog.ok("ERROR",str(e))
+        #log_utils.log('Fatal Error in %s:: Error: %s' % (base_name.title(),str(e)), log_utils.LOGERROR)
+        kodi.notify(msg='Fatal Error', duration=4000, sound=True)
+        quit()
 
-	dirlst = []
+    dirlst = []
 
-	for i in r:
-		try:
-			name = i.a['data-mxptext']
-			icon = i.img['data-thumb_url']
-			url2 = i.a['href']
-			if not base_domain in url2: url2=base_domain+url2
-			fanarts = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork', 'resources/art/%s/fanart.jpg' % filename))
-			dirlst.append({'name': name, 'url': url2, 'mode': content_mode, 'icon': icon, 'fanart': fanarts, 'folder': True})
-		except Exception as e:
-			log_utils.log('Error adding menu item %s in %s:: Error: %s' % (name.title(),base_name.title(),str(e)), log_utils.LOGERROR)
+    for i in r:
+        try:
+            name = i.a['alt']
+            icon = i.img['src']
+            url2 = i.a['href']
+            if not base_domain in url2: url2=base_domain+url2
+            fanarts = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork', 'resources/art/%s/fanart.jpg' % filename))
+            dirlst.append({'name': name, 'url': url2, 'mode': content_mode, 'icon': icon, 'fanart': fanarts, 'folder': True})
+        except Exception as e:
+            log_utils.log('Error adding menu item %s in %s:: Error: %s' % (name.title(),base_name.title(),str(e)), log_utils.LOGERROR)
 
-	if dirlst: buildDirectory(dirlst)    
-	else:
-		kodi.notify(msg='No Menu Items Found')
-		quit()
+    if dirlst: buildDirectory(dirlst)    
+    else:
+        kodi.notify(msg='No Menu Items Found')
+        quit()
 		
 @utils.url_dispatcher.register('%s' % content_mode,['url'],['searched'])
 def content(url,searched=False):
-	
 	try:
-		c = client.request(url)
+		c = requests.get(url, headers=headers,cookies=cookies).text
 		soup = BeautifulSoup(c,'html.parser')
-		r = soup.find('ul',id={'videoCategory'})
-		c = r.find_all('div', class_={'phimage'})
+		if not 'video/search?' in url:
+			r = soup.find('ul',id={'videoCategory'})
+			c = r.find_all('div', class_={'phimage'})
+		else:
+			c = soup.find_all('div', class_={'phimage'})
 		if ( not c ) and ( not searched ):
 			log_utils.log('Scraping Error in %s:: Content of request: %s' % (base_name.title(),str(c)), log_utils.LOGERROR)
 			kodi.notify(msg='Scraping Error: Info Added To Log File', duration=6000, sound=True)
@@ -84,7 +89,7 @@ def content(url,searched=False):
 	for i in c:
 		try:
 			name = i.a['title']
-			icon = i.img['data-thumb_url']
+			icon = i.img['src']
 			content_url = i.a['href']
 			if searched: description = 'Result provided by %s' % base_name.title()
 			else: description = name

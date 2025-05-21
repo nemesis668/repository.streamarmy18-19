@@ -65,7 +65,7 @@ def content(url,searched=False):
     try:
         c = client.request(url)
         soup = BeautifulSoup(c, 'html5lib')
-        r = soup.find_all('div', class_={'video-box pc js_video-box'})
+        r = soup.find_all('div', class_={'video-box pc js_video-box thumbnail-card js-pop'})
         if ( not r ) and ( not searched ):
             log_utils.log('Scraping Error in %s:: Content of request: %s' % (base_name.title(),str(c)), log_utils.LOGERROR)
             kodi.notify(msg='Scraping Error: Info Added To Log File', duration=6000, sound=True)

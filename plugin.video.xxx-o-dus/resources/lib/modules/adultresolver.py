@@ -178,6 +178,8 @@ class streamer:
             
             elif 'adult-tv-channels.com' in url: u = self.adult_tv(url)
             
+            elif 'tube8.com' in url: u = self.tube8(url)
+            
 
 
             else: u = self.generic(url, pattern=None)
@@ -704,12 +706,39 @@ class streamer:
             return
 
     def youporn(self, url):
+        #dialog.ok("YouPorn",str(url))
         try:        
             headers = {'User-Agent' : 'User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko'}
             link = requests.get(url,headers=headers).text
-            soup = BeautifulSoup(link, 'html.parser')
-            r = soup.find('div', class_={'feature videoLike'})['data-videoid']
-            apiurl = ('https://www.youporn.com/api/video/media_definitions/%s' % r)
+            pattern = r'''videoUrl.*?s=(.*?)['"]'''
+            get_sources = re.findall(pattern,link)[0]
+            apiurl = ('https://www.youporn.com/media/hls/?s=%s' % get_sources)
+            link = requests.get(apiurl,headers=headers).json()
+            names = []
+            srcs  = []
+            for i in link:
+                quality = i['quality']
+                mediia = i['videoUrl']
+                names.append(kodi.giveColor(quality,'white',True))
+                srcs.append(mediia)
+            selected = kodi.dialog.select('Select a link.',names)
+            if selected < 0:
+                kodi.notify(msg='No option selected.')
+                kodi.idle()
+                quit()
+            else:
+                url2 = srcs[selected]
+                xbmc.Player().play(url2)
+        except: pass
+        
+    def tube8(self, url):
+        #dialog.ok("YouPorn",str(url))
+        try:        
+            headers = {'User-Agent' : 'User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko'}
+            link = requests.get(url,headers=headers).text
+            pattern = r'''videoUrl.*?s=(.*?)['"]'''
+            get_sources = re.findall(pattern,link)[0]
+            apiurl = ('https://www.tube8.com/media/hls/?s=%s' % get_sources)
             link = requests.get(apiurl,headers=headers).json()
             names = []
             srcs  = []
@@ -868,7 +897,7 @@ class streamer:
         iframe = soup.find('div', class_={'video_wrapper'}).iframe['src']
         r = client.request(iframe)
         soup = BeautifulSoup(r,'html.parser')
-        pattern = r'''['"]url['"]:.*?['"](.*?)['"].*?['"]label['"]:.*?['"](.*?)['"]'''
+        pattern = r'''src['"]:['"](https:\\/\\/video.*?.mp4)['"].*?label['"]:['"](.*?)['"]'''
         c = re.findall(pattern,r,flags=re.DOTALL)
         names = []
         srcs  = []

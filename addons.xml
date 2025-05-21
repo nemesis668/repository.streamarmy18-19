@@ -244,7 +244,7 @@ For Support Follow @Nemzzy668 On Twitter
 
 <addon id="plugin.video.xxx-o-dus"
 	     name="XXX-O-DUS"
-	     version="5.00.024"
+	     version="5.00.025"
 	     provider-name="Originally By : Echo Coder :: Revived By @Nemzzy668">
   <requires>
     <!-- <import addon="xbmc.python" version="2.24.0"/> -->
@@ -399,7 +399,7 @@ For Support Follow @Nemzzy668 On Twitter
 	</extension>
 </addon>
 
-<addon id="script.xxxodus.scrapers" name="XXXODUS Scrapers" version="5.00.017" provider-name="Original Echo Coder // Maintained NOW by @Nemzzy668">
+<addon id="script.xxxodus.scrapers" name="XXXODUS Scrapers" version="5.00.018" provider-name="Original Echo Coder // Maintained NOW by @Nemzzy668">
 	<requires>
 		<!-- <import addon="xbmc.python" version="2.24.0" /> -->
 		<import addon="script.module.requests" />

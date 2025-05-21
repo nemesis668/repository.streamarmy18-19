@@ -63,12 +63,11 @@ def menu():
 
 @utils.url_dispatcher.register('%s' % content_mode,['url'],['searched'])
 def content(url,searched=False):
-
-
+    #dialog.ok("URL",str(url))
     try:
         c = client.request(url)
         soup = BeautifulSoup(c, 'html5lib')
-        r = soup.find_all('div', class_={'video-box pc js_video-box'})
+        r = soup.find_all('div', class_={'video-box pc js_video-box thumbnail-card js-pop'})
         if ( not r ) and ( not searched ):
             log_utils.log('Scraping Error in %s:: Content of request: %s' % (base_name.title(),str(c)), log_utils.LOGERROR)
             kodi.notify(msg='Scraping Error: Info Added To Log File', duration=6000, sound=True)
@@ -90,8 +89,8 @@ def content(url,searched=False):
             fanarts = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork', 'resources/art/%s/fanart.jpg' % filename))
             dirlst.append({'name': name, 'url': url2, 'mode': player_mode, 'icon': icon, 'fanart': fanarts, 'description': name, 'folder': False})
         except Exception as e:
-            log_utils.log('Error: %s' % str(e), log_utils.LOGERROR)
-
+            pass
+            #log_utils.log('Error: %s' % str(e), log_utils.LOGERROR)
     if dirlst: buildDirectory(dirlst, stopend=True, isVideo = True, isDownloadable = True)
     else:
         if (not searched):
