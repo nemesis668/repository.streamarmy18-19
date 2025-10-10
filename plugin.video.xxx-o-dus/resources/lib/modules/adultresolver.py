@@ -46,6 +46,7 @@ class streamer:
             u = self.generic(url, pattern)
             
         else:
+            #dialog.ok("URL",str(url))
         
             if 'eporner.com' in url: u = self.eporner(url)
             
@@ -85,7 +86,7 @@ class streamer:
             
             elif 'porn.com' in url: u = self.generic(url)
             
-            elif 'pandamovie.info' in url: u = self.pandamovie(url)
+            elif 'pandamovies.me' in url: u = self.pandamovie(url)
 
             elif 'winporn.com' in url: u = self.winporn(url)
 
@@ -166,7 +167,7 @@ class streamer:
             
             elif 'teenpornsite.net' in url: u = self.teenpornsite(url)
             
-            elif 'watchpornfree.info' in url: u = self.watchpornfree(url)
+            elif 'watchpornfree.watch' in url: u = self.watchpornfree(url)
             
             elif 'pornhd.com' in url: u = self.pornhd(url)
             
@@ -975,16 +976,16 @@ class streamer:
         headers = {'User-Agent' : 'User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko'}
         link = requests.get(url,headers=headers).text
         soup = BeautifulSoup(link, 'html.parser')
-        data = soup.find_all('li', class_={'hosts-buttons-wpx'})
+        data = soup.find('div', id={'pettabs'})
         names = []
         srcs  = []
         found = 0
         xbmc.executebuiltin("Dialog.Close(busydialog)")
         dialog.notification('XXX-O-DUS', '[COLOR yellow]Checking For Links Now, Be Patient[/COLOR]', xbmcgui.NOTIFICATION_INFO, 5000)
-        for i in data:
-            url = i.a['href']
-            if 'drivevideo' in url: url = url.split('?link=')[1]
-            title = i.a['title']
+        for i in data.find_all('a'):
+            url = i['href']
+            #if 'drivevideo' in url: url = url.split('?link=')[1]
+            title = i.text
             if resolveurl.HostedMediaFile(url).valid_url():
                 names.append(kodi.giveColor(title,'white',True))
                 srcs.append(url)
@@ -1134,20 +1135,27 @@ class streamer:
         r = re.findall(pattern,c,flags=re.DOTALL)[0]
         xbmc.Player().play(r)
     def siska(self, url):
-            c = client.request(url)
-            
-            pattern = r'''<iframe src=['"](.*?)['"]'''
-            r = re.findall(pattern,c,flags=re.DOTALL)
+            #dialog.ok("URL",str(url))
+            headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36'}
+            c = requests.get(url,headers=headers).text
+            #dialog.ok("C",str(c))
+            soup = BeautifulSoup(c,'html.parser')
+            r = soup.find_all('iframe')
+            #dialog.ok("R",str(r))
+            #pattern = r'''<iframe src=['"](.*?)['"]'''
+            #r = re.findall(pattern,c,flags=re.DOTALL)
+            #dialog.ok("R",str(r))
             names = []
             srcs  = []
             found = 0
-            for url in r:
-                if not 'hqq.tv' in url:
-                    if resolveurl.HostedMediaFile(url).valid_url():
-                        found += 1
-                        stream = ('Link %s' % found)
-                        names.append(kodi.giveColor(stream,'white',True))
-                        srcs.append(url)
+            for i in r:
+                url = i['src']
+                #if not 'hqq.tv' in url:
+                if resolveurl.HostedMediaFile(url).valid_url():
+                    found += 1
+                    stream = ('Link %s' % found)
+                    names.append(kodi.giveColor(stream,'white',True))
+                    srcs.append(url)
             selected = kodi.dialog.select('Select a Quality.',names)
             if selected < 0:
                 kodi.notify(msg='No option selected.')
@@ -1196,21 +1204,23 @@ class streamer:
             link = requests.get(url2,headers=headers, stream=True)
             xbmc.Player().play(link.url)
     def watchpornfree(self, url):
+        #dialog.ok("IN","Resolver")
         headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36',
             'Referer' : url}
         #dialog.notification('XXX-O-DUS', '[COLOR yellow]Getting Links Now[/COLOR]', xbmcgui.NOTIFICATION_INFO, 5000)
         r = requests.get(url, headers=headers).text
         soup = BeautifulSoup(r,'html.parser')
-        r = soup.find('div', id={'pettabs'})
+        r = soup.find('div', class_={'downloads mt-5 mb-5'})
         #r = re.findall('<div id="pettabs">(.*?)</div>',r, flags=re.DOTALL)[0]
-        pattern = r'''href=['"]([^'"]+)['"].+?>(.*?)<'''
-        r = re.findall(pattern,str(r))
+        #pattern = r'''href=['"]([^'"]+)['"].+?>(.*?)<'''
+        #r = re.findall(pattern,str(r))
         names = []
         srcs  = []
         found = 0
         xbmc.executebuiltin("Dialog.Close(busydialog)")
-        for url,name in r:
-            if 'drivevideo' in url: url = url.split('?link=')[1]
+        for i in r.find_all('a'):
+            #if 'drivevideo' in url: url = url.split('?link=')[1]
+            url = i['href']
             if resolveurl.HostedMediaFile(url).valid_url():
                 found += 1
                 name = ("Link %s" % found)

@@ -16,7 +16,7 @@ headers = {'User-Agent' : 'User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; Trid
 buildDirectory = utils.buildDir #CODE BY NEMZZY AND ECHO
 translatePath = xbmc.translatePath if PY2 else xbmcvfs.translatePath
 filename     = 'pandamovie'
-base_domain  = 'https://pandamovie.info/'
+base_domain  = 'https://pandamovies.me/'
 base_name    = base_domain.replace('www.',''); base_name = re.findall('(?:\/\/|\.)([^.]+)\.',base_name)[0].title()
 type         = 'movies'
 menu_mode    = 297
@@ -30,7 +30,7 @@ search_base  = urljoin(base_domain,'search.fcgi?query=%s')
 def menu():
     
 	lover.checkupdates()
-	url = urljoin(base_domain,'genres/porn-movies/')
+	url = urljoin(base_domain,'category/porn-movies/')
 	content(url)
 	# try:
 		# url = urljoin(base_domain,'xxx/movies/')
@@ -67,10 +67,10 @@ def menu():
 def content(url,searched=False):
     try:
         if url == '':
-            url = urljoin(base_domain,'genres/porn-movies/')
+            url = urljoin(base_domain,'category/porn-movies/')
         link = requests.get(url,headers=headers).text
         soup = BeautifulSoup(link, 'html.parser')
-        r = soup.find_all('article', class_={'item movies'})
+        r = soup.find_all('a', class_={'thumb'})
         if ( not r ) and ( not searched ):
             log_utils.log('Scraping Error in %s:: Content of request: %s' % (base_name.title(),str(c)), log_utils.LOGERROR)
             kodi.notify(msg='Scraping Error: Info Added To Log File', duration=6000, sound=True)
@@ -86,9 +86,9 @@ def content(url,searched=False):
     for i in r:
         try:
             title = i.img['alt']
-            mediaurl = i.a['href']
+            mediaurl = i['href']
             icon = i.img['src']
-            if '.gif' in icon: icon = i.img['data-wpfc-original-src']
+            #if '.gif' in icon: icon = i.img['data-wpfc-original-src']
             #dialog.ok("Media",str(icon))
             #quit()
             fanarts = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork', 'resources/art/%s/fanart.jpg' % filename))
@@ -107,7 +107,7 @@ def content(url,searched=False):
     if not searched:
         
         try:
-            search_pattern = '''<link rel=['"]next['"]\s*href=['"]([^'"]+)'''
+            search_pattern = '''link rel=['"]next['"].*?href=['"]([^'"]+)'''
             helper.scraper().get_next_page(content_mode,url,search_pattern,filename)
         except Exception as e: 
             log_utils.log('Error getting next page for %s :: Error: %s' % (base_name.title(),str(e)), log_utils.LOGERROR)

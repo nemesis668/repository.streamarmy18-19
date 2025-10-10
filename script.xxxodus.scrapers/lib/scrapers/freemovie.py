@@ -53,7 +53,7 @@ def content(url,searched=False):
         try:
             name = i.find('div', class_={'Title'}).text
             url2 = i.a['href']
-            icon = i.find('img')['data-lazy-src']
+            icon = i.img['src']
             fanarts = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork', 'resources/art/%s/fanart.jpg' % filename))
             dirlst.append({'name': name, 'url': url2, 'mode': player_mode, 'icon': icon, 'fanart': fanarts, 'folder': False})
         except Exception as e:
