@@ -805,7 +805,7 @@ class streamer:
         source = requests.post(api_url, headers=get_headers(),data=data).json()
         #dialog.ok("SOURCE",str(source))
         cam = source['url']
-        cam = cam.replace('live-hls','live-c-fhls').replace('playlist.m3u8','playlist_sfm4s.m3u8').replace('-ams','-rtm')
+        cam = cam.replace('live-c-fhls','live-hls')#.replace('playlist.m3u8','playlist_sfm4s.m3u8').replace('-ams','-rtm')
         #cam = cam+'|User-Agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36&Keep-Alive=true&Referer=https://chaturbate.com&Origin=https://chaturbate.com'
         #source = re.findall(pattern,link,flags=re.DOTALL)[0]
         #if PY2: source = source.replace('\u002D','-')
