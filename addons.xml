@@ -213,7 +213,7 @@ For Support Follow @Nemzzy668 On Twitter
   </extension>
 </addon>
 
-<addon id="plugin.video.sportie" name="[COLOR aqua][B]S[COLOR red]PORTI[COLOR aqua]E[/B][/COLOR]" version="1.00.13" provider-name="Nemzzy668">
+<addon id="plugin.video.sportie" name="[COLOR aqua][B]S[COLOR red]PORTI[COLOR aqua]E[/B][/COLOR]" version="1.00.14" provider-name="Nemzzy668">
   <requires>
     <import addon="script.module.requests" />
 	<import addon="script.module.pyxbmct" />
@@ -244,7 +244,7 @@ For Support Follow @Nemzzy668 On Twitter
 
 <addon id="plugin.video.xxx-o-dus"
 	     name="XXX-O-DUS"
-	     version="5.00.027"
+	     version="5.00.028"
 	     provider-name="Originally By : Echo Coder :: Revived By @Nemzzy668">
   <requires>
     <!-- <import addon="xbmc.python" version="2.24.0"/> -->
@@ -399,7 +399,7 @@ For Support Follow @Nemzzy668 On Twitter
 	</extension>
 </addon>
 
-<addon id="script.xxxodus.scrapers" name="XXXODUS Scrapers" version="5.00.019" provider-name="Original Echo Coder // Maintained NOW by @Nemzzy668">
+<addon id="script.xxxodus.scrapers" name="XXXODUS Scrapers" version="5.00.020" provider-name="Original Echo Coder // Maintained NOW by @Nemzzy668">
 	<requires>
 		<!-- <import addon="xbmc.python" version="2.24.0" /> -->
 		<import addon="script.module.requests" />

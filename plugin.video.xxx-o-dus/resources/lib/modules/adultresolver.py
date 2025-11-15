@@ -97,7 +97,7 @@ class streamer:
             elif 'boobsandtits.co.uk' in url: u = self.boobntit(url)
             
             elif 'sexmax.co' in url: u = self.sexmax(url)
-            elif 'freeomovie.info' in url: u = self.freeomovie(url)
+            elif 'freeomovie.to' in url: u = self.freeomovie(url)
 
             elif 'drtube' in url: u = self.drtube(url)
             
@@ -363,7 +363,7 @@ class streamer:
         headers = {'User-Agent': ua}
         c = requests.get(url, headers=headers).text
         soup = BeautifulSoup(c, 'html5lib')
-        r = soup.find('div', id={'pettabs'})
+        r = soup.find('ul', id={'link-tabs'})
         names = []
         srcs  = []
         found = 0

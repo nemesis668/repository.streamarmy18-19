@@ -11,8 +11,8 @@ import dom_parser2, os,re,requests
 from bs4 import BeautifulSoup
 buildDirectory = utils.buildDir #CODE BY NEMZZY AND ECHO
 translatePath = xbmc.translatePath if PY2 else xbmcvfs.translatePath
-filename     = 'pandamovie'
-base_domain  = 'https://freeomovie.info/'
+filename     = 'freeomovie'
+base_domain  = 'https://freeomovie.to'
 base_name    = base_domain.replace('www.',''); base_name = re.findall('(?:\/\/|\.)([^.]+)\.',base_name)[0].title()
 type         = 'movies'
 menu_mode    = 410
@@ -36,7 +36,7 @@ def content(url,searched=False):
         headers = {'User-Agent': ua}
         c = requests.get(url.strip(), headers=headers).text
         soup = BeautifulSoup(c, 'html5lib')
-        r = soup.find_all('li', class_={'TPostMv'})
+        r = soup.find_all('li', class_={'thumi'})
         if ( not r ) and ( not searched ):
             log_utils.log('Scraping Error in %s:: Content of request: %s' % (base_name.title(),str(c)), log_utils.LOGERROR)
             kodi.notify(msg='Scraping Error: Info Added To Log File', duration=6000, sound=True)
@@ -51,9 +51,11 @@ def content(url,searched=False):
         
     for i in r:
         try:
-            name = i.find('div', class_={'Title'}).text
+            #dialog.ok("I",str(i))
+            name = i.a['title']
             url2 = i.a['href']
-            icon = i.img['src']
+            icon = i.find('img', class_={'lazyload rmbd'})['data-src']
+            #icon = i.img['data-src']
             fanarts = translatePath(os.path.join('special://home/addons/script.xxxodus.artwork', 'resources/art/%s/fanart.jpg' % filename))
             dirlst.append({'name': name, 'url': url2, 'mode': player_mode, 'icon': icon, 'fanart': fanarts, 'folder': False})
         except Exception as e:
