@@ -1,0 +1,4 @@
+<settings>
+<category label="Settings">	<setting id="Username" type="text" label="Account Username : " default="" visible="true"/>	<setting id="Password" type="text" label="Account password : " default="" visible="true"/>
+</category>
+</settings>

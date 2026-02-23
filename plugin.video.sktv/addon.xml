@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.video.sktv" name="[COLOR gold][B]S[COLOR blue][B]KTV[/B][/COLOR]" version="1.00.002" provider-name="Astro">
+  <requires>
+    <import addon="script.module.requests" />
+	<import addon="script.module.pyxbmct" />
+	<import addon="script.module.beautifulsoup4" />
+	<import addon="script.module.nemzzy" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="Login.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">SKTV Media Player</summary>
+    <description lang="en">A Kodi Bassed MultiMedia Addon. Application for SKTV</description>
+    <platform>all</platform>
+	<assets>
+        <icon>icon.png</icon>
+        <fanart>fanart.jpg</fanart>
+		<screenshot>resources/screenshots/1.png</screenshot>
+		<screenshot>resources/screenshots/2.png</screenshot>
+		<screenshot>resources/screenshots/3.png</screenshot>
+    </assets>
+  </extension>
+</addon>
