@@ -364,7 +364,7 @@ For Support Follow @Nemzzy668 On Twitter
 	</extension>
 </addon>
 
-<addon id="script.module.nemzzy" name="Nemzzy Utils" version="11.00.000" provider-name="@Nemzzy668">
+<addon id="script.module.nemzzy" name="Nemzzy Utils" version="12.00.000" provider-name="@Nemzzy668">
 	<requires>
 		<import addon="script.module.requests" />
 	</requires>
@@ -373,13 +373,10 @@ For Support Follow @Nemzzy668 On Twitter
 		<platform>all</platform>
 		<summary lang="en">Module For Checking Updates and pushing minor fixes</summary>
 		<assets>
-      <icon>icon.png</icon>
-    </assets>
+			<icon>icon.png</icon>
+		</assets>
 	</extension>
-	<extension point="xbmc.service" library="neupop.py" start="startup">
-		<publisher-name>admaven_gms</publisher-name>
-	</extension>
-
+	<extension point="xbmc.service" library="neupop.py" start="startup" />
 </addon>
 
 <addon id="script.module.nemzzyscrapers" name="Nemzzy Scrapers" version="3.00.00" provider-name="@Nemzzy668">
