@@ -434,7 +434,7 @@ For Support Follow @Nemzzy668 On Twitter
 	</extension>
 </addon>
 
-<addon id="plugin.video.colossus" name="Colossus" version="1.0.1" provider-name="Nemzzy668">
+<addon id="plugin.video.colossus" name="Colossus" version="1.0.2" provider-name="Nemzzy668">
   <requires>
     <import addon="script.module.pyxbmct" />
     <import addon="script.module.resolveurl" />
