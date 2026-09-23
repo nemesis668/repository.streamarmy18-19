@@ -1,3 +1,6 @@
+[B]Version 19.0[/B]
+- Colossus playback fix
+
 [B]Version 18.0[/B]
 - Colossus added
 

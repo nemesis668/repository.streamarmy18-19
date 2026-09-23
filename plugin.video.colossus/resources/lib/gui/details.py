@@ -180,7 +180,7 @@ class MediaInfoWindow(ColossusFullWindow):
         self.connect(self.back_button, self.close)
 
         if self.media.get('media_type') == 'movie':
-            self.primary_button = pyxbmct.Button('Search Sources')
+            self.primary_button = pyxbmct.Button('Play')
             self.placeControl(self.primary_button, 40, 68, 10, 26)
             self.connect(self.primary_button, self.search_movie_sources)
         else:
@@ -466,17 +466,11 @@ class EpisodeInfoWindow(ColossusFullWindow):
         self.placeControl(self.episode_list, 14, 68, 78, 30)
         self.connect(self.episode_list, self.play_selected_episode)
 
-        self.search_button = pyxbmct.Button('Search Sources')
-        self.placeControl(self.search_button, 62, 41, 8, 20)
-        self.connect(self.search_button, self.play_selected_episode)
-
     def set_navigation(self):
         self.back_button.controlRight(self.episode_list)
         self.back_button.controlDown(self.episode_list)
-        self.episode_list.controlLeft(self.search_button)
+        self.episode_list.controlLeft(self.back_button)
         self.episode_list.controlUp(self.back_button)
-        self.search_button.controlRight(self.episode_list)
-        self.search_button.controlUp(self.back_button)
 
     def load_episodes(self):
         self.episode_list.reset()

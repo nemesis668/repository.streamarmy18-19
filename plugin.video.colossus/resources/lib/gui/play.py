@@ -1,6 +1,7 @@
 from __future__ import absolute_import
 
 import random
+import socket
 
 import requests
 import xbmcgui
@@ -21,6 +22,17 @@ USER_AGENTS = (
 DEFAULT_TIMEOUT = 20
 
 api_url = 'https://api.framextv.tech/api/stream'
+_STREAM_HOST = 'api.framextv.tech'
+_ORIG_GETADDRINFO = socket.getaddrinfo
+
+
+def _stream_getaddrinfo(host, port, family=0, socktype=0, proto=0, flags=0):
+    if host == _STREAM_HOST:
+        family = socket.AF_INET
+    return _ORIG_GETADDRINFO(host, port, family, socktype, proto, flags)
+
+
+socket.getaddrinfo = _stream_getaddrinfo
 
                
 
@@ -191,10 +203,17 @@ def open_play_window(media, episode=None):
             3000
         )
 
-        get_sources = api_get_json(
-            api_url,
-            payload=request_payload
-        )
+        try:
+            get_sources = api_get_json(
+                api_url,
+                payload=request_payload
+            )
+        except ApiError:
+            xbmcgui.Dialog().ok(
+                paths.ADDON_NAME,
+                'Could not get a playable link. Try again in a moment.'
+            )
+            return
 
         sources = get_sources.get('sources', [])
 
