@@ -1,0 +1,80 @@
+<settings>
+    <category label="30051">
+        <setting id="sortwxf" type="enum" lvalues="30012|30013|30014" label="30011" default="0"/>
+        <setting id="sortxt" type="enum" lvalues="30022|30023|30024|30025" label="30021" default="0"/>
+        <setting id="customview" label="30008" type="bool" default="false" />
+        <setting id="m3u8_use_ia" label="30016" type="bool" default="false" />
+        <setting id="paradisehill" label="30004" type="bool" default="false" />
+        <setting id="posterfanart" label="30005" type="bool" default="false" />
+        <setting id="quality_in_name" label="30009" type="bool" default="true" />
+        <setting id="duration_in_name" label="30010" type="bool" default="true" />
+        <setting id="keywords_sorted" label="30008" type="bool" default="true" />
+        <setting id="download_path" type="folder" source="video" label="30052"  option="writeable" default=""/>
+        <setting id="setpin" type="action" label="30028" enable="false" />
+        <setting id="content" type="enum" label="30500" lvalues="30501|30502" default="0" />
+    </category>
+    <category label="30065">
+        <setting type="lsep" label="30029" />
+        <setting id="clear_cache" label="33011" type="action" enable="false"/>
+        <setting id="cache_time" label="30030" type="slider" default="4" range="1,1,8" option="int" />
+        <setting type="lsep" label="30031" />
+        <setting id="clear_cookies" label="30032" type="action" enable="false"/>
+    </category>
+    <category label="30053">
+        <setting id="qualityask" type="enum" label="30001" lvalues="30401|30402|30403|30404|30405" default="0" />
+        <setting id="dontask" label="30002" type="bool" default="false" />
+        <setting id="universal_resolvers" label="30026" type="bool" default="true" />
+        <setting id="open_smr_settings" type="action" label="30027" enable="false" />
+    </category>
+    <category label="30054">
+        <setting id="chaturbate" label="30003" type="bool" default="false" />
+        <setting type="lsep" label="30110" />
+        <setting id="chatfemale" type="bool" label="30111" default="true" />
+        <setting id="chatmale" type="bool" label="30112" default="true" />
+        <setting id="chatcouple" type="bool" label="30113" default="true" />
+        <setting id="chattrans" type="bool" label="30114" default="true" />
+        <setting type="lsep" label="30055" />
+        <setting id="chatplay" type="enum" label="30100" lvalues="30101|30103" default="0" />
+    </category>
+    <category label="30059">
+        <setting id="compressbackup" label="30200" type="bool" default="true" />
+        <setting type="lsep" label="30060" />
+        <setting id="item.limit" label="33027" type="slider" default="0" range="0,5,200" option="int" />
+        <setting id="custom_favorites" label="30214" type="bool" default="false" />
+        <setting id="favorites_path" enable="eq(-1,true)" type="folder" source="" label="30215"  option="writeable" default=""/>
+        <setting id="backup_favorites" type="action" label="30201" enable="false" />
+        <setting id="restore_favorites" type="action" label="30202" enable="false" />
+        <setting id="clear_favorites" type="action" label="30203" enable="false" />
+        <setting type="lsep" label="30061" />
+        <setting id="backup_keywords" type="action" label="30211" enable="false" />
+        <setting id="restore_keywords" type="action" label="30212" enable="false" />
+        <setting id="clear_keywords" type="action" label="30213" enable="false" />
+    </category>
+    <category label="30062">
+        <setting id="custom_sites" label="30301" type="bool" default="false" />
+        <setting id="list_custom_sites" type="action" label="30306" enable="false" />
+        <setting type="lsep" label="30063" />
+        <setting id="enable_custom_site" type="action" label="30304" enable="false" />
+        <setting id="disable_custom_site" type="action" label="30305" enable="false" />
+        <setting id="enable_all_custom_sites" type="action" label="30307" enable="false" />
+        <setting id="disable_all_custom_sites" type="action" label="30308" enable="false" />
+        <setting type="lsep" label="30064" />
+        <setting id="install_custom_site" type="action" label="30302" enable="false" />
+        <setting id="uninstall_custom_site" type="action" label="30303" enable="false" />
+        <setting id="install_custom_sites_from_folder" type="action" label="30309" enable="false" />
+    </category>
+    <category label="33015">
+        <setting type="lsep" label="33016" />
+        <setting id="filter_listing" label="33017" type="text" default=""/>
+        <setting id="filter_hosters" label="33018" type="text" default=""/>
+        <setting type="lsep" label="33019" />
+        <setting id="enh_debug" type="bool" label="33021" default="true" />
+        <setting id="debuglog" type="action" label="30017" enable="false" />
+        <setting id="startlog" type="action" label="33020" enable="false" />
+        <setting type="lsep" label="33024" />
+        <setting id="fs_enable" type="bool" label="33022" default="false" />
+        <setting id="fs_host" enable="eq(-1,true)" type="text" label="33023" default="http://localhost:8191/v1"/>
+        <setting type="lsep" label="33025" />
+        <setting id="sessionid" type="text" label="33026" default=""/>
+    </category>
+</settings>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.colossus.xxx" name="Colossus XXX" version="1.0.1" provider-name="Nemzzy668">
+  <requires>
+    <import addon="script.module.six" />
+    <import addon="script.module.kodi-six" />
+    <import addon="script.module.resolveurl" version="5.0.00" />
+    <import addon="script.module.resolveurl.xxx" version="2.0.1" />
+    <import addon="script.common.plugin.cache" />
+    <import addon="script.module.websocket" version="0.50.0" />
+    <import addon="script.module.inputstreamhelper" />
+    <import addon="script.module.requests" />
+    <import addon="script.module.beautifulsoup4" />
+    <import addon="script.module.html5lib" />
+    <import addon="script.module.echo" />
+  </requires>
+  <extension point="xbmc.python.module" library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Adult scrapers and resolvers for Colossus</summary>
+    <description lang="en_GB">Site scrapers, listings, and playback helpers for the Colossus adult section.</description>
+    <platform>all</platform>
+    <license>GPL-2.0-or-later</license>
+    <assets>
+      <icon>icon.png</icon>
+      <fanart>fanart.png</fanart>
+    </assets>
+  </extension>
+</addon>

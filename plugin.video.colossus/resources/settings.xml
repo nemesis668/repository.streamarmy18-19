@@ -1,0 +1,9 @@
+<settings>
+  <category label="General">
+    <setting id="disable_adult" type="bool" label="Disable adult" default="false" />
+    <setting id="protect_adult" type="bool" label="Password protect adult" default="false" />
+    <setting type="action" label="Set adult password" action="RunPlugin(plugin://plugin.video.colossus/?action=set_adult_password)" option="close" visible="eq(-1,true)" subsetting="true" />
+    <setting type="action" label="Reset adult password" action="RunPlugin(plugin://plugin.video.colossus/?action=reset_adult_password)" option="close" visible="eq(-2,true)" subsetting="true" />
+    <setting id="adult_password_reset" type="text" label="Password last reset" default="Never" enable="false" subsetting="true" visible="eq(-3,true)" />
+  </category>
+</settings>
