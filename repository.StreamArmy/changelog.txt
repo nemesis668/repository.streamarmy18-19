@@ -1,3 +1,6 @@
+[B]Version 20.0[/B]
+- Colossus music section and install fix
+
 [B]Version 19.0[/B]
 - Colossus playback fix
 
