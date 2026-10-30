@@ -2,8 +2,6 @@
 # MIT License (see LICENSE.txt or https://opensource.org/licenses/MIT)
 """Implements generic widevine functions used across architectures"""
 
-from __future__ import absolute_import, division, unicode_literals
-
 import os
 from time import time
 
@@ -14,7 +12,6 @@ from ..kodiutils import (addon_profile, exists, get_setting_int, listdir,
 from ..unicodes import compat_path, to_unicode
 from ..utils import (arch, cmd_exists, hardlink, http_download, parse_version,
                      remove_tree, run_cmd, system_os)
-from .arm_lacros import cdm_from_lacros, latest_lacros
 from .repo import cdm_from_repo, latest_widevine_available_from_repo
 
 
@@ -35,17 +32,16 @@ def install_cdm_from_backup(version):
 def widevine_eula():
     """Displays the Widevine EULA and prompts user to accept it."""
     if cdm_from_repo():
-        cdm_version = latest_widevine_available_from_repo().get('version')
         cdm_os = config.WIDEVINE_OS_MAP[system_os()]
         cdm_arch = config.WIDEVINE_ARCH_MAP_REPO[arch()]
     else:  # Grab the license from the x86 files
         log(0, 'Acquiring Widevine EULA from x86 files.')
-        cdm_version = '4.10.2830.0' # fine to hardcode as it's only used for the EULA
         cdm_os = 'mac'
         cdm_arch = 'x64'
 
-    url = config.WIDEVINE_DOWNLOAD_URL.format(version=cdm_version, os=cdm_os, arch=cdm_arch)
-    dl_path = http_download(url, message=localize(30025), background=True)  # Acquiring EULA
+    cdm = latest_widevine_available_from_repo(cdm_os, cdm_arch)
+
+    dl_path = http_download(cdm.get('url'), message=localize(30025), background=True)  # Acquiring EULA
     if not dl_path:
         return False
 
@@ -70,7 +66,7 @@ def widevine_config_path():
     iacdm = ia_cdm_path()
     if iacdm is None:
         return None
-    if cdm_from_repo() or cdm_from_lacros():
+    if cdm_from_repo():
         return os.path.join(iacdm, config.WIDEVINE_CONFIG_NAME)
     return os.path.join(iacdm, 'config.json')
 
@@ -96,7 +92,7 @@ def widevinecdm_path():
 
 def has_widevinecdm():
     """Whether a Widevine CDM is installed on the system"""
-    if system_os() == 'Android':  # Widevine CDM is built into Android
+    if system_os() == 'Android' or system_os() == 'webOS':  # Widevine CDM is built into Android and webOS
         return True
 
     widevinecdm = widevinecdm_path()
@@ -127,6 +123,9 @@ def ia_cdm_path():
 def missing_widevine_libs():
     """Parses ldd output of libwidevinecdm.so and displays dialog if any depending libraries are missing."""
     if system_os() != 'Linux':  # this should only be needed for linux
+        return None
+
+    if arch() in {'arm', 'arm64'}:  # ldd will fail with missing GLIBC_ABI_DT_RELR error and is useless
         return None
 
     if cmd_exists('ldd'):
@@ -160,12 +159,9 @@ def missing_widevine_libs():
 
 
 def latest_widevine_version():
-    """Returns the latest available version of Widevine CDM/Chrome OS/Lacros Image."""
+    """Returns the latest available version of Widevine CDM/Chrome OS"""
     if cdm_from_repo():
-        return latest_widevine_available_from_repo().get('version')
-
-    if cdm_from_lacros():
-        return latest_lacros()
+        return latest_widevine_available_from_repo(config.WIDEVINE_OS_MAP[system_os()], config.WIDEVINE_ARCH_MAP_REPO[arch()]).get('version')
 
     from .arm import chromeos_config, select_best_chromeos_image
     devices = chromeos_config()
@@ -180,6 +176,7 @@ def latest_widevine_version():
 def remove_old_backups(bpath):
     """Removes old Widevine backups, if number of allowed backups is exceeded"""
     max_backups = get_setting_int('backups', 4)
+    to_remove = []
     versions = sorted([parse_version(version) for version in listdir(bpath)])
 
     if len(versions) < 2:
@@ -188,13 +185,16 @@ def remove_old_backups(bpath):
     try:
         installed_version = load_widevine_config()['version']
     except TypeError:
-        log(2, "could not determine installed version. Aborting cleanup of old versions.")
+        log(2, "Could not determine installed version. Aborting cleanup of old versions.")
         return
 
-    while len(versions) > max_backups + 1:
-        remove_version = str(versions[1] if versions[0] == parse_version(installed_version) else versions[0])
-        log(0, 'Removing oldest backup which is not installed: {version}', version=remove_version)
-        remove_tree(os.path.join(bpath, remove_version))
-        versions = sorted([parse_version(version) for version in listdir(bpath)])
+    filtered = [v for v in versions if v != parse_version(installed_version)]
 
+    if len(filtered) > max_backups:
+        to_remove = filtered[: len(filtered) - max_backups]
+
+    for v in to_remove:
+        remove_version = str(v)
+        log(2, 'Removing old backup: {version}', version=remove_version)
+        remove_tree(os.path.join(bpath, remove_version, ''))  # ensure trailing separator
     return
