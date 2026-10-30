@@ -434,7 +434,7 @@ For Support Follow @Nemzzy668 On Twitter
 	</extension>
 </addon>
 
-<addon id="plugin.video.colossus" name="Colossus" version="1.0.13" provider-name="Nemzzy668">
+<addon id="plugin.video.colossus" name="Colossus" version="1.0.14" provider-name="Nemzzy668">
   <requires>
     <import addon="script.module.pyxbmct" />
     <import addon="script.module.resolveurl" />
@@ -443,6 +443,7 @@ For Support Follow @Nemzzy668 On Twitter
     <import addon="script.module.requests" />
     <import addon="script.module.clouddrive.common" />
     <import addon="plugin.video.youtube" optional="true" />
+    <import addon="script.module.inputstreamhelper" optional="true" />
   </requires>
   <extension point="xbmc.python.pluginsource" library="default.py">
     <provides>video</provides>
